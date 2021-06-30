@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 
 const UploadImage = () => {
 
-  const [fileInput, setFileInput] = useState('');
-  const [selectedFile, setSelectedFile] = useState('');
+  //const [fileInput, setFileInput] = useState('');
+  //const [selectedFile, setSelectedFile] = useState('');
   const [previewSource, setPreviewSource] = useState('');
 
   const handleFileInputChange = (e) => {
@@ -42,7 +42,7 @@ const UploadImage = () => {
   return (
     <div>
       <form onSubmit={handleSubmitFile}>
-        <input type='file' name='image' onChange={handleFileInputChange} value={fileInput} />
+        <input type='file' name='image' onChange={handleFileInputChange} />
         <button type='submit'>Upload</button>
       </form>
       {previewSource && (
