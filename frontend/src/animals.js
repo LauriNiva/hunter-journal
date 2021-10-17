@@ -1,10 +1,17 @@
-const animalsArray = {
+const animalsArray =  {
   'Antelope Jackrabbit': {
     title: 'Antelope Jackrabbit',
     animalclass: 1,
     trophytype: 'Weight',
     trophyscore: { silver: 2.8, gold: 4.8, diamond: 6.3 },
-    furtypes: null
+    furtypes: [
+      'Albino',
+      'Common',
+      'Dark Brown',
+      'Grey',
+      'Melanistic',
+      'Mottled'
+    ]
   },
   'Axis Deer': {
     title: 'Axis Deer',
@@ -62,8 +69,8 @@ const animalsArray = {
     trophyscore: { silver: 4.4, gold: 6.8, diamond: 8.5 },
     furtypes: [
       'Brown Hybrid',
-      'Grey Hybrid',
-      'Light grey',
+      'Grey',
+      'Light grey leucistic',
       'Melanistic',
       'Common',
       'Bald leucistic'
@@ -95,7 +102,7 @@ const animalsArray = {
       'Grey Brown',
       'Honeytones',
       'Leucistic',
-      'Melanistic,Johnathan'
+      'Melanistic'
     ]
   },
   'Cinnamon Teal': {
@@ -110,6 +117,22 @@ const animalsArray = {
       'Melanistic',
       'Piebald',
       'Red'
+    ]
+  },
+  'Collared Peccary': {
+    title: 'Collared Peccary',
+    animalclass: 4,
+    trophytype: 'Tusks',
+    trophyscore: { silver: NaN, gold: NaN, diamond: NaN },
+    furtypes: [
+      'Albino',
+      'Brown',
+      'Common',
+      'Dark-Brown',
+      'Dark-Grey',
+      'Leucistic',
+      'Melanistic',
+      'Ochre'
     ]
   },
   Coyote: {
@@ -257,19 +280,12 @@ const animalsArray = {
       'Pristine',   'Winter'
     ]
   },
-  Jackrabbit: {
-    title: 'Jackrabbit',
+  'White-tailed Jackrabbit': {
+    title: 'White-tailed Jackrabbit',
     animalclass: 1,
     trophytype: 'Weight',
     trophyscore: { silver: 2.8, gold: 4.8, diamond: 6.3 },
-    furtypes: [
-      'Albino',
-      'Grey',
-      'Common',
-      'Light Brown',
-      'Brown',
-      'Melanistic'
-    ]
+    furtypes: [ 'Albino', 'Grey', 'Common', 'Light Brown', 'Brown' ]
   },
   'Lesser Kudu': {
     title: 'Lesser Kudu',
@@ -307,12 +323,35 @@ const animalsArray = {
       'Blonde'
     ]
   },
+  "Merriam's Turkey": {
+    title: "Merriam's Turkey",
+    animalclass: 1,
+    trophytype: 'Weight',
+    trophyscore: { silver: 3.3, gold: 4, diamond: 4.6 },
+    furtypes: [
+      'Albino',
+      'Common',
+      'Grey',
+      'Leucistic',
+      'Light Brown',
+      'Melanistic'
+    ]
+  },
   'Mexican Bobcat': {
     title: 'Mexican Bobcat',
     animalclass: 3,
     trophytype: 'Skull',
     trophyscore: { silver: 18.5, gold: 23.7, diamond: 27.6 },
-    furtypes: [ 'Blue', 'Common', 'Grey', 'Red', 'Tan' ]
+    furtypes: [
+      'Albino',
+      'Blue',
+      'Brown',
+      'Common',
+      'Light Brown',
+      'Melanistic',
+      'Red',
+      'Tan'
+    ]
   },
   Moose: {
     title: 'Moose',
@@ -405,6 +444,20 @@ const animalsArray = {
     trophyscore: { silver: 152.5, gold: 311.2, diamond: 430.2 },
     furtypes: [ 'Albino', 'Common', 'Piebald', 'Melanistic', 'Leucistic' ]
   },
+  'Ring-Necked Pheasant': {
+    title: 'Ring-Necked Pheasant',
+    animalclass: 1,
+    trophytype: 'Combined',
+    trophyscore: { silver: NaN, gold: NaN, diamond: NaN },
+    furtypes: [
+      'Albino',
+      'Common',
+      'Grey',
+      'Leucistic',
+      'Melanistic',
+      'Molting'
+    ]
+  },
   'Rocky Mountain Elk': {
     title: 'Rocky Mountain Elk',
     animalclass: 8,
@@ -444,15 +497,8 @@ const animalsArray = {
     title: 'Scrub Hare',
     animalclass: 1,
     trophytype: 'Weight',
-    trophyscore: { silver: 2.4, gold: 4.1, diamond: 5.1 },
-    furtypes: [
-      'Albino',
-      'Grey',
-      'Light Grey',
-      'Chestnut',
-      'Brown',
-      'Melanistic'
-    ]
+    trophyscore: { silver: 2.4, gold: 4.1, diamond: 5.3 },
+    furtypes: [ 'Grey', 'Light Grey', 'Chestnut', 'Brown' ]
   },
   'Musk Deer': {
     title: 'Musk Deer',
@@ -496,20 +542,6 @@ const animalsArray = {
     trophyscore: { silver: 69.4, gold: 93, diamond: 110.7 },
     furtypes: [ 'Albino', 'Common', 'Black-Brown', 'Dark-Brown' ]
   },
-  "Merriam's Turkey": {
-    title: "Merriam's Turkey",
-    animalclass: 1,
-    trophytype: 'Weight',
-    trophyscore: { silver: 3.3, gold: 4, diamond: 4.6 },
-    furtypes: [
-      'Albino',
-      'Common',
-      'Grey',
-      'Leucistic',
-      'Light Brown',
-      'Melanistic'
-    ]
-  },
   Warthog: {
     title: 'Warthog',
     animalclass: 4,
@@ -528,7 +560,7 @@ const animalsArray = {
     title: 'Whitetail Deer',
     animalclass: 4,
     trophytype: 'Antlers',
-    trophyscore: { silver: 111, gold: 206, diamond: 255 },
+    trophyscore: { silver: 112, gold: 193.7, diamond: 255 },
     furtypes: [ 'Albino', 'Piebald', 'Common', 'Melanistic' ]
   },
   'Wild Boar': {
@@ -539,5 +571,6 @@ const animalsArray = {
     furtypes: [ 'Common', 'Albino', 'Melanistic', 'Blackgold' ]
   }
 };
+
 
 export default animalsArray;
