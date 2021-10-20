@@ -1,23 +1,29 @@
-import { Autocomplete, Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material'
+import { Autocomplete, FormControl, InputAdornment, InputLabel, MenuItem, Select, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react';
-import { Formik, Field, Form } from 'formik';
 import animalsArray from '../animals.js';
 
 const NewLogForm = () => {
 
   const animalOptions = Object.keys(animalsArray);
-  const [availableFurTypes, setAvailableFurTypes] = useState([]);
   const [formAnimal, setFormAnimal] = useState(animalOptions[0]);
-  const [formFurtype, setFormFurtype] = useState('')
+  const [availableFurTypes, setAvailableFurTypes] = useState(animalsArray[formAnimal].furtypes);
+  const [formFurtype, setFormFurtype] = useState(availableFurTypes[0])
   const [formGender, setFormGender] = useState('Male');
+  const [formWeight, setFormWeight] = useState('');
 
-  useEffect(()=> {
+  useEffect(() => {
     setAvailableFurTypes(animalsArray[formAnimal].furtypes);
-    setFormFurtype('')
-  },[formAnimal]);
+  }, [formAnimal]);
+
+  useEffect(() => {
+    setFormFurtype(availableFurTypes[0]);
+  }, [availableFurTypes]);
 
   console.log(`availableFurTypes`, availableFurTypes)
   console.log(`formAnimal`, formAnimal)
+  console.log(`formGender`, formGender)
+  console.log(`formFurType`, formFurtype)
+  console.log(`formWeight`, formWeight)
 
 
 
@@ -36,6 +42,7 @@ const NewLogForm = () => {
           id="animals-combobox"
           options={animalOptions}
           sx={{ width: 300 }}
+          disableClearable
           value={formAnimal}
           onChange={(e, newValue) => setFormAnimal(newValue)}
           renderInput={(params) => <TextField {...params} label="Animal" />}
@@ -50,11 +57,22 @@ const NewLogForm = () => {
           >
             <MenuItem value="Male">Male</MenuItem>
             <MenuItem value="Female">Female</MenuItem>
-
           </Select>
         </FormControl>
+        <TextField
+          id="weight-textfield"
+          label="Weight"
+          variant="outlined"
+          InputProps={{
+            endAdornment: <InputAdornment position="end">kg</InputAdornment>
+
+          }}
+          value={formWeight}
+          onChange={(e) => setFormWeight(e.target.value)}
+        />
         <Autocomplete
           disablePortal
+          disableClearable
           id="furtypes-combobox"
           options={availableFurTypes}
           sx={{ width: 300 }}
