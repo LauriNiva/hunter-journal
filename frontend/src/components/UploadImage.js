@@ -29,7 +29,7 @@ const UploadImage = () => {
   const uploadImage = async (base64EncodedImage) => {
 
     try {
-      const uploadedImage = await axios.post('/api/upload', { data: base64EncodedImage });
+      const uploadedImage = await axios.post('/api/upload', { imagedata: base64EncodedImage });
       console.log(`uploadedImage`, uploadedImage.data)
     } catch (error) {
       console.log(error);
@@ -46,7 +46,7 @@ const UploadImage = () => {
         <button type='submit'>Upload</button>
       </form>
       {previewSource && (
-        <img src={previewSource} alt="chosen" style={{height: '350px'}} />
+        <img src={previewSource} alt="chosen" style={{height: '150px'}} />
       )}
     </div>
   )

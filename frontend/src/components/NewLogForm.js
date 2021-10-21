@@ -1,5 +1,7 @@
-import { Autocomplete, FormControl, InputAdornment, InputLabel, MenuItem, Select, TextField } from '@mui/material'
+import { Autocomplete, Button, FormControl, InputAdornment, InputLabel, MenuItem, Select, TextField } from '@mui/material'
+import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import animalsArray from '../animals.js';
 
 const NewLogForm = () => {
@@ -10,6 +12,9 @@ const NewLogForm = () => {
   const [formFurtype, setFormFurtype] = useState(availableFurTypes[0])
   const [formGender, setFormGender] = useState('Male');
   const [formWeight, setFormWeight] = useState('');
+  const [formDistance, setFormDistance] = useState('');
+  const [formRating, setFormRating] = useState('');
+
 
   useEffect(() => {
     setAvailableFurTypes(animalsArray[formAnimal].furtypes);
@@ -19,24 +24,66 @@ const NewLogForm = () => {
     setFormFurtype(availableFurTypes[0]);
   }, [availableFurTypes]);
 
-  console.log(`availableFurTypes`, availableFurTypes)
-  console.log(`formAnimal`, formAnimal)
-  console.log(`formGender`, formGender)
-  console.log(`formFurType`, formFurtype)
-  console.log(`formWeight`, formWeight)
+  const [previewSource, setPreviewSource] = useState('');
+
+  const handleFileInputChange = (e) => {
+    const file = e.target.files[0];
+    previewFile(file);
+  };
+
+  const previewFile = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setPreviewSource(reader.result);
+    }
+  }
 
 
+  // console.log(`availableFurTypes`, availableFurTypes)
+  // console.log(`formAnimal`, formAnimal)
+  // console.log(`formGender`, formGender)
+  // console.log(`formFurType`, formFurtype)
+  // console.log(`formWeight`, formWeight)
 
-  const submitNewLog = (params) => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    submitNewLog();
+  }
+
+  const submitNewLog = async () => {
+    const selectedAnimal = animalsArray[formAnimal];
+
+    const newLog = {
+      animal: formAnimal,
+      gender: formGender,
+      weight: formWeight,
+      furtype: formFurtype,
+      distance: formDistance,
+      rating: formRating,
+      imagedata: previewSource,
+    };
+
+    console.log(`newLog`, newLog)
+
+    /* try {
+      const uploadedLog = await axios.post('/api/upload', { imagedata: previewSource });
+    } catch (error) {
+      console.log(error);
+    } */
 
   }
 
 
 
   return (
-    <div>
+    <Box>
+      {previewSource && (
+        <img src={previewSource} alt="chosen" style={{height: '150px'}} />
+      )}
+      <input type='file' name='image' onChange={handleFileInputChange} />
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <Autocomplete
           disablePortal
           id="animals-combobox"
@@ -80,37 +127,30 @@ const NewLogForm = () => {
           onChange={(e, newValue) => setFormFurtype(newValue)}
           renderInput={(params) => <TextField {...params} label="Fur" />}
         />
+        <TextField
+          id="distance-textfield"
+          label="Tracking distance"
+          variant="outlined"
+          InputProps={{
+            endAdornment: <InputAdornment position="end">m</InputAdornment>
 
+          }}
+          value={formDistance}
+          onChange={(e) => setFormDistance(e.target.value)}
+        />
+        <TextField
+          id="rating-textfield"
+          label="Trophy rating"
+          variant="outlined"
+          value={formRating}
+          onChange={(e) => setFormRating(e.target.value)}
+        />
+        <Button type="submit" variant="contained">Add</Button>
 
       </form>
 
 
-      {/*  <Formik
-        initialValues={{ gender: '', weight: '', category: '' }}
-        onSubmit={(data, actions) => {
-          submitNewLog(data);
-          actions.resetForm();
-        }}>
-        {() => (
-          <Form> 
-            <Field name='animal' type='select' label='Animal' as='select' onChange={console.log('beep')}>
-              {Object.keys(animalsArray).map(animal => <option key={animal} value={animal}>{animal}</option>)}
-            </Field>
-            <Field name='gender'  type='select' label='Gender' as='select'>
-              <option value='male'>Male</option>
-              <option value='female'>Female</option>
-
-            </Field>         
-            <Field name='weight'  type='input' label='Weight' as={TextField}></Field>
-            <Field name='fur'  type='input' label='Fur type' as={TextField}></Field>         
-            <Field name='distance'  type='input' label='Tracking distance' as={TextField}></Field>
-            <Field name='difficulty'  type='input' label='Difficulty' as={TextField}></Field>                  
-            <Field name='trophyrating'  type='input' label='Trophy rating' as={TextField}></Field>
-            <Button type='submit'>Submit</Button>
-          </Form>
-        )}
-      </Formik> */}
-    </div>
+    </Box>
   )
 };
 
