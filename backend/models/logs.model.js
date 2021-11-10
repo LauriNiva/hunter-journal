@@ -36,8 +36,8 @@ const logSchema = new mongoose.Schema({
   notes: {
     type: String
   },
-  images: [{
-    id: { type: String },
+  images: [{ 
+    type: String
   }]
 });
 
