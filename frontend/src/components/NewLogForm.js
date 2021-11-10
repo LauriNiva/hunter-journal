@@ -14,6 +14,8 @@ const NewLogForm = () => {
   const [formWeight, setFormWeight] = useState('');
   const [formDistance, setFormDistance] = useState('');
   const [formRating, setFormRating] = useState('');
+  const [formBadge, setFormBadge] = useState('None');
+  const [formNotes, setFormNotes] = useState('');
 
 
   useEffect(() => {
@@ -54,23 +56,29 @@ const NewLogForm = () => {
   const submitNewLog = async () => {
     const selectedAnimal = animalsArray[formAnimal];
 
+
+
     const newLog = {
       animal: formAnimal,
       gender: formGender,
       weight: formWeight,
       furtype: formFurtype,
       distance: formDistance,
+      difficulty: selectedAnimal.animalclass,
       rating: formRating,
+      badge: formBadge,
+      notes: formNotes,
       imagedata: previewSource,
     };
 
     console.log(`newLog`, newLog)
 
-    /* try {
-      const uploadedLog = await axios.post('/api/upload', { imagedata: previewSource });
+    try {
+      const uploadedLog = await axios.post('/api/upload', newLog);
+      console.log(`uploadedLog`, uploadedLog)
     } catch (error) {
       console.log(error);
-    } */
+    }
 
   }
 
@@ -78,11 +86,11 @@ const NewLogForm = () => {
 
   return (
     <Box>
-      {previewSource && (
-        <img src={previewSource} alt="chosen" style={{height: '150px'}} />
-      )}
-      <input type='file' name='image' onChange={handleFileInputChange} />
-
+      {previewSource ?
+        <img src={previewSource} alt="chosen" style={{ height: '150px' }} />
+        : <input type='file' name='image'
+          accept=".jpg,.jpeg,.png" onChange={handleFileInputChange} />
+      }
       <form onSubmit={handleSubmit}>
         <Autocomplete
           disablePortal
@@ -110,6 +118,7 @@ const NewLogForm = () => {
           id="weight-textfield"
           label="Weight"
           variant="outlined"
+          required
           InputProps={{
             endAdornment: <InputAdornment position="end">kg</InputAdornment>
 
@@ -131,6 +140,7 @@ const NewLogForm = () => {
           id="distance-textfield"
           label="Tracking distance"
           variant="outlined"
+          required
           InputProps={{
             endAdornment: <InputAdornment position="end">m</InputAdornment>
 
@@ -141,9 +151,34 @@ const NewLogForm = () => {
         <TextField
           id="rating-textfield"
           label="Trophy rating"
+          required
           variant="outlined"
           value={formRating}
           onChange={(e) => setFormRating(e.target.value)}
+        />
+        <FormControl sx={{ width: 150 }}>
+          <InputLabel id="animal-gender">Badge</InputLabel>
+          <Select
+            labelId="animal-badge"
+            label="Badge"
+            value={formBadge}
+            onChange={(e) => setFormBadge(e.target.value)}
+          >
+            <MenuItem value="None">None</MenuItem>
+            <MenuItem value="Bronze">Bronze</MenuItem>
+            <MenuItem value="Silver">Silver</MenuItem>
+            <MenuItem value="Gold">Gold</MenuItem>
+            <MenuItem value="Diamond">Diamond</MenuItem>
+            <MenuItem value="Great One">Great One</MenuItem>
+          </Select>
+        </FormControl>
+        <TextField
+          id="notes-textfield"
+          label="Notes"
+          variant="outlined"
+          multiline
+          value={formNotes}
+          onChange={(e) => setFormNotes(e.target.value)}
         />
         <Button type="submit" variant="contained">Add</Button>
 
