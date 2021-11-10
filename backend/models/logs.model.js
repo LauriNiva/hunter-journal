@@ -13,7 +13,7 @@ const logSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  fur: {
+  furtype: {
     type: String,
     required: true
   },
@@ -25,17 +25,16 @@ const logSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  trophytype: {
+  rating: {
     type: String,
     required: true
   },
-  trophyorgans: {
+  badge: { 
     type: String,
     required: true
   },
-  trophyrating: {
-    type: String,
-    required: true
+  notes: {
+    type: String
   },
   images: [{
     id: { type: String },
