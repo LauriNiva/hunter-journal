@@ -42,11 +42,6 @@ const NewLogForm = () => {
   }
 
 
-  // console.log(`availableFurTypes`, availableFurTypes)
-  // console.log(`formAnimal`, formAnimal)
-  // console.log(`formGender`, formGender)
-  // console.log(`formFurType`, formFurtype)
-  // console.log(`formWeight`, formWeight)
 
   const handleSubmit = (e) => {
     e.preventDefault();
