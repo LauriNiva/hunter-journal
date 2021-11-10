@@ -4,7 +4,12 @@ import cloudinary from '../utils/cloudinary.js';
 
 const logsRouter = express.Router();
 
-logsRouter.post('/', async (req, res) => {
+logsRouter.get('/', async (req, res) => {
+  const logs = await Log.find({});
+  res.json(logs);
+});
+
+logsRouter.post('/upload', async (req, res) => {
   console.log('inside logsrouter: ', req.body)
   const body = req.body;
   try {

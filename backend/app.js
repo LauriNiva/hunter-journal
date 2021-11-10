@@ -25,7 +25,7 @@ const requestLogger = (request, response, next) => {
 
 app.use(requestLogger);
 
-app.use('/api/upload', logsRouter);
+app.use('/api', logsRouter);
 
 const PORT = process.env.PORT || 3001;
 
