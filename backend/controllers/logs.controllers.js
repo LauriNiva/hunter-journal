@@ -7,7 +7,7 @@ const logsRouter = express.Router();
 logsRouter.post('/', async (req, res) => {
   console.log('inside logsrouter: ', req.body)
   const body = req.body;
-  /* try {
+  try {
     const fileStr = body.imagedata;
     const uploadResponse = await cloudinary.v2.uploader
       .upload(fileStr, { upload_preset: 'hunter_setup', });
@@ -16,16 +16,27 @@ logsRouter.post('/', async (req, res) => {
       animal: body.animal,
       gender: body.gender,
       weight: body.weight,
-      fur: body.fur,
+      furtype: body.furtype,
       distance: body.distance,
       difficulty: body.difficulty,
-      trophytype
+      rating: body.rating,
+      badge: body.badge,
+      notes: body.notes,
+      images: [imageid]
     });
+
+    console.log(`newLog`, newLog)
+
+    const uploadedLog = await newLog.save();
+    
+    console.log(`uploadedLog`, uploadedLog)
+
+    res.json(uploadedLog)
 
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Something went wrong with the upload'})
-  } */
+  }
 
 
 });
