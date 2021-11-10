@@ -123,7 +123,7 @@ const animalsArray =  {
     title: 'Collared Peccary',
     animalclass: 4,
     trophytype: 'Tusks',
-    trophyscore: { silver: NaN, gold: NaN, diamond: NaN },
+    trophyscore: { silver: 37.5, gold: 98.5, diamond: 144.20 },
     furtypes: [
       'Albino',
       'Brown',
@@ -448,7 +448,7 @@ const animalsArray =  {
     title: 'Ring-Necked Pheasant',
     animalclass: 1,
     trophytype: 'Combined',
-    trophyscore: { silver: NaN, gold: NaN, diamond: NaN },
+    trophyscore: { silver: 9.1, gold: 15.5, diamond: 20.3 },
     furtypes: [
       'Albino',
       'Common',
