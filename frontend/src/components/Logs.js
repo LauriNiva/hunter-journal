@@ -3,9 +3,23 @@
 //Ykisttäiset logit lähetetään SingleLog komponentille
 
 import React from 'react';
+import SingleLog from './SingleLog';
 
 function Logs({ logs }) {
-  return <div></div>;
+
+  console.log('logs inside Logs component: ', logs);
+
+  return (
+
+    <div>All logged logs
+
+  {
+    logs.map(log => (
+      <SingleLog log={log} />
+  ))
+  }
+  </div>
+  );
 }
 
 export default Logs;
