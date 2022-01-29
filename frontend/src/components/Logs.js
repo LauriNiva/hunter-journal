@@ -15,7 +15,7 @@ function Logs({ logs }) {
 
   {
     logs.map(log => (
-      <SingleLog log={log} />
+      <SingleLog key={log._id} log={log} />
   ))
   }
   </div>
