@@ -1,4 +1,4 @@
-import { Autocomplete, Button, FormControl, InputAdornment, InputLabel, MenuItem, Select, TextField } from '@mui/material'
+import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, InputAdornment, InputLabel, MenuItem, Select, TextField } from '@mui/material'
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -16,6 +16,8 @@ const NewLogForm = () => {
   const [formRating, setFormRating] = useState('');
   const [formBadge, setFormBadge] = useState('None');
   const [formNotes, setFormNotes] = useState('');
+
+  const [open, setOpen] = useState(false);
 
 
   useEffect(() => {
@@ -77,10 +79,49 @@ const NewLogForm = () => {
 
   }
 
+  const clearForm = () => {
+    setFormAnimal(animalOptions[0]);
+    setAvailableFurTypes(animalsArray[formAnimal].furtypes);
+    setFormFurtype(availableFurTypes[0])
+    setFormGender('Male');
+    setFormWeight('');
+    setFormDistance('');
+    setFormRating('');
+    setFormBadge('None');
+    setFormNotes('');
+    setPreviewSource('');
+  };
+
+  const handleClickOpenDialog = () => {
+    setOpen(true);
+    clearForm();
+  };
+
+  const handleCloseDialog = () => {
+    setOpen(false);
+  };
+
+  const handleSubmitDialog = () => {
+    handleCloseDialog();
+    submitNewLog();
+  }
 
 
   return (
+
     <Box>
+
+      <Button variant="outlined" onClick={handleClickOpenDialog}>
+        Add A New Log
+      </Button>
+
+      <Dialog open={open} onClose={handleCloseDialog}>
+      <DialogTitle id="form-dialog-title">Lisää tuote</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Dialog Content
+          </DialogContentText>
+
       {previewSource ?
         <img src={previewSource} alt="chosen" style={{ height: '150px' }} />
         : <input type='file' name='image'
@@ -178,8 +219,16 @@ const NewLogForm = () => {
         <Button type="submit" variant="contained">Add</Button>
 
       </form>
-
-
+      </DialogContent>
+      <DialogActions>
+          <Button onClick={handleCloseDialog} color="secondary">
+            Takaisin
+          </Button>
+          <Button onClick={handleSubmitDialog} color="primary">
+            Lisää
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   )
 };
