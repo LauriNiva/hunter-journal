@@ -222,10 +222,10 @@ const NewLogForm = () => {
       </DialogContent>
       <DialogActions>
           <Button onClick={handleCloseDialog} color="secondary">
-            Takaisin
+            Cancel
           </Button>
           <Button onClick={handleSubmitDialog} color="primary">
-            Lisää
+            Add
           </Button>
         </DialogActions>
       </Dialog>
