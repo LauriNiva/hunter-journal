@@ -7,11 +7,10 @@ import SingleLog from './SingleLog';
 
 function Logs({ logs }) {
 
-  console.log('logs inside Logs component: ', logs);
 
   return (
 
-    <div>All logged logs
+    <div>[All logs bar - Filter - Arrange - New Log Button]
 
   {
     logs.map(log => (
