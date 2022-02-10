@@ -1,6 +1,10 @@
 import mongoose from 'mongoose';
 
 const logSchema = new mongoose.Schema({
+  user: { 
+    type: String,
+    required: true
+  },
   animal: {
     type: String,
     required: true
