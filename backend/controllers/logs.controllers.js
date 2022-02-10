@@ -1,15 +1,17 @@
 import Log from '../models/logs.model.js';
 import express from 'express';
 import cloudinary from '../utils/cloudinary.js';
+import checkJwt from '../middleware/jwtCheck.js';
+
 
 const logsRouter = express.Router();
 
-logsRouter.get('/', async (req, res) => {
-  const logs = await Log.find({});
+logsRouter.get('/', checkJwt, async (req, res) => {
+  const logs = await Log.find({user: req.user.sub});
   res.json(logs);
 });
 
-logsRouter.post('/upload', async (req, res) => {
+logsRouter.post('/upload', checkJwt, async (req, res) => {
   console.log('inside logsrouter: ', req.body)
   const body = req.body;
   try {
@@ -18,6 +20,7 @@ logsRouter.post('/upload', async (req, res) => {
       .upload(fileStr, { upload_preset: 'hunter_setup', });
     const imageid = uploadResponse.public_id;
     const newLog = new Log ({
+      user: req.user.sub,
       animal: body.animal,
       gender: body.gender,
       weight: body.weight,
