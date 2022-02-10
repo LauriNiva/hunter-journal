@@ -2,7 +2,10 @@ import express from 'express';
 const app = express();
 import mongoose from 'mongoose';
 import cors from 'cors';
+import 'dotenv/config.js';
 import logsRouter from './controllers/logs.controllers.js';
+import requestlogger from './middleware/requestlogger.js';
+
 
 mongoose.connect(process.env.MONGODB_URI,
   { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
@@ -18,15 +21,9 @@ app.use(cors());
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ limit: '5mb', extended: true }));
 
-const requestLogger = (request, response, next) => {
-  console.log('Method:', request.method)
-  console.log('Path:  ', request.path)
-  console.log('Body:  ', request.body)
-  console.log('---')
-  next()
-};
 
-app.use(requestLogger);
+
+app.use(requestlogger);
 
 app.use('/api', logsRouter);
 
