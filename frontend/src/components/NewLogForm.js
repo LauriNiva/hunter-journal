@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import animalsArray from '../animals.js';
 
+import { useAuth0 } from '@auth0/auth0-react';
+
 const NewLogForm = () => {
 
   const animalOptions = Object.keys(animalsArray);
@@ -18,6 +20,8 @@ const NewLogForm = () => {
   const [formNotes, setFormNotes] = useState('');
 
   const [open, setOpen] = useState(false);
+
+  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
 
 
   useEffect(() => {
@@ -53,6 +57,7 @@ const NewLogForm = () => {
   const submitNewLog = async () => {
     const selectedAnimal = animalsArray[formAnimal];
 
+    const token = await getAccessTokenSilently();
 
 
     const newLog = {
@@ -71,7 +76,11 @@ const NewLogForm = () => {
     console.log(`newLog`, newLog)
 
     try {
-      const uploadedLog = await axios.post('/api/upload', newLog);
+      const uploadedLog = await axios.post('/api/upload', newLog, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+      },);
       console.log(`uploadedLog`, uploadedLog)
     } catch (error) {
       console.log(error);
