@@ -1,10 +1,16 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import logsService from './services/logs';
-import NewLogForm from './components/NewLogForm';
 import Logs from './components/Logs';
 import Nav from './components/Nav';
 import { useAuth0 } from '@auth0/auth0-react';
+import { createTheme, ThemeProvider } from '@mui/material';
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 
 const App = () => {
@@ -15,18 +21,18 @@ const App = () => {
 
   useEffect(() => {
     isAuthenticated &&
-    (async () => {
-      const token = await getAccessTokenSilently();
-      setLogs(await logsService.getAllLogs(token));
-    })()
-  }, [isAuthenticated]);
+      (async () => {
+        const token = await getAccessTokenSilently();
+        setLogs(await logsService.getAllLogs(token));
+      })()
+  }, [isAuthenticated, getAccessTokenSilently]);
 
   return (
     <div>
-      <Nav />
-      <NewLogForm />
-      <Logs logs={logs} />
-
+      <ThemeProvider theme={darkTheme}>
+        <Nav />
+        <Logs logs={logs} setLogs={setLogs} />
+      </ThemeProvider>
     </div>
   );
 }
