@@ -42,7 +42,8 @@ const logSchema = new mongoose.Schema({
   },
   images: [{ 
     type: String
-  }]
-});
+  }],
+},
+{timestamps: true});
 
 export default mongoose.model('Log', logSchema);
