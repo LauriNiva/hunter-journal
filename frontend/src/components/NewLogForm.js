@@ -1,4 +1,4 @@
-import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, InputAdornment, InputLabel, MenuItem, Select, TextField } from '@mui/material'
+import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Input, InputAdornment, InputLabel, MenuItem, Select, TextField } from '@mui/material'
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -124,16 +124,20 @@ const NewLogForm = ({ setLogs }) => {
       </Button>
 
       <Dialog open={open} onClose={handleCloseDialog}>
-        <DialogTitle id="form-dialog-title">Lisää tuote</DialogTitle>
+        <DialogTitle id="form-dialog-title">New log</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Dialog Content
+            Add the image and the data
           </DialogContentText>
 
           {previewSource ?
-            <img src={previewSource} alt="chosen" style={{ height: '150px' }} />
-            : <input type='file' name='image'
-              accept=".jpg,.jpeg,.png" onChange={handleFileInputChange} />
+            <img src={previewSource} alt="chosen" style={{ height: "100px", width: "150px" }} />
+            :
+            <label htmlFor="image-upload-button">
+              <Input sx={{ display: "none" }} type='file' id="image-upload-button" name='image'
+                accept=".jpg,.jpeg,.png" onChange={handleFileInputChange} />
+              <Button sx={{ height: "100px", width: "150px" }} variant="outlined" component="span">Image</Button>
+            </label>
           }
           <form id="newLogForm" onSubmit={handleSubmitDialog}>
             <Autocomplete
