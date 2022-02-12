@@ -6,7 +6,7 @@ import animalsArray from '../animals.js';
 
 import { useAuth0 } from '@auth0/auth0-react';
 
-const NewLogForm = () => {
+const NewLogForm = ({ setLogs }) => {
 
   const animalOptions = Object.keys(animalsArray);
   const [formAnimal, setFormAnimal] = useState(animalOptions[0]);
@@ -21,7 +21,7 @@ const NewLogForm = () => {
 
   const [open, setOpen] = useState(false);
 
-  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const { getAccessTokenSilently } = useAuth0();
 
 
   useEffect(() => {
@@ -47,12 +47,6 @@ const NewLogForm = () => {
     }
   }
 
-
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    submitNewLog();
-  }
 
   const submitNewLog = async () => {
     const selectedAnimal = animalsArray[formAnimal];
@@ -80,8 +74,10 @@ const NewLogForm = () => {
         headers: {
           Authorization: `Bearer ${token}`
         },
-      },);
+      });
       console.log(`uploadedLog`, uploadedLog)
+      console.log(`uploadedLog.data`, uploadedLog.data)
+      setLogs(currentLogs => currentLogs.concat(uploadedLog.data));
     } catch (error) {
       console.log(error);
     }
@@ -110,9 +106,12 @@ const NewLogForm = () => {
     setOpen(false);
   };
 
-  const handleSubmitDialog = () => {
-    handleCloseDialog();
-    submitNewLog();
+  const handleSubmitDialog = (e) => {
+    e.preventDefault();
+    if (previewSource) {
+      handleCloseDialog();
+      submitNewLog();
+    };
   }
 
 
@@ -120,120 +119,119 @@ const NewLogForm = () => {
 
     <Box>
 
-      <Button variant="outlined" onClick={handleClickOpenDialog}>
-        Add A New Log
+      <Button variant="outlined" color="success" onClick={handleClickOpenDialog}>
+        New Log
       </Button>
 
       <Dialog open={open} onClose={handleCloseDialog}>
-      <DialogTitle id="form-dialog-title">Lisää tuote</DialogTitle>
+        <DialogTitle id="form-dialog-title">Lisää tuote</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Dialog Content
           </DialogContentText>
 
-      {previewSource ?
-        <img src={previewSource} alt="chosen" style={{ height: '150px' }} />
-        : <input type='file' name='image'
-          accept=".jpg,.jpeg,.png" onChange={handleFileInputChange} />
-      }
-      <form onSubmit={handleSubmit}>
-        <Autocomplete
-          disablePortal
-          id="animals-combobox"
-          options={animalOptions}
-          sx={{ width: 300 }}
-          disableClearable
-          value={formAnimal}
-          onChange={(e, newValue) => setFormAnimal(newValue)}
-          renderInput={(params) => <TextField {...params} label="Animal" />}
-        />
-        <FormControl sx={{ width: 150 }}>
-          <InputLabel id="animal-gender">Gender</InputLabel>
-          <Select
-            labelId="animal-gender"
-            label="Gender"
-            value={formGender}
-            onChange={(e) => setFormGender(e.target.value)}
-          >
-            <MenuItem value="Male">Male</MenuItem>
-            <MenuItem value="Female">Female</MenuItem>
-          </Select>
-        </FormControl>
-        <TextField
-          id="weight-textfield"
-          label="Weight"
-          variant="outlined"
-          required
-          InputProps={{
-            endAdornment: <InputAdornment position="end">kg</InputAdornment>
+          {previewSource ?
+            <img src={previewSource} alt="chosen" style={{ height: '150px' }} />
+            : <input type='file' name='image'
+              accept=".jpg,.jpeg,.png" onChange={handleFileInputChange} />
+          }
+          <form id="newLogForm" onSubmit={handleSubmitDialog}>
+            <Autocomplete
+              disablePortal
+              id="animals-combobox"
+              options={animalOptions}
+              sx={{ width: 300 }}
+              disableClearable
+              value={formAnimal}
+              onChange={(e, newValue) => setFormAnimal(newValue)}
+              renderInput={(params) => <TextField {...params} label="Animal" />}
+            />
+            <FormControl sx={{ width: 150 }}>
+              <InputLabel id="animal-gender">Gender</InputLabel>
+              <Select
+                labelId="animal-gender"
+                label="Gender"
+                value={formGender}
+                onChange={(e) => setFormGender(e.target.value)}
+              >
+                <MenuItem value="Male">Male</MenuItem>
+                <MenuItem value="Female">Female</MenuItem>
+              </Select>
+            </FormControl>
+            <TextField
+              id="weight-textfield"
+              label="Weight"
+              variant="outlined"
+              required
+              InputProps={{
+                endAdornment: <InputAdornment position="end">kg</InputAdornment>
 
-          }}
-          value={formWeight}
-          onChange={(e) => setFormWeight(e.target.value)}
-        />
-        <Autocomplete
-          disablePortal
-          disableClearable
-          id="furtypes-combobox"
-          options={availableFurTypes}
-          sx={{ width: 300 }}
-          value={formFurtype}
-          onChange={(e, newValue) => setFormFurtype(newValue)}
-          renderInput={(params) => <TextField {...params} label="Fur" />}
-        />
-        <TextField
-          id="distance-textfield"
-          label="Tracking distance"
-          variant="outlined"
-          required
-          InputProps={{
-            endAdornment: <InputAdornment position="end">m</InputAdornment>
+              }}
+              value={formWeight}
+              onChange={(e) => setFormWeight(e.target.value)}
+            />
+            <Autocomplete
+              disablePortal
+              disableClearable
+              id="furtypes-combobox"
+              options={availableFurTypes}
+              sx={{ width: 300 }}
+              value={formFurtype}
+              onChange={(e, newValue) => setFormFurtype(newValue)}
+              renderInput={(params) => <TextField {...params} label="Fur" />}
+            />
+            <TextField
+              id="distance-textfield"
+              label="Tracking distance"
+              variant="outlined"
+              required
+              InputProps={{
+                endAdornment: <InputAdornment position="end">m</InputAdornment>
 
-          }}
-          value={formDistance}
-          onChange={(e) => setFormDistance(e.target.value)}
-        />
-        <TextField
-          id="rating-textfield"
-          label="Trophy rating"
-          required
-          variant="outlined"
-          value={formRating}
-          onChange={(e) => setFormRating(e.target.value)}
-        />
-        <FormControl sx={{ width: 150 }}>
-          <InputLabel id="animal-gender">Badge</InputLabel>
-          <Select
-            labelId="animal-badge"
-            label="Badge"
-            value={formBadge}
-            onChange={(e) => setFormBadge(e.target.value)}
-          >
-            <MenuItem value="None">None</MenuItem>
-            <MenuItem value="Bronze">Bronze</MenuItem>
-            <MenuItem value="Silver">Silver</MenuItem>
-            <MenuItem value="Gold">Gold</MenuItem>
-            <MenuItem value="Diamond">Diamond</MenuItem>
-            <MenuItem value="Great One">Great One</MenuItem>
-          </Select>
-        </FormControl>
-        <TextField
-          id="notes-textfield"
-          label="Notes"
-          variant="outlined"
-          multiline
-          value={formNotes}
-          onChange={(e) => setFormNotes(e.target.value)}
-        />
-        <Button type="submit" variant="contained">Add</Button>
+              }}
+              value={formDistance}
+              onChange={(e) => setFormDistance(e.target.value)}
+            />
+            <TextField
+              id="rating-textfield"
+              label="Trophy rating"
+              required
+              variant="outlined"
+              value={formRating}
+              onChange={(e) => setFormRating(e.target.value)}
+            />
+            <FormControl sx={{ width: 150 }}>
+              <InputLabel id="animal-gender">Badge</InputLabel>
+              <Select
+                labelId="animal-badge"
+                label="Badge"
+                value={formBadge}
+                onChange={(e) => setFormBadge(e.target.value)}
+              >
+                <MenuItem value="None">None</MenuItem>
+                <MenuItem value="Bronze">Bronze</MenuItem>
+                <MenuItem value="Silver">Silver</MenuItem>
+                <MenuItem value="Gold">Gold</MenuItem>
+                <MenuItem value="Diamond">Diamond</MenuItem>
+                <MenuItem value="Great One">Great One</MenuItem>
+              </Select>
+            </FormControl>
+            <TextField
+              id="notes-textfield"
+              label="Notes"
+              variant="outlined"
+              multiline
+              value={formNotes}
+              onChange={(e) => setFormNotes(e.target.value)}
+            />
 
-      </form>
-      </DialogContent>
-      <DialogActions>
+          </form>
+        </DialogContent>
+        <DialogActions>
           <Button onClick={handleCloseDialog} color="secondary">
             Cancel
           </Button>
-          <Button onClick={handleSubmitDialog} color="primary">
+          <Button type="submit" form="newLogForm" color="primary">
             Add
           </Button>
         </DialogActions>
