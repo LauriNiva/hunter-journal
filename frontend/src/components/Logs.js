@@ -31,8 +31,7 @@ function Logs({ logs, setLogs }) {
     }else if(selectedSortForLogs === 'Lowest Rating'){
       sortedLogs = [...logs].sort((a,b) => b.rating - a.rating);
     }
-    console.log('logs', logs)
-    console.log('sortedLogs', sortedLogs)
+    
 
 
     setLogsToDisplay(sortedLogs)
@@ -44,14 +43,17 @@ function Logs({ logs, setLogs }) {
   },[logs, selectedSortForLogs]);
 
 
-
+const isSelectedSort = (sort) => {
+  if(sort===selectedSortForLogs) return "secondary"
+  return "primary";
+ }
 
   return (
 
     isAuthenticated
       ? <div>
         {sortsForLogs.map(sort =>
-          <Button key={sort} id={`button${sort.split(' ').join('')}`} onClick={() => setSelectedSortForLogs(sort)}>
+          <Button key={sort} color={isSelectedSort(sort)} onClick={() => setSelectedSortForLogs(sort)}>
             {sort}
           </Button>
         )}
