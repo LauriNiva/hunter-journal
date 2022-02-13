@@ -4,7 +4,7 @@ import logsService from './services/logs';
 import Logs from './components/Logs';
 import Nav from './components/Nav';
 import { useAuth0 } from '@auth0/auth0-react';
-import { createTheme, ThemeProvider } from '@mui/material';
+import { createTheme, CssBaseline, Paper, ThemeProvider } from '@mui/material';
 
 const darkTheme = createTheme({
   palette: {
@@ -29,9 +29,12 @@ const App = () => {
 
   return (
     <div>
+      <CssBaseline />
       <ThemeProvider theme={darkTheme}>
         <Nav />
-        <Logs logs={logs} setLogs={setLogs} />
+        <Paper className="container">
+          <Logs logs={logs} setLogs={setLogs} />
+        </Paper>
       </ThemeProvider>
     </div>
   );
