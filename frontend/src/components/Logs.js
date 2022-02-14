@@ -6,7 +6,8 @@ import React, { useEffect, useState } from 'react';
 import SingleLog from './SingleLog';
 import NewLogForm from './NewLogForm.js';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Button, Typography } from '@mui/material';
+import { Button, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
+import SortIcon from '@mui/icons-material/Sort';
 
 
 
@@ -43,20 +44,21 @@ function Logs({ logs, setLogs }) {
   },[logs, selectedSortForLogs]);
 
 
-const isSelectedSort = (sort) => {
-  if(sort===selectedSortForLogs) return "secondary"
-  return "primary";
- }
-
   return (
 
     isAuthenticated
       ? <div>
-        {sortsForLogs.map(sort =>
-          <Button key={sort} color={isSelectedSort(sort)} onClick={() => setSelectedSortForLogs(sort)}>
-            {sort}
-          </Button>
-        )}
+        <FormControl>
+          <InputLabel id="sort-dropdown-label"><SortIcon /></InputLabel>
+          <Select labelId="sort-dropdown-label" id="sort-dropdown" label="Sort"
+          value={selectedSortForLogs} onChange={(e) => setSelectedSortForLogs(e.target.value)} >
+            {sortsForLogs.map(sort => 
+            <MenuItem key={sort} value={sort}>{sort}</MenuItem>)}
+
+          </Select>
+        </FormControl>
+
+      
         <NewLogForm setLogs={setLogs} />
 
         {
