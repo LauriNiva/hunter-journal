@@ -11,3 +11,7 @@ body {
   width: 80%;
   opacity: 0.9;
 }
+
+#logs-list-container :last-child {
+  margin-bottom: 0;
+}
