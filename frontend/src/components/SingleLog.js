@@ -1,10 +1,17 @@
 // Yksittäisen login komponentti etusivulle
 // Logi saadaan Logs komponentilta
 
-import { Button, Card, Dialog, Typography } from '@mui/material';
+import { Card, Dialog, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import FemaleIcon from '@mui/icons-material/Female';
 import MaleIcon from '@mui/icons-material/Male';
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ScaleIcon from '@mui/icons-material/Scale';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import PetsIcon from '@mui/icons-material/Pets';
+import ArticleIcon from '@mui/icons-material/Article';
+import CategoryIcon from '@mui/icons-material/Category';
+
 
 function SingleLog({ log }) {
 
@@ -33,38 +40,43 @@ function SingleLog({ log }) {
   const logBadgeColor = badgeColors[log.badge];
 
   const genderIcon = () => {
-    if(log.gender==="Male") {
-      return <MaleIcon/>;
-    }else{
-      return <FemaleIcon/>;
+    if (log.gender === "Male") {
+      return <MaleIcon />;
+    } else {
+      return <FemaleIcon />;
     }
   };
 
 
 
   return (
-    <Card sx={{ margin: 1, padding: 2 }} elevation={6}>
-      <Typography sx={{ display: 'inline', mr: 2 }} variant="h5">
-        {log.animal}
-      </Typography>
-      <Typography sx={{ color: logBadgeColor, display: 'inline' }} variant="h5">
-        {log.rating}
-      </Typography>
+    <>
+      <Card sx={{ margin: 1, padding: 2, display: 'grid', gridTemplateColumns: '3fr 2fr 30px' }} elevation={6}
+        onClick={handleOpen}>
+        <Typography sx={{ display: 'inline', mr: 2 }} variant="h5">
+          {log.animal}
+        </Typography>
+        <Typography sx={{ color: logBadgeColor, display: 'inline' }} variant="h5">
+          {log.rating}
+        </Typography>
+        <ThumbUpOffAltIcon />
+      </Card>
 
-      <Button onClick={handleOpen}>Open</Button>
       <Dialog onClose={handleClose} open={singleLogDialogOpen}>
-        <Typography variant="h4">{log.animal}</Typography>
-        {genderIcon()}
-        <img src={imageUrl} alt=""/>
-        <Typography>Rating: {log.rating}</Typography>
-        <Typography>Weight: {log.weight}</Typography>
-        <Typography>Fur: {log.furtype}</Typography>
-        <Typography>Distance: {log.distance}</Typography>
-        <Typography>Notes: {log.notes}</Typography>
-        
+        <Card sx={{ padding: 3 }} >
+          <Typography variant="h4">{log.animal}</Typography>
+          {genderIcon()}
+          <img src={imageUrl} alt="" width="100%" />
+          <Typography> <EmojiEventsIcon /> {log.rating}</Typography>
+          <Typography> <ScaleIcon /> {log.weight}kg</Typography>
+          <Typography> <CategoryIcon /> {log.furtype}</Typography>
+          <Typography> <PetsIcon /> {log.distance}m</Typography>
+          <Typography> <ArticleIcon /> {log.notes}</Typography>
+
+        </Card>
 
       </Dialog>
-    </Card>
+    </>
   );
 }
 
