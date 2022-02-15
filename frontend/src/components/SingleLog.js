@@ -1,13 +1,25 @@
 // Yksittäisen login komponentti etusivulle
 // Logi saadaan Logs komponentilta
 
-import { Card, Typography } from '@mui/material';
-import React from 'react';
+import { Button, Card, Dialog, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import FemaleIcon from '@mui/icons-material/Female';
+import MaleIcon from '@mui/icons-material/Male';
 
 function SingleLog({ log }) {
 
+  const [singleLogDialogOpen, setSingleLogDialogOpen] = useState(false);
 
-  //const imageUrl = `https://res.cloudinary.com/devniva/image/upload/v1636547210/${log.images[0]}`;
+  const handleOpen = () => {
+    setSingleLogDialogOpen(true);
+  };
+
+  const handleClose = () => {
+    setSingleLogDialogOpen(false);
+  };
+
+
+  const imageUrl = `https://res.cloudinary.com/devniva/image/upload/v1636547210/${log.images[0]}`;
 
   const badgeColors = {
     'None': '#000000',
@@ -20,6 +32,14 @@ function SingleLog({ log }) {
 
   const logBadgeColor = badgeColors[log.badge];
 
+  const genderIcon = () => {
+    if(log.gender==="Male") {
+      return <MaleIcon/>;
+    }else{
+      return <FemaleIcon/>;
+    }
+  };
+
 
 
   return (
@@ -30,6 +50,20 @@ function SingleLog({ log }) {
       <Typography sx={{ color: logBadgeColor, display: 'inline' }} variant="h5">
         {log.rating}
       </Typography>
+
+      <Button onClick={handleOpen}>Open</Button>
+      <Dialog onClose={handleClose} open={singleLogDialogOpen}>
+        <Typography variant="h4">{log.animal}</Typography>
+        {genderIcon()}
+        <img src={imageUrl} alt=""/>
+        <Typography>Rating: {log.rating}</Typography>
+        <Typography>Weight: {log.weight}</Typography>
+        <Typography>Fur: {log.furtype}</Typography>
+        <Typography>Distance: {log.distance}</Typography>
+        <Typography>Notes: {log.notes}</Typography>
+        
+
+      </Dialog>
     </Card>
   );
 }
