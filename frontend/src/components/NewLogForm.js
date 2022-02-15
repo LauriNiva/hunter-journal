@@ -3,6 +3,7 @@ import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import animalsArray from '../animals.js';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -136,7 +137,9 @@ const NewLogForm = ({ setLogs }) => {
             <label htmlFor="image-upload-button">
               <Input sx={{ display: "none" }} type='file' id="image-upload-button" name='image'
                 accept=".jpg,.jpeg,.png" onChange={handleFileInputChange} />
-              <Button sx={{ height: "100px", width: "150px" }} variant="outlined" component="span">Image</Button>
+              <Button sx={{ height: "100px", width: "150px" }} variant="outlined" component="span">
+                <AddPhotoAlternateIcon />
+              </Button>
             </label>
           }
           <form id="newLogForm" onSubmit={handleSubmitDialog}>
