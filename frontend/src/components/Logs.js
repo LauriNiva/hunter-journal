@@ -48,9 +48,9 @@ function Logs({ logs, setLogs }) {
 
     isAuthenticated
       ? <div>
-        <Container id="logs-container" sx={{ display: "grid", gridTemplateColumns: "1fr 4fr"}}>
+        <Container disableGutters id="logs-container" sx={{ display: "grid", gridTemplateColumns: "1fr 4fr" }}>
 
-          <Paper  elevation={6}>
+          <Paper elevation={6}>
             <List>
               <ListItem>
                 <ListItemText primary="Badge" />
@@ -70,20 +70,20 @@ function Logs({ logs, setLogs }) {
             </List>
 
           </Paper>
-          <Container >
-        <Toolbar>
+          <Container id="logs-list-container" disableGutters >
+            <Toolbar>
 
-          <FormControl>
-            <InputLabel id="sort-dropdown-label"><SortIcon /></InputLabel>
-            <Select labelId="sort-dropdown-label" id="sort-dropdown" label="Sort"
-              value={selectedSortForLogs} onChange={(e) => setSelectedSortForLogs(e.target.value)} >
-              {sortsForLogs.map(sort =>
-                <MenuItem key={sort} value={sort}>{sort}</MenuItem>)}
-            </Select>
-          </FormControl>
+              <FormControl>
+                <InputLabel id="sort-dropdown-label"><SortIcon /></InputLabel>
+                <Select labelId="sort-dropdown-label" id="sort-dropdown" label="Sort"
+                  value={selectedSortForLogs} onChange={(e) => setSelectedSortForLogs(e.target.value)} >
+                  {sortsForLogs.map(sort =>
+                    <MenuItem key={sort} value={sort}>{sort}</MenuItem>)}
+                </Select>
+              </FormControl>
 
-          <NewLogForm setLogs={setLogs} />
-        </Toolbar>
+              <NewLogForm setLogs={setLogs} />
+            </Toolbar>
             {
               logsToDisplay.map(log => (
                 <SingleLog key={log._id} log={log} />
