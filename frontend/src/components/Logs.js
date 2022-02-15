@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import SingleLog from './SingleLog';
 import NewLogForm from './NewLogForm.js';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Button, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import SortIcon from '@mui/icons-material/Sort';
 
 
@@ -24,13 +24,13 @@ function Logs({ logs, setLogs }) {
     let sortedLogs = logs;
 
     if(selectedSortForLogs === 'Newest First') {
-      sortedLogs = [...logs].sort((a,b) => Date.parse(a.createdAt) - Date.parse(b.createdAt));
-    }else if(selectedSortForLogs === 'Oldest First'){
       sortedLogs = [...logs].sort((a,b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
+    }else if(selectedSortForLogs === 'Oldest First'){
+      sortedLogs = [...logs].sort((a,b) => Date.parse(a.createdAt) - Date.parse(b.createdAt));
     }else if(selectedSortForLogs === 'Highest Rating'){
-      sortedLogs = [...logs].sort((a,b) => a.rating - b.rating);
-    }else if(selectedSortForLogs === 'Lowest Rating'){
       sortedLogs = [...logs].sort((a,b) => b.rating - a.rating);
+    }else if(selectedSortForLogs === 'Lowest Rating'){
+      sortedLogs = [...logs].sort((a,b) => a.rating - b.rating);
     }
     
 
@@ -54,7 +54,6 @@ function Logs({ logs, setLogs }) {
           value={selectedSortForLogs} onChange={(e) => setSelectedSortForLogs(e.target.value)} >
             {sortsForLogs.map(sort => 
             <MenuItem key={sort} value={sort}>{sort}</MenuItem>)}
-
           </Select>
         </FormControl>
 
