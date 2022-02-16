@@ -11,6 +11,7 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import PetsIcon from '@mui/icons-material/Pets';
 import ArticleIcon from '@mui/icons-material/Article';
 import CategoryIcon from '@mui/icons-material/Category';
+import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 
 
 function SingleLog({ log }) {
@@ -41,9 +42,9 @@ function SingleLog({ log }) {
 
   const genderIcon = () => {
     if (log.gender === "Male") {
-      return <MaleIcon />;
+      return <MaleIcon fontSize="large" />;
     } else {
-      return <FemaleIcon />;
+      return <FemaleIcon fontSize="large" />;
     }
   };
 
@@ -51,45 +52,58 @@ function SingleLog({ log }) {
 
   return (
     <>
-      <Card sx={{ ml: 1, mt:1, mb: 1, p: 2, display: 'grid', gridTemplateColumns: '3fr 2fr 30px' }} elevation={6}
+      {/* Yksittäinen logi listalla */}
+      <Card sx={{ m: 1, mr: 0, p: 2, display: 'grid', gridTemplateColumns: '40px 3fr 2fr 30px' }} elevation={6}
       >
-        <Typography onClick={handleOpen} sx={{ display: 'inline', mr: 2 }} variant="h5">
+        <Tooltip title={log.badge}>
+          <MilitaryTechIcon fontSize="large" sx={{ color: logBadgeColor }} />
+        </Tooltip>
+        <Typography onClick={handleOpen} variant="h5">
           {log.animal}
         </Typography>
-        <Typography sx={{ color: logBadgeColor, display: 'inline' }} variant="h5">
+
+        <Typography variant="h6">
           {log.rating}
         </Typography>
         <ThumbUpOffAltIcon onClick={(e) => console.log(e)} />
       </Card>
 
+      {/* Yksittäisen login näkymä avatessa */}
       <Dialog onClose={handleClose} open={singleLogDialogOpen}>
         <Card sx={{ padding: 3 }} >
-          <Typography variant="h4">{log.animal}</Typography>
-          {genderIcon()}
+          <Container disableGutters sx={{ display: 'grid', gridTemplateColumns: '1fr 35px 30px' }}>
+            <Typography variant="h4">{log.animal}</Typography>
+            <Tooltip title={log.gender}>
+              {genderIcon()}
+            </Tooltip>
+            <Tooltip title={log.badge}>
+              <MilitaryTechIcon fontSize="large" sx={{ color: logBadgeColor }} />
+            </Tooltip>
+          </Container>
           <img src={imageUrl} alt="" width="100%" />
-          <Container disableGutters sx={{ padding: 0}}>
+          <Container disableGutters sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr' }}>
             <Tooltip title="Trophy rating">
-              <Typography>
+              <Typography variant="h6">
                 <EmojiEventsIcon /> {log.rating}
               </Typography>
             </Tooltip>
             <Tooltip title="Weight">
-              <Typography>
+              <Typography variant="h6">
                 <ScaleIcon /> {log.weight}kg
               </Typography>
             </Tooltip>
             <Tooltip title="Fur type">
-              <Typography>
+              <Typography variant="h6">
                 <CategoryIcon /> {log.furtype}
               </Typography>
             </Tooltip>
             <Tooltip title="Distance tracked">
-              <Typography>
+              <Typography variant="h6">
                 <PetsIcon /> {log.distance}m
               </Typography>
             </Tooltip>
             <Tooltip title="Notes">
-              <Typography>
+              <Typography sx={{ gridColumn: 'span 4' }}>
                 <ArticleIcon /> {log.notes}
               </Typography>
             </Tooltip>
