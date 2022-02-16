@@ -6,14 +6,17 @@ import React, { useEffect, useState } from 'react';
 import SingleLog from './SingleLog';
 import NewLogForm from './NewLogForm.js';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Card, Container, FormControl, InputLabel, List, ListItem, ListItemText, MenuItem, Paper, Select, Toolbar, Typography } from '@mui/material';
+import { Container, FormControl, InputLabel,MenuItem, Select, Toolbar, Typography } from '@mui/material';
 import SortIcon from '@mui/icons-material/Sort';
+import LogFilteringList from './LogFilteringList';
 
 
 
 function Logs({ logs, setLogs }) {
 
   const { isAuthenticated } = useAuth0();
+
+  const [filteredLogs, setFilteredLogs] = useState(logs);
 
   const [logsToDisplay, setLogsToDisplay] = useState([]);
   const [selectedSortForLogs, setSelectedSortForLogs] = useState('Newest First');
@@ -50,26 +53,8 @@ function Logs({ logs, setLogs }) {
       ? <div>
         <Container disableGutters id="logs-container" sx={{ display: "grid", gridTemplateColumns: "1fr 4fr" }}>
 
-          <Paper elevation={6}>
-            <List>
-              <ListItem>
-                <ListItemText primary="Badge" />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Rating" />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Animal" />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Distance" />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Fur" />
-              </ListItem>
-            </List>
+          <LogFilteringList logs={logs}  setFilteredLogs={setFilteredLogs} />
 
-          </Paper>
           <Container id="logs-list-container" disableGutters >
             <Toolbar>
 
