@@ -19,32 +19,32 @@ function Logs({ logs, setLogs }) {
   const [filteredLogs, setFilteredLogs] = useState(logs);
 
   const [logsToDisplay, setLogsToDisplay] = useState([]);
+
   const [selectedSortForLogs, setSelectedSortForLogs] = useState('Newest First');
 
   const sortsForLogs = ['Newest First', 'Oldest First', 'Highest Rating', 'Lowest Rating'];
 
   const sortLogs = () => {
-    let sortedLogs = logs;
+    console.log("Sorting the logs...")
+    console.log('logs to sort: ', filteredLogs)
+    let sortedLogs = filteredLogs;
 
     if (selectedSortForLogs === 'Newest First') {
-      sortedLogs = [...logs].sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
+      sortedLogs = [...filteredLogs].sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
     } else if (selectedSortForLogs === 'Oldest First') {
-      sortedLogs = [...logs].sort((a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt));
+      sortedLogs = [...filteredLogs].sort((a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt));
     } else if (selectedSortForLogs === 'Highest Rating') {
-      sortedLogs = [...logs].sort((a, b) => b.rating - a.rating);
+      sortedLogs = [...filteredLogs].sort((a, b) => b.rating - a.rating);
     } else if (selectedSortForLogs === 'Lowest Rating') {
-      sortedLogs = [...logs].sort((a, b) => a.rating - b.rating);
+      sortedLogs = [...filteredLogs].sort((a, b) => a.rating - b.rating);
     }
-
-
 
     setLogsToDisplay(sortedLogs)
   };
 
   useEffect(() => {
-    console.log("useEffect for sort", selectedSortForLogs)
     sortLogs();
-  }, [logs, selectedSortForLogs]);
+  }, [logs, filteredLogs, selectedSortForLogs]);
 
 
   return (
