@@ -21,18 +21,30 @@ function LogFilteringList({ logs, setFilteredLogs }) {
   const [distanceFilter, setDistanceFilter] = useState([]);
   const [furFilter, setFurFilter] = useState([]);
 
-  let availableBadgesForFiltering = {};
-  let availableAnimalsForFiltering = {};
-  let availableDistancesForFiltering = {};
-  let availableFursForFiltering = {};
+  const [availableBadgesForFiltering, setAvailableBadgesForFiltering] = useState({});
+  const [availableAnimalsForFiltering, setAvailableAnimalsForFiltering] = useState({});
+  const [availableDistancesForFiltering, setAvailableDistancesForFiltering] = useState({});
+  const [availableFursForFiltering, setAvailableFursForFiltering] = useState({});
 
+  useEffect(() => {
+    let badges = {};
+    let animals = {};
+    let distances = {};
+    let furs = {};
 
-  logs.forEach(log => {
-    availableBadgesForFiltering[log.badge] = (availableBadgesForFiltering[log.badge] || 0) + 1;
-    availableAnimalsForFiltering[log.animal] = (availableAnimalsForFiltering[log.badge] || 0) + 1;
-    availableDistancesForFiltering[log.distance] = true;
-    availableFursForFiltering[log.furtype] = (availableFursForFiltering[log.badge] || 0) + 1;
-  });
+    logs.forEach(log => {
+      badges[log.badge] = (badges[log.badge] || 0) + 1;
+      animals[log.animal] = (animals[log.animal] || 0) + 1;
+      distances[log.distance] = true;
+      furs[log.furtype] = (furs[log.furtype] || 0) + 1;
+    });
+
+    setAvailableBadgesForFiltering(badges);
+    setAvailableAnimalsForFiltering(animals);
+    setAvailableDistancesForFiltering(distances);
+    setAvailableFursForFiltering(furs);
+
+  }, [logs])
 
   const toggleFilter = (filter, setter, option) => {
     if (filter.includes(option)) {
@@ -54,22 +66,23 @@ function LogFilteringList({ logs, setFilteredLogs }) {
     if (badgeFilter.length || animalFilter.length || furFilter.length) {
       console.log("---Filter---")
 
-      badgeFilter.length && 
-      (logsBeingFiltered = logs.filter(item => badgeFilter.includes(item.badge)));
-      animalFilter.length && 
-      (logsBeingFiltered = logsBeingFiltered.filter(item => animalFilter.includes(item.animal)));
-      furFilter.length && 
-      (logsBeingFiltered = logsBeingFiltered.filter(item => furFilter.includes(item.furtype)));
+      badgeFilter.length &&
+        (logsBeingFiltered = logs.filter(item => badgeFilter.includes(item.badge)));
+      animalFilter.length &&
+        (logsBeingFiltered = logsBeingFiltered.filter(item => animalFilter.includes(item.animal)));
+      furFilter.length &&
+        (logsBeingFiltered = logsBeingFiltered.filter(item => furFilter.includes(item.furtype)));
 
 
 
-    } 
+    }
 
     setFilteredLogs(logsBeingFiltered);
-  }, [badgeFilter, animalFilter, furFilter,  logs])
+  }, [badgeFilter, animalFilter, furFilter, logs])
 
 
   const Badgefilter = () => {
+    console.log("*** availableBadgesForFiltering:", availableBadgesForFiltering)
     return (
       <Collapse in={badgeOpen}>
         <List>
@@ -87,6 +100,7 @@ function LogFilteringList({ logs, setFilteredLogs }) {
 
 
   const Animalfilter = () => {
+    console.log('availableAnimalsForFiltering', availableAnimalsForFiltering)
     return (
       <Collapse in={animalOpen}>
         <List>
