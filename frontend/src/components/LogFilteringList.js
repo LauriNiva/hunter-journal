@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Checkbox, Collapse, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper } from '@mui/material';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import PetsIcon from '@mui/icons-material/Pets';
 import CategoryIcon from '@mui/icons-material/Category';
 import PestControlRodentIcon from '@mui/icons-material/PestControlRodent';
@@ -13,41 +12,72 @@ function LogFilteringList({ logs, setFilteredLogs }) {
   console.log('logs to filter', logs)
 
   const [badgeOpen, setBadgeOpen] = useState(false);
-  const [ratingOpen, setRatingOpen] = useState(false);
   const [animalOpen, setAnimalOpen] = useState(false);
   const [distanceOpen, setDistanceOpen] = useState(false);
   const [furOpen, setFurOpen] = useState(false);
 
-  let badgeForFiltering = {};
-  let animalForFiltering = {};
-  let distanceForFiltering = {};
-  let furForFiltering = {};
+  const [badgeFilter, setBadgeFilter] = useState([]);
+  const [animalFilter, setAnimalFilter] = useState([]);
+  const [distanceFilter, setDistanceFilter] = useState([]);
+  const [furFilter, setFurFilter] = useState([]);
 
-  badgeForFiltering = {};
-  animalForFiltering = {};
-  distanceForFiltering = {};
-  furForFiltering = {};
-
+  let availableBadgesForFiltering = {};
+  let availableAnimalsForFiltering = {};
+  let availableDistancesForFiltering = {};
+  let availableFursForFiltering = {};
 
 
   logs.forEach(log => {
-    badgeForFiltering[log.badge] = (badgeForFiltering[log.badge] || 0 ) + 1 ;
-    animalForFiltering[log.animal] = true;
-    distanceForFiltering[log.distance] = true;
-    furForFiltering[log.furtype] = true;
+    availableBadgesForFiltering[log.badge] = (availableBadgesForFiltering[log.badge] || 0) + 1;
+    availableAnimalsForFiltering[log.animal] = (availableAnimalsForFiltering[log.badge] || 0) + 1;
+    availableDistancesForFiltering[log.distance] = true;
+    availableFursForFiltering[log.furtype] = (availableFursForFiltering[log.badge] || 0) + 1;
   });
 
+  const toggleFilter = (filter, setter, option) => {
+    if (filter.includes(option)) {
+      setter(filter.filter(item => item !== option))
+    } else {
+      setter([...filter, option])
+    }
+  };
 
-  console.log('badgeForFiltering', badgeForFiltering)
+
+  useEffect(() => {
+    console.log("Filtering the logs...");
+
+    console.log('badgeFilter inside the --useEffect: ', badgeFilter)
+    console.log('logs inside the --useEffect: ', logs)
+
+    let logsBeingFiltered = logs;
+
+    if (badgeFilter.length || animalFilter.length || furFilter.length) {
+      console.log("---Filter---")
+
+      badgeFilter.length && 
+      (logsBeingFiltered = logs.filter(item => badgeFilter.includes(item.badge)));
+      animalFilter.length && 
+      (logsBeingFiltered = logsBeingFiltered.filter(item => animalFilter.includes(item.animal)));
+      furFilter.length && 
+      (logsBeingFiltered = logsBeingFiltered.filter(item => furFilter.includes(item.furtype)));
+
+
+
+    } 
+
+    setFilteredLogs(logsBeingFiltered);
+  }, [badgeFilter, animalFilter, furFilter,  logs])
+
 
   const Badgefilter = () => {
     return (
       <Collapse in={badgeOpen}>
         <List>
-          {Object.keys(badgeForFiltering).map((option) =>
+          {Object.keys(availableBadgesForFiltering).map((option) =>
             <ListItemButton key={option} dense>
-              <Checkbox onClick={() => console.log()} />
-              <ListItemText primary={option} />
+              <Checkbox checked={badgeFilter.includes(option)}
+                onClick={() => toggleFilter(badgeFilter, setBadgeFilter, option)} />
+              <ListItemText primary={`${option} (${availableBadgesForFiltering[option]})`} />
             </ListItemButton>
           )}
         </List>
@@ -60,10 +90,11 @@ function LogFilteringList({ logs, setFilteredLogs }) {
     return (
       <Collapse in={animalOpen}>
         <List>
-          {Object.keys(animalForFiltering).map((option) =>
+          {Object.keys(availableAnimalsForFiltering).map((option) =>
             <ListItemButton key={option} dense>
-              <Checkbox onClick={() => console.log()} />
-              <ListItemText primary={option} />
+              <Checkbox checked={animalFilter.includes(option)}
+                onClick={() => toggleFilter(animalFilter, setAnimalFilter, option)} />
+              <ListItemText primary={`${option} (${availableAnimalsForFiltering[option]})`} />
             </ListItemButton>
           )}
         </List>
@@ -74,30 +105,31 @@ function LogFilteringList({ logs, setFilteredLogs }) {
   const Distancefilter = () => {
     return (
       <Collapse in={distanceOpen}>
-      
-      <List>
-        {Object.keys(distanceForFiltering).map((option) =>
-          <ListItemButton key={option} dense>
-            <Checkbox onClick={() => console.log()} />
-            <ListItemText primary={option} />
-          </ListItemButton>
-        )}
-      </List>
-    </Collapse>
+
+        <List>
+          {Object.keys(availableDistancesForFiltering).map((option) =>
+            <ListItemButton key={option} dense>
+              <Checkbox onClick={() => console.log()} />
+              <ListItemText primary={option} />
+            </ListItemButton>
+          )}
+        </List>
+      </Collapse>
     )
   };
   const Furfilter = () => {
     return (
       <Collapse in={furOpen}>
 
-      <List>
-        {Object.keys(furForFiltering).map((option) =>
-          <ListItemButton key={option} dense>
-            <Checkbox onClick={() => console.log()} />
-            <ListItemText primary={option} />
-          </ListItemButton>
-        )}
-      </List>
+        <List>
+          {Object.keys(availableFursForFiltering).map((option) =>
+            <ListItemButton key={option} dense>
+              <Checkbox checked={furFilter.includes(option)}
+                onClick={() => toggleFilter(furFilter, setFurFilter, option)} />
+              <ListItemText primary={`${option} (${availableFursForFiltering[option]})`} />
+            </ListItemButton>
+          )}
+        </List>
       </Collapse>
     )
   };
