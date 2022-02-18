@@ -2,7 +2,7 @@ import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogConte
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import animalsArray from '../animals.js';
+import animalsArray from '../data/animals.js';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
 import { useAuth0 } from '@auth0/auth0-react';
