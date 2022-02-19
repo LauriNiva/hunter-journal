@@ -30,7 +30,7 @@ function LogFilteringList({ logs, setFilteredLogs }) {
     let badges = {};
     let animals = {};
     let furs = {};
-    let distances = { '-0': 0 , '1-49': 0, '50-499': 0, '500-999': 0, '1000-': 0 };
+    let distances = { '-0': 0, '1-49': 0, '50-499': 0, '500-999': 0, '1000-': 0 };
 
     logs.forEach(log => {
       badges[log.badge] = (badges[log.badge] || 0) + 1;
@@ -38,15 +38,15 @@ function LogFilteringList({ logs, setFilteredLogs }) {
       furs[log.furtype] = (furs[log.furtype] || 0) + 1;
 
       const distance = parseInt(log.distance);
-      if(distance >= 1000){
+      if (distance >= 1000) {
         distances['1000-']++;
-      }else if(distance >= 500 && distance <= 999){
+      } else if (distance >= 500 && distance <= 999) {
         distances['500-999']++;
-      }else if(distance >= 50 && distance <= 499){
+      } else if (distance >= 50 && distance <= 499) {
         distances['50-499']++;
-      }else if(distance >= 1 && distance <= 49){
+      } else if (distance >= 1 && distance <= 49) {
         distances['1-49']++;
-      }else{
+      } else {
         distances['-0']++;
       };
     });
@@ -77,20 +77,30 @@ function LogFilteringList({ logs, setFilteredLogs }) {
 
     let logsBeingFiltered = logs;
 
-    if (badgeFilter.length || animalFilter.length || furFilter.length || distanceFilter.length ) {
-      console.log("---Filter---")
+    if (badgeFilter.length || animalFilter.length || furFilter.length || distanceFilter.length) {
 
       badgeFilter.length &&
         (logsBeingFiltered = logs.filter(item => badgeFilter.includes(item.badge)));
+
       animalFilter.length &&
         (logsBeingFiltered = logsBeingFiltered.filter(item => animalFilter.includes(item.animal)));
+
       furFilter.length &&
-      (logsBeingFiltered = logsBeingFiltered.filter(item => furFilter.includes(item.furtype)));
+        (logsBeingFiltered = logsBeingFiltered.filter(item => furFilter.includes(item.furtype)));
+
+      const distancesMinMax = {
+        '-0': { min: 0, max: 0 },
+        '1-49': { min: 1, max: 49 },
+        '50-499': { min: 50, max: 499 },
+        '500-999': { min: 500, max: 999 },
+        '1000-': { min: 1000, max: 99999 },
+      };
+
       distanceFilter.length &&
-      (logsBeingFiltered = logsBeingFiltered.filter(item => furFilter.includes(item.furtype)));
-
-
-
+        (logsBeingFiltered = logsBeingFiltered.filter(item =>
+          distanceFilter.some(filter =>
+            item.distance >= distancesMinMax[filter].min && item.distance <= distancesMinMax[filter].max))
+        );
 
     }
 
