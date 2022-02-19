@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Checkbox, Collapse, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper } from '@mui/material';
+import { Button, Checkbox, Collapse, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper } from '@mui/material';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
@@ -27,6 +27,8 @@ function LogFilteringList({ logs, setFilteredLogs }) {
   const [availableFursForFiltering, setAvailableFursForFiltering] = useState({});
 
   useEffect(() => {
+    //Check available items for filtering
+
     let badges = {};
     let animals = {};
     let furs = {};
@@ -52,7 +54,7 @@ function LogFilteringList({ logs, setFilteredLogs }) {
     });
 
     const filteredDistances = Object.entries(distances).filter(entry => entry[1])
-    console.log('filteredDistances', filteredDistances)
+
     setAvailableBadgesForFiltering(badges);
     setAvailableAnimalsForFiltering(animals);
     setAvailableDistancesForFiltering(filteredDistances);
@@ -70,10 +72,9 @@ function LogFilteringList({ logs, setFilteredLogs }) {
 
 
   useEffect(() => {
+    //Do the actual filtering of the logs
     console.log("Filtering the logs...");
 
-    console.log('badgeFilter inside the --useEffect: ', badgeFilter)
-    console.log('logs inside the --useEffect: ', logs)
 
     let logsBeingFiltered = logs;
 
@@ -105,7 +106,14 @@ function LogFilteringList({ logs, setFilteredLogs }) {
     }
 
     setFilteredLogs(logsBeingFiltered);
-  }, [badgeFilter, animalFilter, furFilter, distanceFilter, logs])
+  }, [badgeFilter, animalFilter, furFilter, distanceFilter, logs]);
+
+  const resetFilters = () => { 
+    setAnimalFilter([]);
+    setDistanceFilter([]);
+    setBadgeFilter([]);
+    setFurFilter([]);
+   };
 
 
   const Badgefilter = () => {
@@ -178,10 +186,9 @@ function LogFilteringList({ logs, setFilteredLogs }) {
   return (
     <Paper elevation={6}>
       <List>
-        <ListSubheader sx={{ bgcolor: "inherit" }} >
-          Filter Logs
-        </ListSubheader>
-
+        <Button onClick={() => resetFilters()}>Reset</Button>
+          
+        
         <ListItemButton onClick={() => setBadgeOpen(!badgeOpen)}>
           <ListItemIcon>
             <MilitaryTechIcon />
