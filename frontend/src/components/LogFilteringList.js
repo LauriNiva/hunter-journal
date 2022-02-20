@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Checkbox, Collapse, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Paper } from '@mui/material';
+import { Button, Checkbox, Collapse, List, ListItemButton, ListItemIcon, ListItemText, Paper } from '@mui/material';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
@@ -15,16 +15,19 @@ function LogFilteringList({ logs, setFilteredLogs }) {
   const [animalOpen, setAnimalOpen] = useState(false);
   const [distanceOpen, setDistanceOpen] = useState(false);
   const [furOpen, setFurOpen] = useState(false);
+  const [weaponOpen, setWeaponOpen] = useState(false);
 
   const [badgeFilter, setBadgeFilter] = useState([]);
   const [animalFilter, setAnimalFilter] = useState([]);
   const [distanceFilter, setDistanceFilter] = useState([]);
   const [furFilter, setFurFilter] = useState([]);
+  const [weaponFilter, setWeaponFilter] = useState([]);
 
   const [availableBadgesForFiltering, setAvailableBadgesForFiltering] = useState({});
   const [availableAnimalsForFiltering, setAvailableAnimalsForFiltering] = useState({});
   const [availableDistancesForFiltering, setAvailableDistancesForFiltering] = useState([]);
   const [availableFursForFiltering, setAvailableFursForFiltering] = useState({});
+  const [availableWeaponsForFiltering, setAvailableWeaponsForFiltering] = useState({});
 
   useEffect(() => {
     //Check available items for filtering
@@ -33,11 +36,13 @@ function LogFilteringList({ logs, setFilteredLogs }) {
     let animals = {};
     let furs = {};
     let distances = { '-0': 0, '1-49': 0, '50-499': 0, '500-999': 0, '1000-': 0 };
+    let weapons = {};
 
     logs.forEach(log => {
       badges[log.badge] = (badges[log.badge] || 0) + 1;
       animals[log.animal] = (animals[log.animal] || 0) + 1;
       furs[log.furtype] = (furs[log.furtype] || 0) + 1;
+      weapons[log.weapon] = (weapons[log.weapon] || 0) + 1;
 
       const distance = parseInt(log.distance);
       if (distance >= 1000) {
@@ -59,6 +64,7 @@ function LogFilteringList({ logs, setFilteredLogs }) {
     setAvailableAnimalsForFiltering(animals);
     setAvailableDistancesForFiltering(filteredDistances);
     setAvailableFursForFiltering(furs);
+    setAvailableWeaponsForFiltering(weapons);
 
   }, [logs])
 
@@ -73,12 +79,13 @@ function LogFilteringList({ logs, setFilteredLogs }) {
 
   useEffect(() => {
     //Do the actual filtering of the logs
-    //console.log("Filtering the logs...");
+    console.log("Filtering the logs...");
 
 
     let logsBeingFiltered = logs;
 
-    if (badgeFilter.length || animalFilter.length || furFilter.length || distanceFilter.length) {
+    if (badgeFilter.length || animalFilter.length || furFilter.length ||
+       distanceFilter.length || weaponFilter.length) {
 
       badgeFilter.length &&
         (logsBeingFiltered = logs.filter(item => badgeFilter.includes(item.badge)));
@@ -88,6 +95,10 @@ function LogFilteringList({ logs, setFilteredLogs }) {
 
       furFilter.length &&
         (logsBeingFiltered = logsBeingFiltered.filter(item => furFilter.includes(item.furtype)));
+
+        console.log('weaponFilter', weaponFilter)
+      weaponFilter.length &&
+        (logsBeingFiltered = logsBeingFiltered.filter(item => weaponFilter.includes(item.weapon)))
 
       const distancesMinMax = {
         '-0': { min: 0, max: 0 },
@@ -106,14 +117,15 @@ function LogFilteringList({ logs, setFilteredLogs }) {
     }
 
     setFilteredLogs(logsBeingFiltered);
-  }, [badgeFilter, animalFilter, furFilter, distanceFilter, logs]);
+  }, [badgeFilter, animalFilter, furFilter, distanceFilter, weaponFilter, logs]);
 
-  const resetFilters = () => { 
+  const resetFilters = () => {
     setAnimalFilter([]);
     setDistanceFilter([]);
     setBadgeFilter([]);
     setFurFilter([]);
-   };
+    setWeaponFilter([]);
+  };
 
 
   const Badgefilter = () => {
@@ -182,13 +194,49 @@ function LogFilteringList({ logs, setFilteredLogs }) {
     )
   };
 
+  const Weaponfilter = () => {
+    return (
+      <Collapse in={weaponOpen}>
+
+        <List>
+          {Object.keys(availableWeaponsForFiltering).map((option) =>
+            <ListItemButton key={option} dense>
+              <Checkbox checked={weaponFilter.includes(option)}
+                onClick={() => toggleFilter(weaponFilter, setWeaponFilter, option)} />
+              <ListItemText primary={`${option} (${availableWeaponsForFiltering[option]})`} />
+            </ListItemButton>
+          )}
+        </List>
+      </Collapse>
+    )
+  };
+
+
+
+  const NewFilter = (open, availableFiltersArray, filter, setFilter) => {
+    console.log('availableFiltersArray', availableFiltersArray)
+    return (
+      <Collapse in={open}>
+        <List>
+          {availableFiltersArray.map((option) =>
+          <ListItemButton key={option} dense>
+            <Checkbox checked={filter.includes(option)}
+              onClick={() => toggleFilter(filter, setFilter, option)} />
+              <ListItemText primary={`${option}} (${availableFiltersArray[option]})`}/>
+          </ListItemButton>
+          )}
+        </List>
+      </Collapse>
+    )
+  };
+
 
   return (
     <Paper elevation={6}>
       <List>
         <Button onClick={() => resetFilters()}>Reset</Button>
-          
-        
+
+
         <ListItemButton onClick={() => setBadgeOpen(!badgeOpen)}>
           <ListItemIcon>
             <MilitaryTechIcon />
@@ -197,6 +245,8 @@ function LogFilteringList({ logs, setFilteredLogs }) {
           {badgeOpen ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
         <Badgefilter />
+        {/* <NewFilter open={badgeOpen} availableFiltersArray={availableBadgesForFiltering}
+        filter={badgeFilter} setFilter={setBadgeFilter}/> */}
 
         <ListItemButton onClick={() => setAnimalOpen(!animalOpen)}>
           <ListItemIcon>
@@ -224,8 +274,18 @@ function LogFilteringList({ logs, setFilteredLogs }) {
           {furOpen ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
         <Furfilter />
-      </List>
 
+        <ListItemButton onClick={() => setWeaponOpen(!weaponOpen)} >
+          <ListItemIcon>
+            <CategoryIcon />
+          </ListItemIcon>
+          <ListItemText primary="Weapon" />
+          {weaponOpen ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Weaponfilter />
+
+
+      </List>
     </Paper>
   )
 }
