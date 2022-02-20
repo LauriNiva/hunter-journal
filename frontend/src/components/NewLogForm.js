@@ -12,7 +12,14 @@ import { useAuth0 } from '@auth0/auth0-react';
 const NewLogForm = ({ setLogs }) => {
 
   const animalOptions = Object.keys(animalsList);
-  const weaponOptions = weaponsList.map(weapon => ({ 'label': weapon[0], 'type': weapon[1] }));
+  const weaponOptions = weaponsList.map(weapon =>
+  (
+    {
+      'label': weapon[0],
+      'type': weapon[1],
+      'group': weapon[1].toUpperCase()
+    }
+  ));
 
   const [formAnimal, setFormAnimal] = useState(animalOptions[0]);
   const [availableFurTypes, setAvailableFurTypes] = useState(animalsList[formAnimal].furtypes);
@@ -24,7 +31,8 @@ const NewLogForm = ({ setLogs }) => {
   const [formBadge, setFormBadge] = useState('None');
   const [formWeapon, setFormWeapon] = useState(weaponOptions[0]);
   const [availableAmmo, setAvailableAmmo] = useState(ammoArray[formWeapon.type]);
-  const [formAmmo, setFormAmmo] = useState(ammoArray[formWeapon.type]);
+  const [formAmmo, setFormAmmo] = useState(ammoArray[formWeapon.type][0]);
+  const [formShotDistance, setFormShotDistance] = useState('');
   const [formNotes, setFormNotes] = useState('');
 
   const [open, setOpen] = useState(false);
@@ -42,7 +50,6 @@ const NewLogForm = ({ setLogs }) => {
   }, [availableFurTypes]);
 
   useEffect(() => {
-    console.log('formWeapon', formWeapon)
     setAvailableAmmo(ammoArray[formWeapon.type]);
   }, [formWeapon]);
 
@@ -83,6 +90,10 @@ const NewLogForm = ({ setLogs }) => {
       difficulty: selectedAnimal.animalclass,
       rating: formRating,
       badge: formBadge,
+      weapon: formWeapon.label,
+      weapontype: formWeapon.type,
+      ammo: formAmmo,
+      shotdistance: formShotDistance,
       notes: formNotes,
       imagedata: previewSource,
     };
@@ -115,7 +126,10 @@ const NewLogForm = ({ setLogs }) => {
     setFormBadge('None');
     setFormNotes('');
     setPreviewSource('');
-    //weapon and ammo resets
+    setFormWeapon(weaponOptions[0]);
+    setAvailableAmmo(ammoArray[formWeapon.type]);
+    setFormAmmo(ammoArray[formWeapon.type][0]);
+    setFormShotDistance('');
   };
 
   const handleClickOpenDialog = () => {
@@ -165,7 +179,6 @@ const NewLogForm = ({ setLogs }) => {
           <form id="newLogForm" onSubmit={handleSubmitDialog}>
 
             <Autocomplete
-              disablePortal
               id="animals-combobox"
               options={animalOptions}
               sx={{ width: 300 }}
@@ -202,7 +215,6 @@ const NewLogForm = ({ setLogs }) => {
             />
 
             <Autocomplete
-              disablePortal
               disableClearable
               id="furtypes-combobox"
               options={availableFurTypes}
@@ -252,19 +264,18 @@ const NewLogForm = ({ setLogs }) => {
             </FormControl>
 
             <Autocomplete
-              disablePortal
               id="weapons-combobox"
               options={weaponOptions}
               isOptionEqualToValue={(option, value) => option.id === value.id}
+              groupBy={(option) => option.group}
               sx={{ width: 200 }}
               disableClearable
               value={formWeapon}
               onChange={(e, newValue) => setFormWeapon(newValue)}
               renderInput={(params) => <TextField {...params} label="Weapon" />}
-              />
+            />
 
             <Autocomplete
-              disablePortal
               id="ammo-combobox"
               options={availableAmmo}
               isOptionEqualToValue={(option, value) => option.id === value.id}
@@ -273,6 +284,19 @@ const NewLogForm = ({ setLogs }) => {
               value={formAmmo}
               onChange={(e, newValue) => setFormAmmo(newValue)}
               renderInput={(params) => <TextField {...params} label="Ammo" />}
+            />
+
+            <TextField
+              id="shotdistance-textfield"
+              label="Shot Distance"
+              variant="outlined"
+              required
+              InputProps={{
+                endAdornment: <InputAdornment position="end">m</InputAdornment>
+
+              }}
+              value={formShotDistance}
+              onChange={(e) => setFormShotDistance(e.target.value)}
             />
 
             <TextField
