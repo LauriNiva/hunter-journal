@@ -102,6 +102,23 @@ function SingleLog({ log }) {
                 <PetsIcon /> {log.distance}m
               </Typography>
             </Tooltip>
+
+            <Tooltip title="Weapon">
+              <Typography variant="h6">
+                <PetsIcon /> {log.weapon} ({log.weapontype})
+              </Typography>
+            </Tooltip>
+            <Tooltip title="Ammo">
+              <Typography variant="h6">
+                <PetsIcon /> {log.ammo}
+              </Typography>
+            </Tooltip>
+            <Tooltip title="Shot distance">
+              <Typography variant="h6">
+                <PetsIcon /> {log.shotdistance}m
+              </Typography>
+            </Tooltip>
+
             <Tooltip title="Notes">
               <Typography sx={{ gridColumn: 'span 4' }}>
                 <ArticleIcon /> {log.notes}
