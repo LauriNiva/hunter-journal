@@ -25,8 +25,8 @@ function Logs({ logs, setLogs }) {
   const sortsForLogs = ['Newest First', 'Oldest First', 'Highest Rating', 'Lowest Rating'];
 
   const sortLogs = () => {
-    console.log("Sorting the logs...")
-    console.log('logs to sort: ', filteredLogs)
+   // console.log("Sorting the logs...")
+   // console.log('logs to sort: ', filteredLogs)
     let sortedLogs = filteredLogs;
 
     if (selectedSortForLogs === 'Newest First') {

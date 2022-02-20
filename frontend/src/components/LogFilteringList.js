@@ -9,7 +9,7 @@ import PestControlRodentIcon from '@mui/icons-material/PestControlRodent';
 
 function LogFilteringList({ logs, setFilteredLogs }) {
 
-  console.log('logs to filter', logs)
+  //console.log('logs to filter', logs)
 
   const [badgeOpen, setBadgeOpen] = useState(false);
   const [animalOpen, setAnimalOpen] = useState(false);
@@ -73,7 +73,7 @@ function LogFilteringList({ logs, setFilteredLogs }) {
 
   useEffect(() => {
     //Do the actual filtering of the logs
-    console.log("Filtering the logs...");
+    //console.log("Filtering the logs...");
 
 
     let logsBeingFiltered = logs;
