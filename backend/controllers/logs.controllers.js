@@ -29,6 +29,10 @@ logsRouter.post('/upload', checkJwt, async (req, res) => {
       difficulty: body.difficulty,
       rating: body.rating,
       badge: body.badge,
+      weapon: body.weapon,
+      weapontype: body.weapontype,
+      ammo: body.ammo,
+      shotdistance: body.shotdistance,
       notes: body.notes,
       images: [imageid]
     });
