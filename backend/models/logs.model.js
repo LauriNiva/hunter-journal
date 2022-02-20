@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const logSchema = new mongoose.Schema({
-  user: { 
+  user: {
     type: String,
     required: true
   },
@@ -33,17 +33,33 @@ const logSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  badge: { 
+  badge: {
+    type: String,
+    required: true
+  },
+  weapon: {
+    type: String,
+    required: true
+  },
+  weapontype: {
+    type: String,
+    required: true
+  },
+  ammo: { 
+    type: String,
+    required: true
+  },
+  shotdistance: {
     type: String,
     required: true
   },
   notes: {
     type: String
   },
-  images: [{ 
+  images: [{
     type: String
   }],
 },
-{timestamps: true});
+  { timestamps: true });
 
 export default mongoose.model('Log', logSchema);
