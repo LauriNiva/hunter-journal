@@ -2,22 +2,29 @@ import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogConte
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import animalsArray from '../data/animals.js';
+import animalsList from '../data/animals.js';
+import weaponsList from '../data/weapons.js'
+import ammoArray from '../data/ammo.js'
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
 import { useAuth0 } from '@auth0/auth0-react';
 
 const NewLogForm = ({ setLogs }) => {
 
-  const animalOptions = Object.keys(animalsArray);
+  const animalOptions = Object.keys(animalsList);
+  const weaponOptions = weaponsList.map(weapon => ({ 'label': weapon[0], 'type': weapon[1] }));
+
   const [formAnimal, setFormAnimal] = useState(animalOptions[0]);
-  const [availableFurTypes, setAvailableFurTypes] = useState(animalsArray[formAnimal].furtypes);
+  const [availableFurTypes, setAvailableFurTypes] = useState(animalsList[formAnimal].furtypes);
   const [formFurtype, setFormFurtype] = useState(availableFurTypes[0])
   const [formGender, setFormGender] = useState('Male');
   const [formWeight, setFormWeight] = useState('');
   const [formDistance, setFormDistance] = useState('');
   const [formRating, setFormRating] = useState('');
   const [formBadge, setFormBadge] = useState('None');
+  const [formWeapon, setFormWeapon] = useState(weaponOptions[0]);
+  const [availableAmmo, setAvailableAmmo] = useState(ammoArray[formWeapon.type]);
+  const [formAmmo, setFormAmmo] = useState(ammoArray[formWeapon.type]);
   const [formNotes, setFormNotes] = useState('');
 
   const [open, setOpen] = useState(false);
@@ -25,13 +32,25 @@ const NewLogForm = ({ setLogs }) => {
   const { getAccessTokenSilently } = useAuth0();
 
 
+
   useEffect(() => {
-    setAvailableFurTypes(animalsArray[formAnimal].furtypes);
+    setAvailableFurTypes(animalsList[formAnimal].furtypes);
   }, [formAnimal]);
 
   useEffect(() => {
     setFormFurtype(availableFurTypes[0]);
   }, [availableFurTypes]);
+
+  useEffect(() => {
+    console.log('formWeapon', formWeapon)
+    setAvailableAmmo(ammoArray[formWeapon.type]);
+  }, [formWeapon]);
+
+
+  useEffect(() => {
+    setFormAmmo(availableAmmo[0]);
+  }, [availableAmmo]);
+
 
   const [previewSource, setPreviewSource] = useState('');
 
@@ -50,7 +69,7 @@ const NewLogForm = ({ setLogs }) => {
 
 
   const submitNewLog = async () => {
-    const selectedAnimal = animalsArray[formAnimal];
+    const selectedAnimal = animalsList[formAnimal];
 
     const token = await getAccessTokenSilently();
 
@@ -87,7 +106,7 @@ const NewLogForm = ({ setLogs }) => {
 
   const clearForm = () => {
     setFormAnimal(animalOptions[0]);
-    setAvailableFurTypes(animalsArray[formAnimal].furtypes);
+    setAvailableFurTypes(animalsList[formAnimal].furtypes);
     setFormFurtype(availableFurTypes[0])
     setFormGender('Male');
     setFormWeight('');
@@ -96,6 +115,7 @@ const NewLogForm = ({ setLogs }) => {
     setFormBadge('None');
     setFormNotes('');
     setPreviewSource('');
+    //weapon and ammo resets
   };
 
   const handleClickOpenDialog = () => {
@@ -113,7 +133,7 @@ const NewLogForm = ({ setLogs }) => {
       handleCloseDialog();
       submitNewLog();
     };
-  }
+  };
 
 
   return (
@@ -143,6 +163,7 @@ const NewLogForm = ({ setLogs }) => {
             </label>
           }
           <form id="newLogForm" onSubmit={handleSubmitDialog}>
+
             <Autocomplete
               disablePortal
               id="animals-combobox"
@@ -153,6 +174,7 @@ const NewLogForm = ({ setLogs }) => {
               onChange={(e, newValue) => setFormAnimal(newValue)}
               renderInput={(params) => <TextField {...params} label="Animal" />}
             />
+
             <FormControl sx={{ width: 150 }}>
               <InputLabel id="animal-gender">Gender</InputLabel>
               <Select
@@ -165,6 +187,7 @@ const NewLogForm = ({ setLogs }) => {
                 <MenuItem value="Female">Female</MenuItem>
               </Select>
             </FormControl>
+
             <TextField
               id="weight-textfield"
               label="Weight"
@@ -177,6 +200,7 @@ const NewLogForm = ({ setLogs }) => {
               value={formWeight}
               onChange={(e) => setFormWeight(e.target.value)}
             />
+
             <Autocomplete
               disablePortal
               disableClearable
@@ -187,6 +211,7 @@ const NewLogForm = ({ setLogs }) => {
               onChange={(e, newValue) => setFormFurtype(newValue)}
               renderInput={(params) => <TextField {...params} label="Fur" />}
             />
+
             <TextField
               id="distance-textfield"
               label="Tracking distance"
@@ -199,6 +224,7 @@ const NewLogForm = ({ setLogs }) => {
               value={formDistance}
               onChange={(e) => setFormDistance(e.target.value)}
             />
+
             <TextField
               id="rating-textfield"
               label="Trophy rating"
@@ -207,6 +233,7 @@ const NewLogForm = ({ setLogs }) => {
               value={formRating}
               onChange={(e) => setFormRating(e.target.value)}
             />
+
             <FormControl sx={{ width: 150 }}>
               <InputLabel id="animal-gender">Badge</InputLabel>
               <Select
@@ -223,6 +250,31 @@ const NewLogForm = ({ setLogs }) => {
                 <MenuItem value="Great One">Great One</MenuItem>
               </Select>
             </FormControl>
+
+            <Autocomplete
+              disablePortal
+              id="weapons-combobox"
+              options={weaponOptions}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
+              sx={{ width: 200 }}
+              disableClearable
+              value={formWeapon}
+              onChange={(e, newValue) => setFormWeapon(newValue)}
+              renderInput={(params) => <TextField {...params} label="Weapon" />}
+              />
+
+            <Autocomplete
+              disablePortal
+              id="ammo-combobox"
+              options={availableAmmo}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
+              sx={{ width: 200 }}
+              disableClearable
+              value={formAmmo}
+              onChange={(e, newValue) => setFormAmmo(newValue)}
+              renderInput={(params) => <TextField {...params} label="Ammo" />}
+            />
+
             <TextField
               id="notes-textfield"
               label="Notes"
