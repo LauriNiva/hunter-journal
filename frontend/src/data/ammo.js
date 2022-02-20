@@ -1,4 +1,4 @@
-const ammoArray = {
+const ammoList = {
   "rifle":
     [
       ".223 (Polymer-Tip)",
@@ -78,4 +78,4 @@ const ammoArray = {
 
 }
 
-export default ammoArray;
+export default ammoList;
