@@ -101,7 +101,7 @@ const NewLogForm = ({ setLogs }) => {
     console.log(`newLog`, newLog)
 
     try {
-      const uploadedLog = await axios.post('/api/upload', newLog, {
+      const uploadedLog = await axios.post('/api/logs', newLog, {
         headers: {
           Authorization: `Bearer ${token}`
         },
