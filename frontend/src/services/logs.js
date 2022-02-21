@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const baseURL = "http://localhost:3001/api/";
+const baseURL = "http://localhost:3001/api/logs";
 
 //Hae tykätyimmät logit etusivulle
 
@@ -24,9 +24,22 @@ const getAllLogs = async (token) => {
 
 //Poista logi
 
+const deleteALog = async (logId, token) => {
+  const request = await axios.delete(`${baseURL}/${logId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+    }
+  );
+  console.log('delete request.data', request)
+  return request.data;
+
+};
+
 //Päivitä logia
 
 
-const logsService = { getAllLogs };
+const logsService = { getAllLogs, deleteALog };
 
 export default logsService;
