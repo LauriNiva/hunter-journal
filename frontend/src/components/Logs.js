@@ -71,7 +71,7 @@ function Logs({ logs, setLogs }) {
             </Toolbar>
             {
               logsToDisplay.map(log => (
-                <SingleLog key={log._id} log={log} />
+                <SingleLog key={log._id} log={log} setLogs={setLogs} />
               ))
             }
           </Container>
