@@ -35,6 +35,11 @@ const NewLogForm = ({ setLogs }) => {
   const [formShotDistance, setFormShotDistance] = useState('');
   const [formNotes, setFormNotes] = useState('');
 
+  const [weightInvalid, setWeightInvalid] = useState(false);
+  const [distanceInvalid, setDistanceInvalid] = useState(false);
+  const [ratingInvalid, setRatingInvalid] = useState(false);
+  const [shotDistanceInvalid, setShotDistanceInvalid] = useState(false);
+
   const [open, setOpen] = useState(false);
 
   const { getAccessTokenSilently } = useAuth0();
@@ -58,6 +63,37 @@ const NewLogForm = ({ setLogs }) => {
     setFormAmmo(availableAmmo[0]);
   }, [availableAmmo]);
 
+  useEffect(() => {
+    if(formWeight < 0 || formWeight > 2000){
+      setWeightInvalid(true)
+    }else{
+      setWeightInvalid(false)
+    }
+  }, [formWeight]);
+
+  useEffect(() => {
+    if(formDistance < 0 || formDistance > 50000){
+      setDistanceInvalid(true)
+    }else{
+      setDistanceInvalid(false)
+    }
+  }, [formDistance]);
+
+  useEffect(() => {
+    if(formRating < 0 || formRating > 1000){
+      setRatingInvalid(true)
+    }else{
+      setRatingInvalid(false)
+    }
+  }, [formRating]);
+
+  useEffect(() => {
+    if(formShotDistance < 0 || formShotDistance > 800){
+      setShotDistanceInvalid(true)
+    }else{
+      setShotDistanceInvalid(false)
+    }
+  }, [formShotDistance]);
 
   const [previewSource, setPreviewSource] = useState('');
 
@@ -205,14 +241,17 @@ const NewLogForm = ({ setLogs }) => {
               id="weight-textfield"
               label="Weight"
               variant="outlined"
+              sx={{ width: 150 }}
+              error={weightInvalid}
+              inputProps={{type:"number", min:"0", max:"2000",}}
               required
               InputProps={{
                 endAdornment: <InputAdornment position="end">kg</InputAdornment>
-
+                
               }}
               value={formWeight}
               onChange={(e) => setFormWeight(e.target.value)}
-            />
+              />
 
             <Autocomplete
               disableClearable
@@ -222,29 +261,35 @@ const NewLogForm = ({ setLogs }) => {
               value={formFurtype}
               onChange={(e, newValue) => setFormFurtype(newValue)}
               renderInput={(params) => <TextField {...params} label="Fur" />}
-            />
+              />
 
             <TextField
               id="distance-textfield"
               label="Tracking distance"
               variant="outlined"
+              sx={{ width: 150 }}
+              error={distanceInvalid}
+              inputProps={{type:"number", min:"0", max:"50000",}}
               required
               InputProps={{
                 endAdornment: <InputAdornment position="end">m</InputAdornment>
-
+                
               }}
               value={formDistance}
               onChange={(e) => setFormDistance(e.target.value)}
-            />
+              />
 
             <TextField
               id="rating-textfield"
               label="Trophy rating"
               required
+              sx={{ width: 100 }}
+              error={ratingInvalid}
+              inputProps={{type:"number", min:"0", max:"1000",}}
               variant="outlined"
               value={formRating}
               onChange={(e) => setFormRating(e.target.value)}
-            />
+              />
 
             <FormControl sx={{ width: 150 }}>
               <InputLabel id="animal-gender">Badge</InputLabel>
@@ -253,7 +298,7 @@ const NewLogForm = ({ setLogs }) => {
                 label="Badge"
                 value={formBadge}
                 onChange={(e) => setFormBadge(e.target.value)}
-              >
+                >
                 <MenuItem value="None">None</MenuItem>
                 <MenuItem value="Bronze">Bronze</MenuItem>
                 <MenuItem value="Silver">Silver</MenuItem>
@@ -273,7 +318,7 @@ const NewLogForm = ({ setLogs }) => {
               value={formWeapon}
               onChange={(e, newValue) => setFormWeapon(newValue)}
               renderInput={(params) => <TextField {...params} label="Weapon" />}
-            />
+              />
 
             <Autocomplete
               id="ammo-combobox"
@@ -284,12 +329,15 @@ const NewLogForm = ({ setLogs }) => {
               value={formAmmo}
               onChange={(e, newValue) => setFormAmmo(newValue)}
               renderInput={(params) => <TextField {...params} label="Ammo" />}
-            />
+              />
 
             <TextField
               id="shotdistance-textfield"
               label="Shot Distance"
               variant="outlined"
+              sx={{ width: 100 }}
+              error={shotDistanceInvalid}
+              inputProps={{type:"number", min:"0", max:"800",}}
               required
               InputProps={{
                 endAdornment: <InputAdornment position="end">m</InputAdornment>
