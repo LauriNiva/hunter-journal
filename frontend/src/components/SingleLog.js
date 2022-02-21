@@ -1,22 +1,27 @@
 // Yksittäisen login komponentti etusivulle
 // Logi saadaan Logs komponentilta
 
-import { Card, Container, Dialog, Tooltip, Typography } from '@mui/material';
+import { Card, Container, Dialog, IconButton, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
 import React, { useState } from 'react';
+import logsService from '../services/logs.js'
+import { useAuth0 } from '@auth0/auth0-react';
+
 import FemaleIcon from '@mui/icons-material/Female';
 import MaleIcon from '@mui/icons-material/Male';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ScaleIcon from '@mui/icons-material/Scale';
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import PetsIcon from '@mui/icons-material/Pets';
 import ArticleIcon from '@mui/icons-material/Article';
 import CategoryIcon from '@mui/icons-material/Category';
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 
-function SingleLog({ log }) {
+function SingleLog({ log, setLogs }) {
+
 
   const [singleLogDialogOpen, setSingleLogDialogOpen] = useState(false);
+
 
   const handleOpen = () => {
     setSingleLogDialogOpen(true);
@@ -48,6 +53,51 @@ function SingleLog({ log }) {
     }
   };
 
+  const EditMenu = () => {
+    const { getAccessTokenSilently } = useAuth0();
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const menuOpen = Boolean(anchorEl);
+
+    const handleMenuClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleMenuClose = () => {
+      setAnchorEl(null);
+    };
+
+    const handleDeleteClick = async () => {
+      if (window.confirm('Are you sure you want to delete this log?')) {
+
+        try {
+          const token = await getAccessTokenSilently();
+          await logsService.deleteALog(log._id, token);
+          handleMenuClose();
+          handleClose();
+          setLogs(currentLogs => currentLogs.filter(currentLog => currentLog._id !== log._id))
+        } catch (e) {
+          console.log(e)
+        }
+      }
+
+    };
+
+    const handleEditClick = () => {
+      console.log('edit')
+    };
+
+    return (
+      <>
+        <IconButton id="editmenu-button" disableFocusRipple onClick={handleMenuClick}>
+          <MoreVertIcon />
+        </IconButton>
+        <Menu anchorEl={anchorEl} open={menuOpen} onClose={handleMenuClose}>
+          <MenuItem onClick={handleDeleteClick}>Delete</MenuItem>
+          <MenuItem onClick={handleEditClick}>Edit</MenuItem>
+        </Menu>
+      </>
+    )
+  };
+
 
 
   return (
@@ -71,35 +121,34 @@ function SingleLog({ log }) {
       {/* Yksittäisen login näkymä avatessa */}
       <Dialog onClose={handleClose} open={singleLogDialogOpen}>
         <Card sx={{ padding: 3 }} >
-          <Container disableGutters sx={{ display: 'grid', gridTemplateColumns: '1fr 35px 30px' }}>
-            <Typography variant="h4">{log.animal}</Typography>
-            <Tooltip title={log.gender}>
-              {genderIcon()}
-            </Tooltip>
+          <Container disableGutters sx={{ display: 'grid', gridTemplateColumns: '1fr 40px 50px 20px' }}>
+
+            <Typography variant="h4">
+              {log.animal}
+              <Tooltip title={log.gender}>
+                {genderIcon()}
+              </Tooltip>
+            </Typography>
+
             <Tooltip title={log.badge}>
               <MilitaryTechIcon fontSize="large" sx={{ color: logBadgeColor }} />
             </Tooltip>
-          </Container>
-          <img src={imageUrl} alt="" width="100%" />
-          <Container disableGutters sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr' }}>
+
             <Tooltip title="Trophy rating">
               <Typography variant="h6">
-                <EmojiEventsIcon /> {log.rating}
+                {log.rating}
               </Typography>
             </Tooltip>
+
+            <EditMenu />
+
+          </Container>
+          <img src={imageUrl} alt="" width="100%" />
+          <Container disableGutters sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+
             <Tooltip title="Weight">
               <Typography variant="h6">
                 <ScaleIcon /> {log.weight}kg
-              </Typography>
-            </Tooltip>
-            <Tooltip title="Fur type">
-              <Typography variant="h6">
-                <CategoryIcon /> {log.furtype}
-              </Typography>
-            </Tooltip>
-            <Tooltip title="Distance tracked">
-              <Typography variant="h6">
-                <PetsIcon /> {log.distance}m
               </Typography>
             </Tooltip>
 
@@ -108,11 +157,25 @@ function SingleLog({ log }) {
                 <PetsIcon /> {log.weapon} ({log.weapontype})
               </Typography>
             </Tooltip>
+
+            <Tooltip title="Fur type">
+              <Typography variant="h6">
+                <CategoryIcon /> {log.furtype}
+              </Typography>
+            </Tooltip>
+
             <Tooltip title="Ammo">
               <Typography variant="h6">
                 <PetsIcon /> {log.ammo}
               </Typography>
             </Tooltip>
+
+            <Tooltip title="Distance tracked">
+              <Typography variant="h6">
+                <PetsIcon /> {log.distance}m track
+              </Typography>
+            </Tooltip>
+
             <Tooltip title="Shot distance">
               <Typography variant="h6">
                 <PetsIcon /> {log.shotdistance}m
@@ -120,14 +183,12 @@ function SingleLog({ log }) {
             </Tooltip>
 
             <Tooltip title="Notes">
-              <Typography sx={{ gridColumn: 'span 4' }}>
+              <Typography sx={{ gridColumn: 'span 2' }}>
                 <ArticleIcon /> {log.notes}
               </Typography>
             </Tooltip>
           </Container>
-
         </Card>
-
       </Dialog>
     </>
   );
