@@ -25,7 +25,7 @@ app.use(express.urlencoded({ limit: '5mb', extended: true }));
 
 app.use(requestlogger);
 
-app.use('/api', logsRouter);
+app.use('/api/logs', logsRouter);
 
 const PORT = process.env.PORT || 3001;
 
