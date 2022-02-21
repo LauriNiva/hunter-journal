@@ -5,6 +5,7 @@ import Logs from './components/Logs';
 import Nav from './components/Nav';
 import { useAuth0 } from '@auth0/auth0-react';
 import { createTheme, CssBaseline, Paper, ThemeProvider } from '@mui/material';
+import { ConfirmProvider } from 'material-ui-confirm';
 
 const darkTheme = createTheme({
   palette: {
@@ -31,10 +32,12 @@ const App = () => {
     <div>
       <CssBaseline />
       <ThemeProvider theme={darkTheme}>
-        <Nav />
-        <Paper className="container">
-          <Logs logs={logs} setLogs={setLogs} />
-        </Paper>
+        <ConfirmProvider>
+          <Nav />
+          <Paper className="container">
+            <Logs logs={logs} setLogs={setLogs} />
+          </Paper>
+        </ConfirmProvider>
       </ThemeProvider>
     </div>
   );
