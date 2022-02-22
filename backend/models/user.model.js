@@ -8,16 +8,21 @@ const userSchema = new mongoose.Schema({
     minlenght: 4,
     unique: true
   },
-  passwordHash: String,
-  logs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Log' }],
-  // logs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Log' }],
+  email: {
+    type: String,
+    required: true,
+    minlenght: 4,
+  },
+  _id: {
+    type: String,
+    required: true,
+  }
 });
 
 userSchema.set('toJSON', {
   transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString()
+    //returnedObject.id = returnedObject._id.toString()
     delete returnedObject.__v
-    delete returnedObject.passwordHash
   }
 })
 
