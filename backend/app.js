@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import 'dotenv/config.js';
 import logsRouter from './controllers/logs.controllers.js';
+import usersRouter from './controllers/users.controller.js'
 import requestlogger from './middleware/requestlogger.js';
 
 
@@ -26,6 +27,8 @@ app.use(express.urlencoded({ limit: '5mb', extended: true }));
 app.use(requestlogger);
 
 app.use('/api/logs', logsRouter);
+app.use('/api/users', usersRouter);
+
 
 const PORT = process.env.PORT || 3001;
 
