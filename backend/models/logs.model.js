@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 const logSchema = new mongoose.Schema({
   user: {
     type: String,
+    ref: 'User',
     required: true
   },
   animal: {
@@ -61,5 +62,12 @@ const logSchema = new mongoose.Schema({
   }],
 },
   { timestamps: true });
+
+  logSchema.set('toJSON', {
+    transform: (document, returnedObject) => {
+      returnedObject.user = returnedObject.user.username
+      delete returnedObject.__v
+    }
+  })
 
 export default mongoose.model('Log', logSchema);
