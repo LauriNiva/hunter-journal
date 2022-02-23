@@ -23,11 +23,14 @@ function UserDataForm({ setUsername }) {
       const savedUser = await usersService.createUser(newuser, token);
       setUsername(savedUser.username)
     } catch (error) {
-      console.log('Error with username creation', error);
-      const errortype = error.response.data.error.errors.username.kind;
-      if (errortype === 'unique') {
-        setUsernameHelperText('Must be unique')
-        setUsernameError(true);
+      try {
+        const errortype = error.response.data.error.errors.username.kind;
+        if (errortype === 'unique') {
+          setUsernameHelperText('Must be unique')
+          setUsernameError(true);
+        }
+      } catch (error) {
+        console.log(error)
       }
     }
 
