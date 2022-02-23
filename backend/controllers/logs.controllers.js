@@ -2,12 +2,14 @@ import Log from '../models/logs.model.js';
 import express from 'express';
 import cloudinary from '../utils/cloudinary.js';
 import checkJwt from '../middleware/jwtCheck.js';
+import mongoose  from 'mongoose';
 
 
 const logsRouter = express.Router();
 
 logsRouter.get('/', checkJwt, async (req, res) => {
-  const logs = await Log.find({ user: req.user.sub });
+  const userid = req.user.sub;
+  const logs = await Log.find({ user: userid }).populate('user', 'username');
   res.json(logs);
 });
 
@@ -37,7 +39,7 @@ logsRouter.post('/', checkJwt, async (req, res) => {
       images: [imageid]
     });
 
-    console.log(`newLog`, newLog)
+    console.log(`newLog`, newLog);
 
     const uploadedLog = await newLog.save();
 
