@@ -4,9 +4,14 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { AppBar, Toolbar, Typography } from '@mui/material';
 
 
-function Nav() {
+function Nav({ username }) {
 
-  const { user, isAuthenticated } = useAuth0();
+  const { isAuthenticated } = useAuth0();
+
+  const greetings = ['Hi there', 'Happy hunting'];
+
+  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+   
 
   return (
     <AppBar position="sticky" >
@@ -14,7 +19,7 @@ function Nav() {
         <Typography variant='h4' sx={{ flexGrow: 1 }}>
           Hunter Log
         </Typography>
-        {isAuthenticated && <Typography variant='h7' sx={{ mr: 2 }}>Happy Huntings {user.name} !</Typography>}
+        {isAuthenticated && <Typography variant='h7' sx={{ mr: 2 }}>{greeting} {username} !</Typography>}
         <AuthButton />
 
       </Toolbar>
