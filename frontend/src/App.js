@@ -4,8 +4,10 @@ import logsService from './services/logs';
 import Logs from './components/Logs';
 import Nav from './components/Nav';
 import { useAuth0 } from '@auth0/auth0-react';
-import { createTheme, CssBaseline, Paper, ThemeProvider } from '@mui/material';
+import { createTheme, CssBaseline, Paper, ThemeProvider, Typography } from '@mui/material';
 import { ConfirmProvider } from 'material-ui-confirm';
+import usersService from './services/user';
+import UserDataForm from './components/UserDataForm';
 
 const darkTheme = createTheme({
   palette: {
@@ -18,24 +20,44 @@ const App = () => {
 
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
 
+  const [username, setUsername] = useState();
+  const [usernameCheckedButNotFound, setUsernameCheckedButNotFound] = useState(false);
   const [logs, setLogs] = useState([]);
 
   useEffect(() => {
-    isAuthenticated &&
+    (!username && isAuthenticated) &&
+      (async () => {
+        const token = await getAccessTokenSilently();
+        try {
+          const user = await usersService.getUser(token);
+          setUsername(user.username);
+        } catch (err) {
+          setUsernameCheckedButNotFound(true);
+        }
+      })();
+  }, [username, isAuthenticated, getAccessTokenSilently]);
+
+  useEffect(() => {
+    (username && isAuthenticated) &&
       (async () => {
         const token = await getAccessTokenSilently();
         setLogs(await logsService.getAllLogs(token));
       })()
-  }, [isAuthenticated, getAccessTokenSilently]);
+  }, [isAuthenticated, username, getAccessTokenSilently]);
 
   return (
     <div>
       <CssBaseline />
       <ThemeProvider theme={darkTheme}>
         <ConfirmProvider>
-          <Nav />
+          <Nav username={username}/>
           <Paper className="container">
-            <Logs logs={logs} setLogs={setLogs} />
+            {isAuthenticated ?
+              username ?
+                <Logs logs={logs} setLogs={setLogs} />
+                : usernameCheckedButNotFound && <UserDataForm setUsername={setUsername} />
+              : <Typography>Please log in</Typography>
+            }
           </Paper>
         </ConfirmProvider>
       </ThemeProvider>
