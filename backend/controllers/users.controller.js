@@ -19,7 +19,6 @@ usersRouter.post('/', checkJwt, async (req, res) => {
 
   const body = req.body;
   try {
-
     const newUser = new User(
       {
         username: body.username,
@@ -28,15 +27,12 @@ usersRouter.post('/', checkJwt, async (req, res) => {
       }
     );
 
-
     const createdUser = await newUser.save();
-
-
     res.json(createdUser)
 
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: 'Something went wrong with the user creation' })
+    console.log(error.errors);
+    res.status(500).json({ error })
   }
 
 
