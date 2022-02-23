@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Jaapokki';
+  src: local('Jaapokki'), url(./fonts/jaapokki-regular.woff) format('woff');
+}
+
 body {
   background-image: url("./img/bg.jpg");
   background-position: center center;
@@ -17,6 +22,8 @@ body {
   margin-bottom: 0;
 }
 
+
+
 /*Remove arrows from number input fields */
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -28,3 +35,4 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+

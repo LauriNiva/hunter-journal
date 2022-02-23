@@ -50,13 +50,15 @@ const App = () => {
       <CssBaseline />
       <ThemeProvider theme={darkTheme}>
         <ConfirmProvider>
-          <Nav username={username}/>
+          <Nav username={username} />
           <Paper className="container">
             {isAuthenticated ?
               username ?
                 <Logs logs={logs} setLogs={setLogs} />
                 : usernameCheckedButNotFound && <UserDataForm setUsername={setUsername} />
-              : <Typography>Please log in</Typography>
+              : <Typography variant='h5' sx={{fontFamily:'Jaapokki', m:2}}>
+                Please log in or create a account to start.
+                </Typography>
             }
           </Paper>
         </ConfirmProvider>
