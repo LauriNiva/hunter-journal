@@ -49,14 +49,13 @@ function Logs({ logs, setLogs }) {
 
   return (
 
-    isAuthenticated
-      ? <div>
+    <div>
         <Container disableGutters id="logs-container" sx={{ display: "grid", gridTemplateColumns: "1fr 4fr" }}>
 
           <LogFilteringList logs={logs}  setFilteredLogs={setFilteredLogs} />
 
           <Container id="logs-list-container" disableGutters >
-            <Toolbar>
+            <Toolbar sx={{ justifyContent: 'space-between' }}>
 
               <FormControl>
                 <InputLabel id="sort-dropdown-label"><SortIcon /></InputLabel>
@@ -77,7 +76,7 @@ function Logs({ logs, setLogs }) {
           </Container>
         </Container>
       </div>
-      : <Typography>Please log in</Typography>
+      
   );
 }
 
