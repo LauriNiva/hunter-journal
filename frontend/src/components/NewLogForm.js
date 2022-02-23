@@ -241,6 +241,7 @@ const NewLogForm = ({ setLogs }) => {
               id="weight-textfield"
               label="Weight"
               variant="outlined"
+              InputLabelProps={{ shrink: true }}
               sx={{ width: 150 }}
               error={weightInvalid}
               inputProps={{type:"number", min:"0", max:"2000",}}
@@ -267,6 +268,7 @@ const NewLogForm = ({ setLogs }) => {
               id="distance-textfield"
               label="Tracking distance"
               variant="outlined"
+              InputLabelProps={{ shrink: true }}
               sx={{ width: 150 }}
               error={distanceInvalid}
               inputProps={{type:"number", min:"0", max:"50000",}}
@@ -283,6 +285,7 @@ const NewLogForm = ({ setLogs }) => {
               id="rating-textfield"
               label="Trophy rating"
               required
+              InputLabelProps={{ shrink: true }}
               sx={{ width: 100 }}
               error={ratingInvalid}
               inputProps={{type:"number", min:"0", max:"1000",}}
@@ -335,10 +338,11 @@ const NewLogForm = ({ setLogs }) => {
               id="shotdistance-textfield"
               label="Shot Distance"
               variant="outlined"
-              sx={{ width: 100 }}
+              sx={{ width: 150 }}
               error={shotDistanceInvalid}
               inputProps={{type:"number", min:"0", max:"800",}}
               required
+              InputLabelProps={{ shrink: true }}
               InputProps={{
                 endAdornment: <InputAdornment position="end">m</InputAdornment>
 
@@ -351,7 +355,9 @@ const NewLogForm = ({ setLogs }) => {
               id="notes-textfield"
               label="Notes"
               variant="outlined"
+              InputLabelProps={{ shrink: true }}
               multiline
+              rows={4}
               value={formNotes}
               onChange={(e) => setFormNotes(e.target.value)}
             />
