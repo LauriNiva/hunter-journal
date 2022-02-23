@@ -191,7 +191,7 @@ const NewLogForm = ({ setLogs }) => {
     <Box>
 
       <Button variant="outlined" color="success" onClick={handleClickOpenDialog}>
-        New Log
+        +
       </Button>
 
       <Dialog open={open} onClose={handleCloseDialog}>
