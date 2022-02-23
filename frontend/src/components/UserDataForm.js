@@ -43,20 +43,20 @@ function UserDataForm({ setUsername }) {
   }
 
   return (
-    <Box sx={{}}>
+    <Box sx={{p:4}}>
       {
         !user.email_verified ?
           <Typography variant='h5'>Please verify your email and refresh</Typography>
           : <Box>
-            <Typography variant='h5'>Set your username</Typography>
-            <Typography variant='text'>Atleast 4 characters. Letters and numbers only.</Typography>
+            <Typography variant='h5' sx={{ m:1}}>Set your username</Typography>
+            <Typography variant='text' sx={{ m:1}}>Atleast 4 characters. Letters and numbers only.</Typography>
 
             <form onSubmit={handleSubmit}>
               <TextField
                 id="username-textfield"
                 label="Username"
                 variant="outlined"
-                sx={{ width: 150 }}
+                sx={{ width: 150, m:1}}
                 error={usernameError}
                 helperText={usernameHelperText}
                 required
