@@ -15,6 +15,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import CategoryIcon from '@mui/icons-material/Category';
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import RadarIcon from '@mui/icons-material/Radar';
 
 
 function SingleLog({ log, setLogs }) {
@@ -154,7 +155,7 @@ function SingleLog({ log, setLogs }) {
 
             <Tooltip title="Weapon">
               <Typography variant="h6">
-                <PetsIcon /> {log.weapon} ({log.weapontype})
+                <RadarIcon /> {log.weapon} ({log.weapontype})
               </Typography>
             </Tooltip>
 
@@ -166,19 +167,19 @@ function SingleLog({ log, setLogs }) {
 
             <Tooltip title="Ammo">
               <Typography variant="h6">
-                <PetsIcon /> {log.ammo}
+                <RadarIcon /> {log.ammo}
               </Typography>
             </Tooltip>
 
             <Tooltip title="Distance tracked">
               <Typography variant="h6">
-                <PetsIcon /> {log.distance}m track
+                <PetsIcon /> {log.distance}m tracked
               </Typography>
             </Tooltip>
 
             <Tooltip title="Shot distance">
               <Typography variant="h6">
-                <PetsIcon /> {log.shotdistance}m
+                <RadarIcon /> {log.shotdistance}m
               </Typography>
             </Tooltip>
 
