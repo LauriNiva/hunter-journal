@@ -43,7 +43,7 @@ function UserDataForm({ setUsername }) {
   }
 
   return (
-    <Box sx={{p:4}}>
+    <Box sx={{p:4, display:'flex',justifyContent: 'center', alignItems: 'center'}}>
       {
         !user.email_verified ?
           <Typography variant='h5'>Please verify your email and refresh</Typography>
