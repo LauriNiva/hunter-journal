@@ -194,7 +194,7 @@ const NewLogForm = ({ setLogs }) => {
         +
       </Button>
 
-      <Dialog open={open} onClose={handleCloseDialog}>
+      <Dialog open={open} onClose={handleCloseDialog} fullWidth maxWidth="md">
         <DialogTitle id="form-dialog-title">New log</DialogTitle>
         <DialogContent>
           <DialogContentText>
