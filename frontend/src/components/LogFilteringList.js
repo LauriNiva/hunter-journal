@@ -221,9 +221,9 @@ function LogFilteringList({ logs, setFilteredLogs }) {
 
         <List>
           {Object.keys(availableWeaponsForFiltering).map((option) =>
-            <ListItemButton key={option} dense>
+            <ListItemButton onClick={() => toggleFilter(weaponFilter, setWeaponFilter, option)} key={option} dense>
               <Checkbox checked={weaponFilter.includes(option)}
-                onClick={() => toggleFilter(weaponFilter, setWeaponFilter, option)} />
+                 />
               <ListItemText primary={`${option} (${availableWeaponsForFiltering[option]})`} />
             </ListItemButton>
           )}
