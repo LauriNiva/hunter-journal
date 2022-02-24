@@ -154,9 +154,8 @@ function LogFilteringList({ logs, setFilteredLogs }) {
       <Collapse in={badgeOpen}>
         <List>
           {Object.keys(availableBadgesForFiltering).map((option) =>
-            <ListItemButton key={option} dense>
-              <Checkbox checked={badgeFilter.includes(option)}
-                onClick={() => toggleFilter(badgeFilter, setBadgeFilter, option)} />
+            <ListItemButton key={option} dense onClick={() => toggleFilter(badgeFilter, setBadgeFilter, option)}>
+              <Checkbox checked={badgeFilter.includes(option)}/>
               <ListItemText primary={`${option} (${availableBadgesForFiltering[option]})`} />
             </ListItemButton>
           )}
@@ -171,9 +170,8 @@ function LogFilteringList({ logs, setFilteredLogs }) {
       <Collapse in={animalOpen}>
         <List>
           {Object.keys(availableAnimalsForFiltering).map((option) =>
-            <ListItemButton key={option} dense>
-              <Checkbox checked={animalFilter.includes(option)}
-                onClick={() => toggleFilter(animalFilter, setAnimalFilter, option)} />
+            <ListItemButton key={option} dense onClick={() => toggleFilter(animalFilter, setAnimalFilter, option)} >
+              <Checkbox checked={animalFilter.includes(option)} />
               <ListItemText primary={`${option} (${availableAnimalsForFiltering[option]})`} />
             </ListItemButton>
           )}
@@ -188,9 +186,8 @@ function LogFilteringList({ logs, setFilteredLogs }) {
 
         <List>
           {availableDistancesForFiltering.map((option) =>
-            <ListItemButton key={option[0]} dense>
-              <Checkbox checked={distanceFilter.includes(option[0])}
-                onClick={() => toggleFilter(distanceFilter, setDistanceFilter, option[0])} />
+            <ListItemButton key={option[0]} dense  onClick={() => toggleFilter(distanceFilter, setDistanceFilter, option[0])}>
+              <Checkbox checked={distanceFilter.includes(option[0])} />
               <ListItemText primary={`${option[0]} m (${option[1]})`} />
             </ListItemButton>
           )}
@@ -204,9 +201,8 @@ function LogFilteringList({ logs, setFilteredLogs }) {
 
         <List>
           {Object.keys(availableFursForFiltering).map((option) =>
-            <ListItemButton key={option} dense>
-              <Checkbox checked={furFilter.includes(option)}
-                onClick={() => toggleFilter(furFilter, setFurFilter, option)} />
+            <ListItemButton key={option} dense onClick={() => toggleFilter(furFilter, setFurFilter, option)}>
+              <Checkbox checked={furFilter.includes(option)} />
               <ListItemText primary={`${option} (${availableFursForFiltering[option]})`} />
             </ListItemButton>
           )}
@@ -222,8 +218,7 @@ function LogFilteringList({ logs, setFilteredLogs }) {
         <List>
           {Object.keys(availableWeaponsForFiltering).map((option) =>
             <ListItemButton onClick={() => toggleFilter(weaponFilter, setWeaponFilter, option)} key={option} dense>
-              <Checkbox checked={weaponFilter.includes(option)}
-                 />
+              <Checkbox checked={weaponFilter.includes(option)} />
               <ListItemText primary={`${option} (${availableWeaponsForFiltering[option]})`} />
             </ListItemButton>
           )}
@@ -238,9 +233,8 @@ function LogFilteringList({ logs, setFilteredLogs }) {
 
         <List>
           {Object.keys(availableAmmoForFiltering).map((option) =>
-            <ListItemButton key={option} dense>
-              <Checkbox checked={ammoFilter.includes(option)}
-                onClick={() => toggleFilter(ammoFilter, setAmmoFilter, option)} />
+            <ListItemButton key={option} dense onClick={() => toggleFilter(ammoFilter, setAmmoFilter, option)}>
+              <Checkbox checked={ammoFilter.includes(option)}/>
               <ListItemText primary={`${option} (${availableAmmoForFiltering[option]})`} />
             </ListItemButton>
           )}
@@ -254,9 +248,8 @@ function LogFilteringList({ logs, setFilteredLogs }) {
 
         <List>
           {Object.keys(availableWeapontypesForFiltering).map((option) =>
-            <ListItemButton key={option} dense>
-              <Checkbox checked={weapontypeFilter.includes(option)}
-                onClick={() => toggleFilter(weapontypeFilter, setWeapontypeFilter, option)} />
+            <ListItemButton key={option} dense onClick={() => toggleFilter(weapontypeFilter, setWeapontypeFilter, option)} >
+              <Checkbox checked={weapontypeFilter.includes(option)}/>
               <ListItemText primary={`${option} (${availableWeapontypesForFiltering[option]})`} />
             </ListItemButton>
           )}
@@ -287,7 +280,7 @@ function LogFilteringList({ logs, setFilteredLogs }) {
 
 
   return (
-    <Paper elevation={6}>
+    <Paper sx={{maxHeight: '80vh', overflow: 'scroll', }} elevation={6}>
       <List>
         <Button onClick={() => resetFilters()}>Reset</Button>
 
