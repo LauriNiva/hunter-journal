@@ -2,6 +2,7 @@ import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogConte
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Compress from 'compress.js';
 import animalsList from '../data/animals.js';
 import weaponsList from '../data/weapons.js'
 import ammoArray from '../data/ammo.js'
@@ -10,6 +11,8 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { useAuth0 } from '@auth0/auth0-react';
 
 const NewLogForm = ({ setLogs }) => {
+
+  const compress = new Compress();
 
   const animalOptions = Object.keys(animalsList);
   const weaponOptions = weaponsList.map(weapon =>
@@ -96,10 +99,12 @@ const NewLogForm = ({ setLogs }) => {
   }, [formShotDistance]);
 
   const [previewSource, setPreviewSource] = useState('');
+  const [imageFile, setImageFile] = useState('');
 
   const handleFileInputChange = (e) => {
     const file = e.target.files[0];
     previewFile(file);
+    setImageFile(e.target.files[0])
   };
 
   const previewFile = (file) => {
@@ -116,6 +121,9 @@ const NewLogForm = ({ setLogs }) => {
 
     const token = await getAccessTokenSilently();
 
+    const compressedImageArray = await compress.compress([imageFile],{size: 1, quality:1})
+    const compressedImageData = compressedImageArray[0];
+    const compressedImage = `data:${compressedImageData.ext};base64,${compressedImageData.data}`
 
     const newLog = {
       animal: formAnimal,
@@ -131,7 +139,7 @@ const NewLogForm = ({ setLogs }) => {
       ammo: formAmmo,
       shotdistance: formShotDistance,
       notes: formNotes,
-      imagedata: previewSource,
+      imagedata: compressedImage,
     };
 
     console.log(`newLog`, newLog)
@@ -204,8 +212,8 @@ const NewLogForm = ({ setLogs }) => {
           {previewSource ?
             <img src={previewSource} alt="chosen" style={{ height: "100px", width: "150px" }} />
             :
-            <label htmlFor="image-upload-button">
-              <Input sx={{ display: "none" }} type='file' id="image-upload-button" name='image'
+            <label htmlFor="imageuploadbutton">
+              <Input sx={{ display: "none" }} type='file' id="imageuploadbutton" name='image'
                 accept=".jpg,.jpeg,.png" onChange={handleFileInputChange} />
               <Button sx={{ height: "100px", width: "150px" }} variant="outlined" component="span">
                 <AddPhotoAlternateIcon />
