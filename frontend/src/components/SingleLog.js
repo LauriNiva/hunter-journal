@@ -24,8 +24,8 @@ function SingleLog({ log, setLogs }) {
   const [singleLogDialogOpen, setSingleLogDialogOpen] = useState(false);
 
 
-  const handleOpen = () => {
-    setSingleLogDialogOpen(true);
+  const handleOpen = (e) => {
+    if(e.target.id !== 'likeButton') setSingleLogDialogOpen(true);
   };
 
   const handleClose = () => {
@@ -104,8 +104,8 @@ function SingleLog({ log, setLogs }) {
   return (
     <>
       {/* Yksittäinen logi listalla */}
-      <Card sx={{ m: 1, mr: 0, p: 2, display: 'grid', gridTemplateColumns: '40px 3fr 2fr 30px' }} elevation={6}
-      >
+      <Card sx={{ m: 1, mr: 0, p: 2, display: 'grid', gridTemplateColumns: '40px 3fr 1fr 20px' }} elevation={6}
+        onClick={handleOpen}>
         <Tooltip title={log.badge}>
           <MilitaryTechIcon fontSize="large" sx={{ color: logBadgeColor }} />
         </Tooltip>
@@ -116,7 +116,7 @@ function SingleLog({ log, setLogs }) {
         <Typography variant="h6">
           {log.rating}
         </Typography>
-        <ThumbUpOffAltIcon onClick={(e) => console.log(e)} />
+        <ThumbUpOffAltIcon id="likeButton" />
       </Card>
 
       {/* Yksittäisen login näkymä avatessa */}
