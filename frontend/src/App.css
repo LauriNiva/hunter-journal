@@ -22,6 +22,12 @@ body {
   margin-bottom: 0;
 }
 
+#newLogForm {
+  display: flex;
+  gap: 10px 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
 
 /*Remove arrows from number input fields */
