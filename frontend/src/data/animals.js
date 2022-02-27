@@ -382,15 +382,15 @@ const animalsArray = {
     trophyscore: { silver: 32, gold: 36, diamond: 39 },
     furtypes: [
       'Albino',
-      'Fantasma*',
+      'Fantasma',
       'Grey',
       'Grey-Brown',
       'Melanistic',
-      'Ogro*',
+      'Ogro',
       'Olive',
-      'Sombra*',
+      'Sombra',
       'Pristine',
-      'Winter.\nUnique fur type - Quest animal only.'
+      'Winter'
     ]
   },
   'White-tailed Jackrabbit': {
@@ -477,9 +477,9 @@ const animalsArray = {
       'Dark-Brown',
       'Light Brown',
       'Melanistic',
-      'Mocha*',
+      'Mocha',
       'Piebald',
-      'Tan.\nUnique fur type - Quest animal only.'
+      'Tan'
     ]
   },
   'Mountain Goat': {
