@@ -24,12 +24,17 @@ const NewLogForm = ({ setLogs }) => {
     }
   ));
 
+
+  const difficultyOptions = ["1 - Trivial", "2 - Minor", "3 - Very easy", "4 - Easy", "5 - Medium",
+    "6 - Hard", "7 - Very hard", "8 - Mythical", "9 - Legendary", "10 - Fabled"];
+
   const [formAnimal, setFormAnimal] = useState(animalOptions[0]);
   const [availableFurTypes, setAvailableFurTypes] = useState(animalsList[formAnimal].furtypes);
   const [formFurtype, setFormFurtype] = useState(availableFurTypes[0])
   const [formGender, setFormGender] = useState('Male');
   const [formWeight, setFormWeight] = useState('');
   const [formDistance, setFormDistance] = useState('');
+  const [formDifficulty, setFormDifficulty] = useState(difficultyOptions[0])
   const [formRating, setFormRating] = useState('');
   const [formBadge, setFormBadge] = useState('None');
   const [formWeapon, setFormWeapon] = useState(weaponOptions[0]);
@@ -67,33 +72,33 @@ const NewLogForm = ({ setLogs }) => {
   }, [availableAmmo]);
 
   useEffect(() => {
-    if(formWeight < 0 || formWeight > 2000){
+    if (formWeight < 0 || formWeight > 2000) {
       setWeightInvalid(true)
-    }else{
+    } else {
       setWeightInvalid(false)
     }
   }, [formWeight]);
 
   useEffect(() => {
-    if(formDistance < 0 || formDistance > 50000){
+    if (formDistance < 0 || formDistance > 50000) {
       setDistanceInvalid(true)
-    }else{
+    } else {
       setDistanceInvalid(false)
     }
   }, [formDistance]);
 
   useEffect(() => {
-    if(formRating < 0 || formRating > 1000){
+    if (formRating < 0 || formRating > 1000) {
       setRatingInvalid(true)
-    }else{
+    } else {
       setRatingInvalid(false)
     }
   }, [formRating]);
 
   useEffect(() => {
-    if(formShotDistance < 0 || formShotDistance > 800){
+    if (formShotDistance < 0 || formShotDistance > 800) {
       setShotDistanceInvalid(true)
-    }else{
+    } else {
       setShotDistanceInvalid(false)
     }
   }, [formShotDistance]);
@@ -121,7 +126,7 @@ const NewLogForm = ({ setLogs }) => {
 
     const token = await getAccessTokenSilently();
 
-    const compressedImageArray = await compress.compress([imageFile],{size: 1, quality:1})
+    const compressedImageArray = await compress.compress([imageFile], { size: 1, quality: 1 })
     const compressedImageData = compressedImageArray[0];
     const compressedImage = `data:${compressedImageData.ext};base64,${compressedImageData.data}`
 
@@ -131,7 +136,7 @@ const NewLogForm = ({ setLogs }) => {
       weight: formWeight,
       furtype: formFurtype,
       distance: formDistance,
-      difficulty: selectedAnimal.animalclass,
+      difficulty: formDifficulty,
       rating: formRating,
       badge: formBadge,
       weapon: formWeapon.label,
@@ -166,6 +171,7 @@ const NewLogForm = ({ setLogs }) => {
     setFormGender('Male');
     setFormWeight('');
     setFormDistance('');
+    setFormDifficulty(difficultyOptions[0]);
     setFormRating('');
     setFormBadge('None');
     setFormNotes('');
@@ -253,15 +259,15 @@ const NewLogForm = ({ setLogs }) => {
               sx={{ width: 150 }}
               error={weightInvalid}
               autoComplete="off"
-              inputProps={{type:"number", step:"any", min:"0", max:"2000",}}
+              inputProps={{ type: "number", step: "any", min: "0", max: "2000", }}
               required
               InputProps={{
                 endAdornment: <InputAdornment position="end">kg</InputAdornment>
-                
+
               }}
               value={formWeight}
               onChange={(e) => setFormWeight(e.target.value)}
-              />
+            />
 
             <Autocomplete
               disableClearable
@@ -271,7 +277,7 @@ const NewLogForm = ({ setLogs }) => {
               value={formFurtype}
               onChange={(e, newValue) => setFormFurtype(newValue)}
               renderInput={(params) => <TextField {...params} label="Fur" />}
-              />
+            />
 
             <TextField
               id="distance-textfield"
@@ -281,15 +287,27 @@ const NewLogForm = ({ setLogs }) => {
               sx={{ width: 150 }}
               error={distanceInvalid}
               autoComplete="off"
-              inputProps={{type:"number", step:"any", min:"0", max:"50000",}}
+              inputProps={{ type: "number", step: "any", min: "0", max: "50000", }}
               required
               InputProps={{
                 endAdornment: <InputAdornment position="end">m</InputAdornment>
-                
+
               }}
               value={formDistance}
               onChange={(e) => setFormDistance(e.target.value)}
-              />
+            />
+
+            <FormControl sx={{ width: 150 }}>
+              <InputLabel id="difficulty">Difficulty</InputLabel>
+              <Select
+                labelId="difficulty"
+                label="Difficulty"
+                value={formDifficulty}
+                onChange={(e) => setFormDifficulty(e.target.value)}
+              >
+                { difficultyOptions.map(option => <MenuItem key={option} value={option}>{option}</MenuItem>) }
+              </Select>
+            </FormControl>
 
             <TextField
               id="rating-textfield"
@@ -299,11 +317,11 @@ const NewLogForm = ({ setLogs }) => {
               sx={{ width: 100 }}
               error={ratingInvalid}
               autoComplete="off"
-              inputProps={{type:"number", step:"any", min:"0", max:"1000",}}
+              inputProps={{ type: "number", step: "any", min: "0", max: "1000", }}
               variant="outlined"
               value={formRating}
               onChange={(e) => setFormRating(e.target.value)}
-              />
+            />
 
             <FormControl sx={{ width: 150 }}>
               <InputLabel id="animal-gender">Badge</InputLabel>
@@ -312,7 +330,7 @@ const NewLogForm = ({ setLogs }) => {
                 label="Badge"
                 value={formBadge}
                 onChange={(e) => setFormBadge(e.target.value)}
-                >
+              >
                 <MenuItem value="None">None</MenuItem>
                 <MenuItem value="Bronze">Bronze</MenuItem>
                 <MenuItem value="Silver">Silver</MenuItem>
@@ -332,7 +350,7 @@ const NewLogForm = ({ setLogs }) => {
               value={formWeapon}
               onChange={(e, newValue) => setFormWeapon(newValue)}
               renderInput={(params) => <TextField {...params} label="Weapon" />}
-              />
+            />
 
             <Autocomplete
               id="ammo-combobox"
@@ -343,7 +361,7 @@ const NewLogForm = ({ setLogs }) => {
               value={formAmmo}
               onChange={(e, newValue) => setFormAmmo(newValue)}
               renderInput={(params) => <TextField {...params} label="Ammo" />}
-              />
+            />
 
             <TextField
               id="shotdistance-textfield"
@@ -351,7 +369,7 @@ const NewLogForm = ({ setLogs }) => {
               variant="outlined"
               sx={{ width: 150 }}
               error={shotDistanceInvalid}
-              inputProps={{type:"number", step:"any", min:"0", max:"800",}}
+              inputProps={{ type: "number", step: "any", min: "0", max: "800", }}
               required
               autoComplete="off"
               InputLabelProps={{ shrink: true }}

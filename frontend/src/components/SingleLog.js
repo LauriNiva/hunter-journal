@@ -17,6 +17,7 @@ import CategoryIcon from '@mui/icons-material/Category';
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import RadarIcon from '@mui/icons-material/Radar';
+import StarHalfIcon from '@mui/icons-material/StarHalf';
 
 
 function SingleLog({ log, setLogs }) {
@@ -181,6 +182,12 @@ function SingleLog({ log, setLogs }) {
             <Tooltip title="Shot distance">
               <Typography variant="h6">
                 <RadarIcon /> {log.shotdistance}m
+              </Typography>
+            </Tooltip>
+
+            <Tooltip title="Difficulty">
+              <Typography variant="h6">
+                <StarHalfIcon /> {log.difficulty}
               </Typography>
             </Tooltip>
 
