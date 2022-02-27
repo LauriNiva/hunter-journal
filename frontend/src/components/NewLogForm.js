@@ -4,8 +4,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Compress from 'compress.js';
 import animalsList from '../data/animals.js';
-import weaponsList from '../data/weapons.js'
-import ammoArray from '../data/ammo.js'
+import weaponsList from '../data/weapons.js';
+import ammoArray from '../data/ammo.js';
+import reservesList from '../data/reserves.js';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
 import { useAuth0 } from '@auth0/auth0-react';
@@ -42,6 +43,7 @@ const NewLogForm = ({ setLogs }) => {
   const [availableAmmo, setAvailableAmmo] = useState(ammoArray[formWeapon.type]);
   const [formAmmo, setFormAmmo] = useState(ammoArray[formWeapon.type][0]);
   const [formShotDistance, setFormShotDistance] = useState('');
+  const [formReserve, setFormReserve] = useState(reservesList[0]);
   const [formNotes, setFormNotes] = useState('');
 
   const [weightInvalid, setWeightInvalid] = useState(false);
@@ -123,7 +125,7 @@ const NewLogForm = ({ setLogs }) => {
 
 
   const submitNewLog = async () => {
-    const selectedAnimal = animalsList[formAnimal];
+    //const selectedAnimal = animalsList[formAnimal];
 
     const token = await getAccessTokenSilently();
 
@@ -144,6 +146,7 @@ const NewLogForm = ({ setLogs }) => {
       weapontype: formWeapon.type,
       ammo: formAmmo,
       shotdistance: formShotDistance,
+      reserve: formReserve,
       notes: formNotes,
       imagedata: compressedImage,
     };
@@ -181,6 +184,7 @@ const NewLogForm = ({ setLogs }) => {
     setAvailableAmmo(ammoArray[formWeapon.type]);
     setFormAmmo(ammoArray[formWeapon.type][0]);
     setFormShotDistance('');
+    setFormReserve(reservesList[0]);
   };
 
   const handleClickOpenDialog = () => {
@@ -385,6 +389,17 @@ const NewLogForm = ({ setLogs }) => {
               value={formShotDistance}
               onChange={(e) => setFormShotDistance(e.target.value)}
             />
+            <FormControl sx={{ width: 150 }}>
+              <InputLabel id="reserve">Reserve</InputLabel>
+              <Select
+                labelId="reserve"
+                label="Reserve"
+                value={formReserve}
+                onChange={(e) => setFormReserve(e.target.value)}
+              >
+                {reservesList.map(option => <MenuItem key={option} value={option}>{option}</MenuItem>)}
+              </Select>
+            </FormControl>
 
             <TextField
               id="notes-textfield"

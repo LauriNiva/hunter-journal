@@ -18,6 +18,7 @@ import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import RadarIcon from '@mui/icons-material/Radar';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
+import ForestIcon from '@mui/icons-material/Forest';
 
 
 function SingleLog({ log, setLogs }) {
@@ -188,6 +189,12 @@ function SingleLog({ log, setLogs }) {
             <Tooltip title="Difficulty">
               <Typography variant="h6">
                 <StarHalfIcon /> {log.difficulty}
+              </Typography>
+            </Tooltip>
+
+            <Tooltip title="Reserve">
+              <Typography variant="h6">
+                <ForestIcon /> {log.reserve}
               </Typography>
             </Tooltip>
 

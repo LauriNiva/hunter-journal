@@ -35,6 +35,7 @@ logsRouter.post('/', checkJwt, async (req, res) => {
       weapontype: body.weapontype,
       ammo: body.ammo,
       shotdistance: body.shotdistance,
+      reserve: body.reserve,
       notes: body.notes,
       images: [imageid]
     });
