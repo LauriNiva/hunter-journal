@@ -210,12 +210,12 @@ const NewLogForm = ({ setLogs }) => {
           </DialogContentText>
 
           {previewSource ?
-            <img src={previewSource} alt="chosen" style={{ height: "100px", width: "150px" }} />
+            <img src={previewSource} alt="chosen" style={{ height: "200px", width: "300px" }} />
             :
             <label htmlFor="imageuploadbutton">
               <Input sx={{ display: "none" }} type='file' id="imageuploadbutton" name='image'
                 accept=".jpg,.jpeg,.png" onChange={handleFileInputChange} />
-              <Button sx={{ height: "100px", width: "150px" }} variant="outlined" component="span">
+              <Button sx={{ height: "200px", width: "300px" }} variant="outlined" component="span">
                 <AddPhotoAlternateIcon />
               </Button>
             </label>
@@ -252,6 +252,7 @@ const NewLogForm = ({ setLogs }) => {
               InputLabelProps={{ shrink: true }}
               sx={{ width: 150 }}
               error={weightInvalid}
+              autoComplete="off"
               inputProps={{type:"number", min:"0", max:"2000",}}
               required
               InputProps={{
@@ -279,6 +280,7 @@ const NewLogForm = ({ setLogs }) => {
               InputLabelProps={{ shrink: true }}
               sx={{ width: 150 }}
               error={distanceInvalid}
+              autoComplete="off"
               inputProps={{type:"number", min:"0", max:"50000",}}
               required
               InputProps={{
@@ -296,6 +298,7 @@ const NewLogForm = ({ setLogs }) => {
               InputLabelProps={{ shrink: true }}
               sx={{ width: 100 }}
               error={ratingInvalid}
+              autoComplete="off"
               inputProps={{type:"number", min:"0", max:"1000",}}
               variant="outlined"
               value={formRating}
@@ -350,6 +353,7 @@ const NewLogForm = ({ setLogs }) => {
               error={shotDistanceInvalid}
               inputProps={{type:"number", min:"0", max:"800",}}
               required
+              autoComplete="off"
               InputLabelProps={{ shrink: true }}
               InputProps={{
                 endAdornment: <InputAdornment position="end">m</InputAdornment>
