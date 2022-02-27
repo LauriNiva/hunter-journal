@@ -9,6 +9,7 @@ import ammoArray from '../data/ammo.js'
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
 import { useAuth0 } from '@auth0/auth0-react';
+import { Image } from 'mui-image';
 
 const NewLogForm = ({ setLogs }) => {
 
@@ -208,7 +209,7 @@ const NewLogForm = ({ setLogs }) => {
         +
       </Button>
 
-      <Dialog open={open} onClose={handleCloseDialog} fullWidth maxWidth="md">
+      <Dialog open={open} onClose={handleCloseDialog} fullWidth maxWidth="lg">
         <DialogTitle id="form-dialog-title">New log</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -216,12 +217,13 @@ const NewLogForm = ({ setLogs }) => {
           </DialogContentText>
 
           {previewSource ?
-            <img src={previewSource} alt="chosen" style={{ height: "600px", width: "800px" }} />
+            <Image src={previewSource} alt="chosen" />
             :
             <label htmlFor="imageuploadbutton">
               <Input sx={{ display: "none" }} type='file' id="imageuploadbutton" name='image'
                 accept=".jpg,.jpeg,.png" onChange={handleFileInputChange} />
-              <Button sx={{ height: "600px", width: "800px" }} variant="outlined" component="span">
+              <Button sx={{ height: {xs: 200, sm: 400, md:600, lg:800, xl: 950},
+               width: {xs: 300, sm: 500, md:800, lg:1000, xl: 1200} }} variant="outlined" component="span">
                 <AddPhotoAlternateIcon />
               </Button>
             </label>
