@@ -5,16 +5,13 @@
 import React, { useEffect, useState } from 'react';
 import SingleLog from './SingleLog';
 import NewLogForm from './NewLogForm.js';
-import { useAuth0 } from '@auth0/auth0-react';
-import { Container, FormControl, InputLabel,MenuItem, Select, Toolbar, Typography } from '@mui/material';
+import { Container, FormControl, InputLabel, MenuItem, Select, Toolbar } from '@mui/material';
 import SortIcon from '@mui/icons-material/Sort';
 import LogFilteringList from './LogFilteringList';
 
 
 
 function Logs({ logs, setLogs }) {
-
-  const { isAuthenticated } = useAuth0();
 
   const [filteredLogs, setFilteredLogs] = useState(logs);
 
@@ -24,9 +21,11 @@ function Logs({ logs, setLogs }) {
 
   const sortsForLogs = ['Newest First', 'Oldest First', 'Highest Rating', 'Lowest Rating'];
 
-  const sortLogs = () => {
-   // console.log("Sorting the logs...")
-   // console.log('logs to sort: ', filteredLogs)
+
+  useEffect(() => {
+
+    // console.log("Sorting the logs...")
+    
     let sortedLogs = filteredLogs;
 
     if (selectedSortForLogs === 'Newest First') {
@@ -40,43 +39,39 @@ function Logs({ logs, setLogs }) {
     }
 
     setLogsToDisplay(sortedLogs)
-  };
-
-  useEffect(() => {
-    sortLogs();
   }, [logs, filteredLogs, selectedSortForLogs]);
 
 
   return (
 
     <>
-        <Container disableGutters id="logs-container" sx={{ display: "grid", gridTemplateColumns: "2fr 5fr" }}>
+      <Container disableGutters id="logs-container" sx={{ display: "grid", gridTemplateColumns: "2fr 5fr" }}>
 
-          <LogFilteringList logs={logs}  setFilteredLogs={setFilteredLogs} />
+        <LogFilteringList logs={logs} setFilteredLogs={setFilteredLogs} />
 
-          <Container id="logs-list-container" disableGutters >
-            <Toolbar sx={{ justifyContent: 'space-between' }}>
+        <Container id="logs-list-container" disableGutters >
+          <Toolbar sx={{ justifyContent: 'space-between' }}>
 
-              <FormControl>
-                <InputLabel id="sort-dropdown-label"><SortIcon /></InputLabel>
-                <Select labelId="sort-dropdown-label" id="sort-dropdown" label="Sort"
-                  value={selectedSortForLogs} onChange={(e) => setSelectedSortForLogs(e.target.value)} >
-                  {sortsForLogs.map(sort =>
-                    <MenuItem key={sort} value={sort}>{sort}</MenuItem>)}
-                </Select>
-              </FormControl>
+            <FormControl>
+              <InputLabel id="sort-dropdown-label"><SortIcon /></InputLabel>
+              <Select labelId="sort-dropdown-label" id="sort-dropdown" label="Sort"
+                value={selectedSortForLogs} onChange={(e) => setSelectedSortForLogs(e.target.value)} >
+                {sortsForLogs.map(sort =>
+                  <MenuItem key={sort} value={sort}>{sort}</MenuItem>)}
+              </Select>
+            </FormControl>
 
-              <NewLogForm setLogs={setLogs} />
-            </Toolbar>
-            {
-              logsToDisplay.map(log => (
-                <SingleLog key={log._id} log={log} setLogs={setLogs} />
-              ))
-            }
-          </Container>
+            <NewLogForm setLogs={setLogs} />
+          </Toolbar>
+          {
+            logsToDisplay.map(log => (
+              <SingleLog key={log._id} log={log} setLogs={setLogs} />
+            ))
+          }
         </Container>
-      </>
-      
+      </Container>
+    </>
+
   );
 }
 

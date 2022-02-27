@@ -48,7 +48,7 @@ const App = () => {
 
   const NotAuthenticated = () => {
     return (
-      <Box className="not-authenticated" sx={{display:'flex',justifyContent: 'center', alignItems: 'center'}}>
+      <Box className="not-authenticated" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         {
           isLoading ?
             <CircularProgress />
@@ -62,8 +62,9 @@ const App = () => {
 
   return (
     <div>
-      <CssBaseline />
+
       <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
         <ConfirmProvider>
           <Nav username={username} />
           <Paper className="container">

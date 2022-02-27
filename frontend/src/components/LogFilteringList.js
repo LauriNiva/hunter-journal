@@ -6,6 +6,7 @@ import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 import PetsIcon from '@mui/icons-material/Pets';
 import CategoryIcon from '@mui/icons-material/Category';
 import PestControlRodentIcon from '@mui/icons-material/PestControlRodent';
+import RadarIcon from '@mui/icons-material/Radar';
 
 function LogFilteringList({ logs, setFilteredLogs }) {
 
@@ -112,13 +113,13 @@ function LogFilteringList({ logs, setFilteredLogs }) {
 
       weaponFilter.length &&
         (logsBeingFiltered = logsBeingFiltered.filter(item => weaponFilter.includes(item.weapon)))
-        
-        weapontypeFilter.length &&
+
+      weapontypeFilter.length &&
         (logsBeingFiltered = logsBeingFiltered.filter(item => weapontypeFilter.includes(item.weapontype)))
-        
-        ammoFilter.length &&
-          (logsBeingFiltered = logsBeingFiltered.filter(item => ammoFilter.includes(item.ammo)))
-      
+
+      ammoFilter.length &&
+        (logsBeingFiltered = logsBeingFiltered.filter(item => ammoFilter.includes(item.ammo)))
+
 
       const distancesMinMax = {
         '-0': { min: 0, max: 0 },
@@ -137,7 +138,7 @@ function LogFilteringList({ logs, setFilteredLogs }) {
     }
 
     setFilteredLogs(logsBeingFiltered);
-  }, [badgeFilter, animalFilter, furFilter, distanceFilter, weaponFilter, weapontypeFilter, ammoFilter, logs]);
+  }, [badgeFilter, animalFilter, furFilter, distanceFilter, weaponFilter, weapontypeFilter, ammoFilter, logs, setFilteredLogs]);
 
   const resetFilters = () => {
     setAnimalFilter([]);
@@ -155,7 +156,7 @@ function LogFilteringList({ logs, setFilteredLogs }) {
         <List>
           {Object.keys(availableBadgesForFiltering).map((option) =>
             <ListItemButton key={option} dense onClick={() => toggleFilter(badgeFilter, setBadgeFilter, option)}>
-              <Checkbox checked={badgeFilter.includes(option)}/>
+              <Checkbox checked={badgeFilter.includes(option)} />
               <ListItemText primary={`${option} (${availableBadgesForFiltering[option]})`} />
             </ListItemButton>
           )}
@@ -186,7 +187,7 @@ function LogFilteringList({ logs, setFilteredLogs }) {
 
         <List>
           {availableDistancesForFiltering.map((option) =>
-            <ListItemButton key={option[0]} dense  onClick={() => toggleFilter(distanceFilter, setDistanceFilter, option[0])}>
+            <ListItemButton key={option[0]} dense onClick={() => toggleFilter(distanceFilter, setDistanceFilter, option[0])}>
               <Checkbox checked={distanceFilter.includes(option[0])} />
               <ListItemText primary={`${option[0]} m (${option[1]})`} />
             </ListItemButton>
@@ -226,7 +227,7 @@ function LogFilteringList({ logs, setFilteredLogs }) {
       </Collapse>
     )
   };
-  
+
   const Ammofilter = () => {
     return (
       <Collapse in={ammoOpen}>
@@ -234,7 +235,7 @@ function LogFilteringList({ logs, setFilteredLogs }) {
         <List>
           {Object.keys(availableAmmoForFiltering).map((option) =>
             <ListItemButton key={option} dense onClick={() => toggleFilter(ammoFilter, setAmmoFilter, option)}>
-              <Checkbox checked={ammoFilter.includes(option)}/>
+              <Checkbox checked={ammoFilter.includes(option)} />
               <ListItemText primary={`${option} (${availableAmmoForFiltering[option]})`} />
             </ListItemButton>
           )}
@@ -249,7 +250,7 @@ function LogFilteringList({ logs, setFilteredLogs }) {
         <List>
           {Object.keys(availableWeapontypesForFiltering).map((option) =>
             <ListItemButton key={option} dense onClick={() => toggleFilter(weapontypeFilter, setWeapontypeFilter, option)} >
-              <Checkbox checked={weapontypeFilter.includes(option)}/>
+              <Checkbox checked={weapontypeFilter.includes(option)} />
               <ListItemText primary={`${option} (${availableWeapontypesForFiltering[option]})`} />
             </ListItemButton>
           )}
@@ -280,9 +281,9 @@ function LogFilteringList({ logs, setFilteredLogs }) {
 
 
   return (
-    <Paper sx={{maxHeight: '80vh', overflow: 'scroll', }} elevation={6}>
+    <Paper sx={{ maxHeight: '80vh', overflow: 'scroll', }} elevation={6}>
       <List>
-        <Button onClick={() => resetFilters()}>Reset</Button>
+        <Button onClick={() => resetFilters()}>Clear filters</Button>
 
 
         <ListItemButton onClick={() => setBadgeOpen(!badgeOpen)}>
@@ -325,7 +326,7 @@ function LogFilteringList({ logs, setFilteredLogs }) {
 
         <ListItemButton onClick={() => setWeaponOpen(!weaponOpen)} >
           <ListItemIcon>
-            <CategoryIcon />
+            <RadarIcon />
           </ListItemIcon>
           <ListItemText primary="Weapon" />
           {weaponOpen ? <ExpandLess /> : <ExpandMore />}
@@ -334,7 +335,7 @@ function LogFilteringList({ logs, setFilteredLogs }) {
 
         <ListItemButton onClick={() => setWeapontypeOpen(!weapontypeOpen)} >
           <ListItemIcon>
-            <CategoryIcon />
+            <RadarIcon />
           </ListItemIcon>
           <ListItemText primary="Weapontype" />
           {weapontypeOpen ? <ExpandLess /> : <ExpandMore />}
@@ -343,7 +344,7 @@ function LogFilteringList({ logs, setFilteredLogs }) {
 
         <ListItemButton onClick={() => setAmmoOpen(!ammoOpen)} >
           <ListItemIcon>
-            <CategoryIcon />
+            <RadarIcon />
           </ListItemIcon>
           <ListItemText primary="Ammo" />
           {ammoOpen ? <ExpandLess /> : <ExpandMore />}
