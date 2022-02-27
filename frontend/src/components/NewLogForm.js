@@ -217,13 +217,16 @@ const NewLogForm = ({ setLogs }) => {
           </DialogContentText>
 
           {previewSource ?
-            <Image src={previewSource} alt="chosen" />
+            <Image src={previewSource} alt="chosen" sx={{m:1}} />
             :
             <label htmlFor="imageuploadbutton">
               <Input sx={{ display: "none" }} type='file' id="imageuploadbutton" name='image'
                 accept=".jpg,.jpeg,.png" onChange={handleFileInputChange} />
-              <Button sx={{ height: {xs: 200, sm: 400, md:600, lg:800, xl: 950},
-               width: {xs: 300, sm: 500, md:800, lg:1000, xl: 1200} }} variant="outlined" component="span">
+              <Button sx={{
+                m:1,
+                height: { xs: 200, sm: 400, md: 600, lg: 800, xl: 950 },
+                width: { xs: 300, sm: 500, md: 800, lg: 1000, xl: 1200 },
+              }} variant="outlined" component="span">
                 <AddPhotoAlternateIcon />
               </Button>
             </label>
@@ -307,7 +310,7 @@ const NewLogForm = ({ setLogs }) => {
                 value={formDifficulty}
                 onChange={(e) => setFormDifficulty(e.target.value)}
               >
-                { difficultyOptions.map(option => <MenuItem key={option} value={option}>{option}</MenuItem>) }
+                {difficultyOptions.map(option => <MenuItem key={option} value={option}>{option}</MenuItem>)}
               </Select>
             </FormControl>
 
