@@ -1,1 +1,1 @@
-web: node backend
+web: node ./backend/app.js
