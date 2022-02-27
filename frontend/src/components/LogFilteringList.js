@@ -37,7 +37,7 @@ function LogFilteringList({ logs, setFilteredLogs }) {
   const [availableAmmoForFiltering, setAvailableAmmoForFiltering] = useState({});
 
   useEffect(() => {
-    //Check available items for filtering
+    //Check available items for the filtering
 
     let badges = {};
     let animals = {};
