@@ -18,6 +18,8 @@ const ammoList = {
       ".300 (Soft-Point)",
       ".303 (Polymer-Tip)",
       ".303 (Soft-Point)",
+      ".308 (Polymer-Tip)",
+      ".308 (Soft-Point)",
       ".338 (Polymer-Tip)",
       ".338 (Soft-Point)",
       ".45 (Hollow-Point)",

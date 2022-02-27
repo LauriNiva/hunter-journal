@@ -191,6 +191,13 @@ const animalsArray = {
       'Piebald'
     ]
   },
+  'Eastern Cottontail Rabbit': {
+    title: 'Eastern Cottontail Rabbit',
+    animalclass: 1,
+    trophytype: 'Weight',
+    trophyscore: { silver: 1.0, gold: 1.5, diamond: 1.9 },
+    furtypes: ['Brown', 'Grey', 'Light Brown']
+  },
   'Eastern Wild Turkey': {
     title: 'Eastern Wild Turkey',
     animalclass: 1,
