@@ -29,7 +29,7 @@ app.use(requestlogger);
 app.use('/api/logs', logsRouter);
 app.use('/api/users', usersRouter);
 
-app.use(express.static('../frontend/build'));
+app.use(express.static('./frontend/build'));
 
 /* app.get('*', (req, res) => {
 
