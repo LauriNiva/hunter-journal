@@ -17,7 +17,7 @@ function Nav({ username }) {
     <AppBar position="sticky" >
       <Toolbar>
         <Typography variant='h3' sx={{ flexGrow: 1, fontFamily:'Jaapokki' }}>
-          Hunter's Log
+          Hunter's Log Alpha Release
         </Typography>
         {isAuthenticated && <Typography variant='h7' sx={{ mr: 2 }}>{greeting} {username} !</Typography>}
         <AuthButton />
