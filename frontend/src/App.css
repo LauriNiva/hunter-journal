@@ -13,7 +13,6 @@ body {
 .container {
   padding: 10px;
   margin: 10px auto;
-  width: 80%;
   min-height: 800px;
   max-height: 90vh;
   opacity: 0.9;

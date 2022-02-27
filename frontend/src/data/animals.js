@@ -562,7 +562,7 @@ const animalsArray = {
     trophyscore: { silver: 4.7, gold: 10, diamond: 14.1 },
     furtypes: ['Albino', 'Dark Red', 'Melanistic', 'Orange', 'Piebald', 'Red']
   },
-  Reindeer: {
+  'Reindeer': {
     title: 'Reindeer',
     animalclass: 6,
     trophytype: 'Antlers',
