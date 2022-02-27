@@ -5,6 +5,7 @@ import { Card, Container, Dialog, IconButton, Menu, MenuItem, Tooltip, Typograph
 import React, { useState } from 'react';
 import logsService from '../services/logs.js'
 import { useAuth0 } from '@auth0/auth0-react';
+import Image from 'mui-image';
 
 import FemaleIcon from '@mui/icons-material/Female';
 import MaleIcon from '@mui/icons-material/Male';
@@ -144,7 +145,7 @@ function SingleLog({ log, setLogs }) {
             <EditMenu />
 
           </Container>
-          <img src={imageUrl} alt="" width="100%" />
+          <Image src={imageUrl} showLoading width="100%" />
           <Container disableGutters sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
 
             <Tooltip title="Weight">
