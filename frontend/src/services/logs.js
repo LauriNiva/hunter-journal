@@ -1,8 +1,9 @@
 import axios from "axios";
 
-const PORT = process.env.PORT || 3001;
+const baseURL = `/api/logs`;
 
-const baseURL = `http://localhost:${PORT}/api/logs`;
+//kun prod /api/logs
+
 
 //Hae tykätyimmät logit etusivulle
 

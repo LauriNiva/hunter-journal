@@ -1,8 +1,7 @@
 import axios from "axios";
 
-const PORT = process.env.PORT || 3001;
 
-const baseURL = `http://localhost:${PORT}/api/users`;
+const baseURL = `/api/users`;
 
 
 //Hae käyttäjän omat logit
