@@ -123,9 +123,9 @@ function SingleLog({ log, setLogs }) {
       </Card>
 
       {/* Yksittäisen login näkymä avatessa */}
-      <Dialog onClose={handleClose} open={singleLogDialogOpen}>
+      <Dialog onClose={handleClose} open={singleLogDialogOpen} maxWidth="lg">
         <Card sx={{ padding: 3 }} >
-          <Container disableGutters sx={{ display: 'grid', gridTemplateColumns: '1fr 40px 50px 20px' }}>
+          <Container disableGutters sx={{mb:2, display: 'grid', gridTemplateColumns: '1fr 40px 50px 20px' }}>
 
             <Typography variant="h4">
               {log.animal}
@@ -147,8 +147,8 @@ function SingleLog({ log, setLogs }) {
             <EditMenu />
 
           </Container>
-          <Image src={imageUrl} showLoading width="100%" />
-          <Container disableGutters sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+          <Image src={imageUrl} showLoading sx={{}} />
+          <Container disableGutters sx={{ mt:2, display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
 
             <Tooltip title="Weight">
               <Typography variant="h6">
