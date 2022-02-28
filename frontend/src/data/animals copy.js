@@ -1,12 +1,10 @@
-const animalsArray = 
-{
+const animalsArray = {
   'American Alligator': {
     title: 'American Alligator',
     animalclass: 6,
     trophytype: 'Length',
     trophyscore: { silver: 266, gold: 378, diamond: 492 },
-    furtypes: [ 'Albino', 'Dark-Brown', 'Melanistic', 'Olive', 'Piebald' ],
-    reserves: [ 'Mississippi Acres' ]
+    furtypes: ['Albino', 'Dark-Brown', 'Melanistic', 'Olive', 'Piebald']
   },
   'Antelope Jackrabbit': {
     title: 'Antelope Jackrabbit',
@@ -20,16 +18,14 @@ const animalsArray =
       'Grey',
       'Melanistic',
       'Mottled'
-    ],
-    reserves: [ 'Rancho del Arroyo' ]
+    ]
   },
   'Axis Deer': {
     title: 'Axis Deer',
     animalclass: 3,
     trophytype: 'Antlers',
     trophyscore: { silver: 72.8, gold: 155.3, diamond: 217.2 },
-    furtypes: [ 'Albino', 'Dark', 'Melanistic', 'Orange', 'Piebald', 'Spotted' ],
-    reserves: [ 'Parque Fernando' ]
+    furtypes: ['Albino', 'Dark', 'Melanistic', 'Orange', 'Piebald', 'Spotted']
   },
   'Beceite Ibex': {
     title: 'Beceite Ibex',
@@ -45,32 +41,28 @@ const animalsArray =
       'Light Brown',
       'Melanistic',
       'Orange'
-    ],
-    reserves: [ 'Cuatro Colinas' ]
+    ]
   },
   'Bighorn Sheep': {
     title: 'Bighorn Sheep',
     animalclass: 4,
     trophytype: 'Horns',
     trophyscore: { silver: 90.3, gold: 132.7, diamond: 164.6 },
-    furtypes: [ 'Albino', 'Black', 'Bronze', 'Brown', 'Grey-Brown' ],
-    reserves: [ 'Silver Ridge Peaks', 'Rancho del Arroyo' ]
+    furtypes: ['Albino', 'Black', 'Bronze', 'Brown', 'Grey-Brown']
   },
   'Black Bear': {
     title: 'Black Bear',
     animalclass: 7,
     trophytype: 'Skull',
     trophyscore: { silver: 14.4, gold: 19.2, diamond: 22.8 },
-    furtypes: [ 'Black', 'Blonde', 'Brown', 'Cinnamon', 'Dark', 'Dusky' ],
-    reserves: [ 'Layton Lake', 'Silver Ridge Peaks', 'Mississippi Acres' ]
+    furtypes: ['Black', 'Blonde', 'Brown', 'Cinnamon', 'Dark', 'Dusky']
   },
-  Blackbuck: {
+  'Blackbuck': {
     title: 'Blackbuck',
     animalclass: 3,
     trophytype: 'Horns',
     trophyscore: { silver: 71.8, gold: 106.3, diamond: 132.2 },
-    furtypes: [ 'Melanistic', 'Black', 'Leucistic', 'Brown', 'Dark' ],
-    reserves: [ 'Parque Fernando' ]
+    furtypes: ['Melanistic', 'Black', 'Leucistic', 'Brown', 'Dark']
   },
   'Blacktail Deer': {
     title: 'Blacktail Deer',
@@ -85,24 +77,21 @@ const animalsArray =
       'Melanistic',
       'Piebald',
       'Tan'
-    ],
-    reserves: [ 'Layton Lake' ]
+    ]
   },
   'Blue Wildebeest': {
     title: 'Blue Wildebeest',
     animalclass: 6,
     trophytype: 'Horns',
     trophyscore: { silver: 21.6, gold: 30.8, diamond: 37.7 },
-    furtypes: [ 'Albino', 'Crowned', 'Gold', 'Grey' ],
-    reserves: [ 'Vurhonga Savanna' ]
+    furtypes: ['Albino', 'Crowned', 'Gold', 'Grey']
   },
   'Bobwhite Quail': {
     title: 'Bobwhite Quail',
     animalclass: 1,
     trophytype: 'Combined',
     trophyscore: { silver: 159, gold: 217, diamond: 260.5 },
-    furtypes: [ 'Brown', 'Grey', 'Red', 'Red-Brown', 'Albino' ],
-    reserves: [ 'Mississippi Acres' ]
+    furtypes: ['Brown', 'Grey', 'Red', 'Red-Brown', 'Albino']
   },
   'Canada Goose': {
     title: 'Canada Goose',
@@ -116,26 +105,23 @@ const animalsArray =
       'Grey-Brown',
       'Light Grey Leucistic',
       'Melanistic'
-    ],
-    reserves: [ 'Hirschfelden' ]
+    ]
   },
   'Cape Buffalo': {
     title: 'Cape Buffalo',
     animalclass: 9,
     trophytype: 'Horns',
     trophyscore: { silver: 73.3, gold: 117.9, diamond: 151.4 },
-    furtypes: [ 'Black', 'Grey', 'Brown', 'Albino', 'Leucistic' ],
-    reserves: [ 'Vurhonga Savanna' ]
+    furtypes: ['Black', 'Grey', 'Brown', 'Albino', 'Leucistic']
   },
-  Caribou: {
+  'Caribou': {
     title: 'Caribou',
     animalclass: 6,
     trophytype: 'Antlers',
     trophyscore: { silver: 152.5, gold: 311.2, diamond: 430.2 },
-    furtypes: [ 'Albino', 'Dark-Brown', 'Leucistic', 'Melanistic', 'Piebald' ],
-    reserves: [ 'Yukon Valley' ]
+    furtypes: ['Albino', 'Dark-Brown', 'Leucistic', 'Melanistic', 'Piebald']
   },
-  Chamois: {
+  'Chamois': {
     title: 'Chamois',
     animalclass: 3,
     trophytype: 'Horns',
@@ -149,22 +135,20 @@ const animalsArray =
       'Leucistic',
       'Melanistic',
       'Tan'
-    ],
-    reserves: [ 'Te Awaroa' ]
+    ]
   },
   'Cinnamon Teal': {
     title: 'Cinnamon Teal',
     animalclass: 1,
     trophytype: 'Weight',
     trophyscore: { silver: 3.4, gold: 4.1, diamond: 4.6 },
-    furtypes: [ 'Beige', 'Cinnamon', 'Melanistic', 'Piebald', 'Red' ],
-    reserves: [ 'Parque Fernando' ]
+    furtypes: ['Beige', 'Cinnamon', 'Melanistic', 'Piebald', 'Red']
   },
   'Collared Peccary': {
     title: 'Collared Peccary',
     animalclass: 4,
     trophytype: 'Tusks',
-    trophyscore: { silver: 37.5, gold: 98.5, diamond: 144.2 },
+    trophyscore: { silver: 37.5, gold: 98.5, diamond: 144.20 },
     furtypes: [
       'Albino',
       'Brown',
@@ -174,8 +158,7 @@ const animalsArray =
       'Leucistic',
       'Melanistic',
       'Ochre'
-    ],
-    reserves: [ 'Rancho del Arroyo' ]
+    ]
   },
   'Common Raccoon': {
     title: 'Common Raccoon',
@@ -191,10 +174,9 @@ const animalsArray =
       'Blonde Piebald',
       'Brown Piebald',
       'Grey Piebald'
-    ],
-    reserves: [ 'Mississippi Acres' ]
+    ]
   },
-  Coyote: {
+  'Coyote': {
     title: 'Coyote',
     animalclass: 2,
     trophytype: 'Weight',
@@ -207,24 +189,21 @@ const animalsArray =
       'Melanistic',
       'Orange',
       'Piebald'
-    ],
-    reserves: [ 'Layton Lake', 'Rancho del Arroyo' ]
+    ]
   },
   'Eastern Cottontail Rabbit': {
     title: 'Eastern Cottontail Rabbit',
     animalclass: 1,
     trophytype: 'Weight',
-    trophyscore: { silver: 1, gold: 1.5, diamond: 1.9 },
-    furtypes: [ 'Brown', 'Grey', 'Light Brown' ],
-    reserves: [ 'Mississippi Acres' ]
+    trophyscore: { silver: 1.0, gold: 1.5, diamond: 1.9 },
+    furtypes: ['Brown', 'Grey', 'Light Brown']
   },
   'Eastern Wild Turkey': {
     title: 'Eastern Wild Turkey',
     animalclass: 1,
     trophytype: 'Weight',
     trophyscore: { silver: 2.5, gold: 3.7, diamond: 4.6 },
-    furtypes: [ 'Bronze', 'Brown', 'Light Bronze', 'Light Brown' ],
-    reserves: [ 'Mississippi Acres' ]
+    furtypes: ['Bronze', 'Brown', 'Light Bronze', 'Light Brown']
   },
   'Brown Bear': {
     title: 'Brown Bear',
@@ -241,16 +220,14 @@ const animalsArray =
       'Light Brown',
       'Melanistic',
       'Red-Brown'
-    ],
-    reserves: [ 'Medved Taiga' ]
+    ]
   },
-  Lynx: {
+  'Lynx': {
     title: 'Lynx',
     animalclass: 3,
     trophytype: 'Skull',
     trophyscore: { silver: 18.6, gold: 23.8, diamond: 27.7 },
-    furtypes: [ 'Albino', 'Grey', 'Light Brown', 'Melanistic', 'Piebald' ],
-    reserves: [ 'Medved Taiga' ]
+    furtypes: ['Albino', 'Grey', 'Light Brown', 'Melanistic', 'Piebald']
   },
   'European Bison': {
     title: 'European Bison',
@@ -264,8 +241,7 @@ const animalsArray =
       'Light Brown',
       'Melanistic',
       'Piebald'
-    ],
-    reserves: [ 'Hirschfelden' ]
+    ]
   },
   'European Hare': {
     title: 'European Hare',
@@ -279,8 +255,7 @@ const animalsArray =
       'Grey',
       'Light Brown',
       'Melanistic'
-    ],
-    reserves: [ 'Cuatro Colinas' ]
+    ]
   },
   'European Rabbit': {
     title: 'European Rabbit',
@@ -296,8 +271,7 @@ const animalsArray =
       'Light Grey',
       'Melanistic',
       'Tan'
-    ],
-    reserves: [ 'Hirschfelden', 'Te Awaroa' ]
+    ]
   },
   'Fallow Deer': {
     title: 'Fallow Deer',
@@ -312,8 +286,7 @@ const animalsArray =
       'Piebald',
       'Red Spotted',
       'Spotted'
-    ],
-    reserves: [ 'Hirschfelden', 'Te Awaroa' ]
+    ]
   },
   'Feral Goat': {
     title: 'Feral Goat',
@@ -321,13 +294,12 @@ const animalsArray =
     trophytype: 'Horns',
     trophyscore: { silver: 89.4, gold: 157.6, diamond: 208.7 },
     furtypes: [
-      'Albino',      'Black',
+      'Albino', 'Black',
       'Black-Brown', 'Black-White',
-      'Blonde',      'Brown',
-      'Dark-Brown',  'Mixed',
-      'White',       'White-Brown'
-    ],
-    reserves: [ 'Te Awaroa' ]
+      'Blonde', 'Brown',
+      'Dark-Brown', 'Mixed',
+      'White', 'White-Brown'
+    ]
   },
   'Feral Pig': {
     title: 'Feral Pig',
@@ -342,16 +314,14 @@ const animalsArray =
       'Brown Hybrid',
       'Dark Brown',
       'Pink'
-    ],
-    reserves: [ 'Te Awaroa', 'Mississippi Acres' ]
+    ]
   },
-  Gemsbok: {
+  'Gemsbok': {
     title: 'Gemsbok',
     animalclass: 8,
     trophytype: 'Horns',
     trophyscore: { silver: 194.8, gold: 276.3, diamond: 337.5 },
-    furtypes: [ 'Dark', 'Common', 'Beige', 'Grey', 'Gold' ],
-    reserves: [ 'Vurhonga Savanna' ]
+    furtypes: ['Dark', 'Common', 'Beige', 'Grey', 'Gold']
   },
   'Gray Fox': {
     title: 'Gray Fox',
@@ -366,16 +336,14 @@ const animalsArray =
       'Red',
       'Two Tones',
       'Melanistic'
-    ],
-    reserves: [ 'Mississippi Acres' ]
+    ]
   },
   'Gray Wolf': {
     title: 'Gray Wolf',
     animalclass: 5,
     trophytype: 'Skull',
     trophyscore: { silver: 32, gold: 36, diamond: 39 },
-    furtypes: [ 'Albino', 'Eggwhite', 'Grey', 'Melanistic', 'Red Brown' ],
-    reserves: [ 'Yukon Valley' ]
+    furtypes: ['Albino', 'Eggwhite', 'Grey', 'Melanistic', 'Red Brown']
   },
   'Gredos Ibex': {
     title: 'Gredos Ibex',
@@ -391,32 +359,28 @@ const animalsArray =
       'Light Brown',
       'Light Grey',
       'Melanistic'
-    ],
-    reserves: [ 'Cuatro Colinas' ]
+    ]
   },
   'Grizzly Bear': {
     title: 'Grizzly Bear',
     animalclass: 7,
     trophytype: 'Skull',
     trophyscore: { silver: 52.6, gold: 60.8, diamond: 67 },
-    furtypes: [ 'Common', 'Melanistic', 'Brown', 'Albino' ],
-    reserves: [ 'Yukon Valley' ]
+    furtypes: ['Common', 'Melanistic', 'Brown', 'Albino']
   },
   'Harlequin Duck': {
     title: 'Harlequin Duck',
     animalclass: 1,
     trophytype: 'Weight',
     trophyscore: { silver: 5.3, gold: 6.4, diamond: 7.2 },
-    furtypes: [ 'Common', 'Dark', 'Piebald', 'Grey', 'Albino', 'Melanistic' ],
-    reserves: [ 'Yukon Valley' ]
+    furtypes: ['Common', 'Dark', 'Piebald', 'Grey', 'Albino', 'Melanistic']
   },
   'Iberian Mouflon': {
     title: 'Iberian Mouflon',
     animalclass: 4,
     trophytype: 'Horns',
     trophyscore: { silver: 97, gold: 144.2, diamond: 179.6 },
-    furtypes: [ 'Albino', 'Brown', 'Grey', 'Light Brown', 'Melanistic' ],
-    reserves: [ 'Cuatro Colinas' ]
+    furtypes: ['Albino', 'Brown', 'Grey', 'Light Brown', 'Melanistic']
   },
   'Iberian Wolf': {
     title: 'Iberian Wolf',
@@ -424,21 +388,24 @@ const animalsArray =
     trophytype: 'Skull',
     trophyscore: { silver: 32, gold: 36, diamond: 39 },
     furtypes: [
-      'Albino',     'Fantasma',
-      'Grey',       'Grey-Brown',
-      'Melanistic', 'Ogro',
-      'Olive',      'Sombra',
-      'Pristine',   'Winter'
-    ],
-    reserves: [ 'Cuatro Colinas' ]
+      'Albino',
+      'Fantasma',
+      'Grey',
+      'Grey-Brown',
+      'Melanistic',
+      'Ogro',
+      'Olive',
+      'Sombra',
+      'Pristine',
+      'Winter'
+    ]
   },
   'White-tailed Jackrabbit': {
     title: 'White-tailed Jackrabbit',
     animalclass: 1,
     trophytype: 'Weight',
     trophyscore: { silver: 2.8, gold: 4.8, diamond: 6.3 },
-    furtypes: [ 'Albino', 'Brown', 'Grey', 'Light Brown' ],
-    reserves: [ 'Layton Lake' ]
+    furtypes: ['Albino', 'Brown', 'Grey', 'Light Brown']
   },
   'Lesser Kudu': {
     title: 'Lesser Kudu',
@@ -453,18 +420,16 @@ const animalsArray =
       'Dusky',
       'Melanistic',
       'Red Brown'
-    ],
-    reserves: [ 'Vurhonga Savanna' ]
+    ]
   },
-  Lion: {
+  'Lion': {
     title: 'Lion',
     animalclass: 9,
     trophytype: 'Skull',
     trophyscore: { silver: 38, gold: 44, diamond: 48.5 },
-    furtypes: [ 'Albino', 'Blonde', 'Dark-Brown', 'Light Brown', 'Tan' ],
-    reserves: [ 'Vurhonga Savanna' ]
+    furtypes: ['Albino', 'Blonde', 'Dark-Brown', 'Light Brown', 'Tan']
   },
-  Mallard: {
+  'Mallard': {
     title: 'Mallard',
     animalclass: 1,
     trophytype: 'Weight',
@@ -476,8 +441,7 @@ const animalsArray =
       'Leucistic',
       'Melanistic',
       'Piebald'
-    ],
-    reserves: [ 'Layton Lake' ]
+    ]
   },
   "Merriam's Turkey": {
     title: "Merriam's Turkey",
@@ -492,8 +456,7 @@ const animalsArray =
       'Leucistic',
       'Light Brown',
       'Melanistic'
-    ],
-    reserves: [ 'Silver Ridge Peaks', 'Te Awaroa' ]
+    ]
   },
   'Mexican Bobcat': {
     title: 'Mexican Bobcat',
@@ -508,10 +471,9 @@ const animalsArray =
       'Melanistic',
       'Red',
       'Tan'
-    ],
-    reserves: [ 'Rancho del Arroyo' ]
+    ]
   },
-  Moose: {
+  'Moose': {
     title: 'Moose',
     animalclass: 8,
     trophytype: 'Antlers',
@@ -525,8 +487,7 @@ const animalsArray =
       'Mocha',
       'Piebald',
       'Tan'
-    ],
-    reserves: [ 'Layton Lake', 'Medved Taiga', 'Yukon Valley' ]
+    ]
   },
   'Mountain Goat': {
     title: 'Mountain Goat',
@@ -540,16 +501,14 @@ const animalsArray =
       'Light Grey',
       'Melanistic',
       'White'
-    ],
-    reserves: [ 'Silver Ridge Peaks' ]
+    ]
   },
   'Mountain Lion': {
     title: 'Mountain Lion',
     animalclass: 5,
     trophytype: 'Skull',
     trophyscore: { silver: 32, gold: 36, diamond: 39 },
-    furtypes: [ 'Albino', 'Dark Red', 'Grey', 'Light Brown', 'Melanistic' ],
-    reserves: [ 'Silver Ridge Peaks' ]
+    furtypes: ['Albino', 'Dark Red', 'Grey', 'Light Brown', 'Melanistic']
   },
   'Mule Deer': {
     title: 'Mule Deer',
@@ -564,32 +523,28 @@ const animalsArray =
       'Grey',
       'Melanistic',
       'Piebald'
-    ],
-    reserves: [ 'Parque Fernando', 'Silver Ridge Peaks', 'Rancho del Arroyo' ]
+    ]
   },
   'Plains Bison': {
     title: 'Plains Bison',
     animalclass: 9,
     trophytype: 'Horns',
     trophyscore: { silver: 50.7, gold: 148.1, diamond: 221.1 },
-    furtypes: [ 'Common', 'Albino', 'Leucistic', 'Melanistic' ],
-    reserves: [ 'Yukon Valley', 'Silver Ridge Peaks' ]
+    furtypes: ['Common', 'Albino', 'Leucistic', 'Melanistic']
   },
-  Pronghorn: {
+  'Pronghorn': {
     title: 'Pronghorn',
     animalclass: 4,
     trophytype: 'Horns',
     trophyscore: { silver: 46, gold: 75.7, diamond: 98 },
-    furtypes: [ 'Dark', 'Tan', 'Piebald', 'Albino', 'Leucistic' ],
-    reserves: [ 'Silver Ridge Peaks' ]
+    furtypes: ['Dark', 'Tan', 'Piebald', 'Albino', 'Leucistic']
   },
-  Puma: {
+  'Puma': {
     title: 'Puma',
     animalclass: 5,
     trophytype: 'Skull',
     trophyscore: { silver: 32, gold: 36, diamond: 39 },
-    furtypes: [ 'Albino', 'Dark Red', 'Grey', 'Light Brown', 'Melanistic' ],
-    reserves: [ 'Parque Fernando' ]
+    furtypes: ['Albino', 'Dark Red', 'Grey', 'Light Brown', 'Melanistic']
   },
   'Red Deer': {
     title: 'Red Deer',
@@ -605,12 +560,6 @@ const animalsArray =
       'Melanistic',
       'Piebald',
       'Spotted (Fabled)'
-    ],
-    reserves: [
-      'Hirschfelden',
-      'Parque Fernando',
-      'Cuatro Colinas',
-      'Te Awaroa'
     ]
   },
   'Red Fox': {
@@ -618,10 +567,9 @@ const animalsArray =
     animalclass: 2,
     trophytype: 'Weight',
     trophyscore: { silver: 4.7, gold: 10, diamond: 14.1 },
-    furtypes: [ 'Albino', 'Dark Red', 'Melanistic', 'Orange', 'Piebald', 'Red' ],
-    reserves: [ 'Hirschfelden', 'Yukon Valley' ]
+    furtypes: ['Albino', 'Dark Red', 'Melanistic', 'Orange', 'Piebald', 'Red']
   },
-  Reindeer: {
+  'Reindeer': {
     title: 'Reindeer',
     animalclass: 6,
     trophytype: 'Antlers',
@@ -635,16 +583,14 @@ const animalsArray =
       'Melanistic',
       'Piebald',
       'Tan'
-    ],
-    reserves: [ 'Medved Taiga' ]
+    ]
   },
   'Ring-Necked Pheasant': {
     title: 'Ring-Necked Pheasant',
     animalclass: 1,
     trophytype: 'Combined',
     trophyscore: { silver: 9.1, gold: 15.5, diamond: 20.3 },
-    furtypes: [ 'Albino', 'Brown', 'Grey', 'Leucistic', 'Melanistic', 'Molting' ],
-    reserves: [ 'Rancho del Arroyo' ]
+    furtypes: ['Albino', 'Brown', 'Grey', 'Leucistic', 'Melanistic', 'Molting']
   },
   'Rio Grande Turkey': {
     title: 'Rio Grande Turkey',
@@ -660,8 +606,7 @@ const animalsArray =
       'Light Buff',
       'Light Copper',
       'Melanistic'
-    ],
-    reserves: [ 'Rancho del Arroyo' ]
+    ]
   },
   'Rocky Mountain Elk': {
     title: 'Rocky Mountain Elk',
@@ -675,8 +620,7 @@ const animalsArray =
       'Light Grey',
       'Piebald',
       'Melanistic'
-    ],
-    reserves: [ 'Silver Ridge Peaks' ]
+    ]
   },
   'Roe Deer': {
     title: 'Roe Deer',
@@ -692,8 +636,7 @@ const animalsArray =
       'Orange',
       'Piebald',
       'Tan'
-    ],
-    reserves: [ 'Hirschfelden', 'Cuatro Colinas' ]
+    ]
   },
   'Ronda Ibex': {
     title: 'Ronda Ibex',
@@ -708,24 +651,21 @@ const animalsArray =
       'Grey',
       'Grey-Brown',
       'Melanistic'
-    ],
-    reserves: [ 'Cuatro Colinas' ]
+    ]
   },
   'Roosevelt Elk': {
     title: 'Roosevelt Elk',
     animalclass: 8,
     trophytype: 'Antlers',
     trophyscore: { silver: 128.7, gold: 272.8, diamond: 380.8 },
-    furtypes: [ 'Albino', 'Brown', 'Melanistic', 'Orange', 'Piebald', 'Tan' ],
-    reserves: [ 'Layton Lake' ]
+    furtypes: ['Albino', 'Brown', 'Melanistic', 'Orange', 'Piebald', 'Tan']
   },
   'Scrub Hare': {
     title: 'Scrub Hare',
     animalclass: 1,
     trophytype: 'Weight',
     trophyscore: { silver: 2.4, gold: 4.1, diamond: 5.3 },
-    furtypes: [ 'Grey', 'Light Grey', 'Chestnut', 'Brown' ],
-    reserves: [ 'Vurhonga Savanna' ]
+    furtypes: ['Grey', 'Light Grey', 'Chestnut', 'Brown']
   },
   'Musk Deer': {
     title: 'Musk Deer',
@@ -739,16 +679,14 @@ const animalsArray =
       'Melanistic',
       'Orange',
       'Piebald'
-    ],
-    reserves: [ 'Medved Taiga' ]
+    ]
   },
   'Side-Striped Jackal': {
     title: 'Side-Striped Jackal',
     animalclass: 2,
     trophytype: 'Weight',
     trophyscore: { silver: 16.8, gold: 23.8, diamond: 29.1 },
-    furtypes: [ 'Grey', 'Light Brown', 'Grey Brown', 'Albino', 'Melanistic' ],
-    reserves: [ 'Vurhonga Savanna' ]
+    furtypes: ['Grey', 'Light Brown', 'Grey Brown', 'Albino', 'Melanistic']
   },
   'Sika Deer': {
     title: 'Sika Deer',
@@ -762,8 +700,7 @@ const animalsArray =
       'Dark Spotted',
       'Red Spotted',
       'Spotted'
-    ],
-    reserves: [ 'Te Awaroa' ]
+    ]
   },
   'Southeastern Spanish Ibex': {
     title: 'Southeastern Spanish Ibex',
@@ -779,32 +716,28 @@ const animalsArray =
       'Light Grey',
       'Melanistic',
       'Orange'
-    ],
-    reserves: [ 'Cuatro Colinas' ]
+    ]
   },
-  Springbok: {
+  'Springbok': {
     title: 'Springbok',
     animalclass: 3,
     trophytype: 'Horns',
     trophyscore: { silver: 69.4, gold: 93, diamond: 110.7 },
-    furtypes: [ 'Albino', 'Black-Brown', 'Dark-Brown', 'Orange' ],
-    reserves: [ 'Vurhonga Savanna' ]
+    furtypes: ['Albino', 'Black-Brown', 'Dark-Brown', 'Orange']
   },
-  Warthog: {
+  'Warthog': {
     title: 'Warthog',
     animalclass: 4,
     trophytype: 'Tusks',
     trophyscore: { silver: 24.6, gold: 43.8, diamond: 58.2 },
-    furtypes: [ 'Albino', 'Grey', 'Common', 'Red Brown', 'Red' ],
-    reserves: [ 'Vurhonga Savanna' ]
+    furtypes: ['Albino', 'Grey', 'Common', 'Red Brown', 'Red']
   },
   'Water Buffalo': {
     title: 'Water Buffalo',
     animalclass: 9,
     trophytype: 'Horns',
     trophyscore: { silver: 84.2, gold: 138.1, diamond: 167.5 },
-    furtypes: [ 'Albino', 'Black', 'Brown', 'Grey', 'Orange' ],
-    reserves: [ 'Parque Fernando' ]
+    furtypes: ['Albino', 'Black', 'Brown', 'Grey', 'Orange']
   },
   'Whitetail Deer': {
     title: 'Whitetail Deer',
@@ -820,8 +753,7 @@ const animalsArray =
       'Red-Brown',
       'Tan',
       'Fabled Piebald'
-    ],
-    reserves: [ 'Layton Lake', 'Rancho del Arroyo', 'Mississippi Acres' ]
+    ]
   },
   'Wild Boar': {
     title: 'Wild Boar',
@@ -835,8 +767,7 @@ const animalsArray =
       'Dark-Brown',
       'Light Brown',
       'Melanistic'
-    ],
-    reserves: [ 'Hirschfelden', 'Medved Taiga', 'Cuatro Colinas' ]
+    ]
   }
 }
 
