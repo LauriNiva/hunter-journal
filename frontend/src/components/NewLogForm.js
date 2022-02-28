@@ -258,8 +258,8 @@ const NewLogForm = ({ setLogs }) => {
               mt: 3,
               display: 'grid',
               gap: 1,
-              gridTemplateColumns: { xs: "1fr 1fr", md: "1fr 1fr 1fr 1fr" },
-              gridTemplateRows: { xs: "1fr 1fr 1fr 1fr 1fr 1fr 1fr", md: "1fr 1fr 1fr 1fr" },
+              gridTemplateColumns: { xs: "1fr 1fr", sm: "1fr 1fr 1fr 1fr" },
+              gridTemplateRows: { xs: "1fr 1fr 1fr 1fr 1fr 1fr 1fr", sm: "1fr 1fr 1fr 1fr" },
               gridTemplateAreas: {
                 xs:
                   `"animal reserve"
@@ -269,7 +269,7 @@ const NewLogForm = ({ setLogs }) => {
                     "difficulty shotdistance"
                     "rating notes"
                     "badge notes"`,
-                md:
+                sm:
                   `"animal distance reserve notes"
                   "gender difficulty weapon notes"
                   "weight rating ammo notes"
