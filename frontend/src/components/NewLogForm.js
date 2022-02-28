@@ -6,6 +6,7 @@ import Compress from 'compress.js';
 import animalsList from '../data/animals.js';
 import weaponsList from '../data/weapons.js';
 import ammoArray from '../data/ammo.js';
+import availableAmmoList from '../data/availableAmmoList.js';
 import reservesList from '../data/reserves.js';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
@@ -40,7 +41,7 @@ const NewLogForm = ({ setLogs }) => {
   const [formRating, setFormRating] = useState('');
   const [formBadge, setFormBadge] = useState('None');
   const [formWeapon, setFormWeapon] = useState(weaponOptions[0]);
-  const [availableAmmo, setAvailableAmmo] = useState(ammoArray[formWeapon.type]);
+  const [availableAmmo, setAvailableAmmo] = useState(availableAmmoList[formWeapon.label].ammo);
   const [formAmmo, setFormAmmo] = useState(ammoArray[formWeapon.type][0]);
   const [formShotDistance, setFormShotDistance] = useState('');
   const [formReserve, setFormReserve] = useState(reservesList[0]);
@@ -67,7 +68,7 @@ const NewLogForm = ({ setLogs }) => {
 
   useEffect(() => {
     const animalRatings = animalsList[formAnimal].trophyscore;
-    console.log('animalRatings', animalRatings)
+    //console.log('animalRatings', animalRatings)
     if(formRating >= animalRatings.diamond) {
       setFormBadge('Diamond')
     } else if(formRating >= animalRatings.gold) {
@@ -80,7 +81,7 @@ const NewLogForm = ({ setLogs }) => {
   },[formRating, formAnimal])
 
   useEffect(() => {
-    setAvailableAmmo(ammoArray[formWeapon.type]);
+    setAvailableAmmo(availableAmmoList[formWeapon.label].ammo);
   }, [formWeapon]);
 
   useEffect(() => {
