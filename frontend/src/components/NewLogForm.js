@@ -44,7 +44,8 @@ const NewLogForm = ({ setLogs }) => {
   const [availableAmmo, setAvailableAmmo] = useState(availableAmmoList[formWeapon.label].ammo);
   const [formAmmo, setFormAmmo] = useState(ammoArray[formWeapon.type][0]);
   const [formShotDistance, setFormShotDistance] = useState('');
-  const [formReserve, setFormReserve] = useState(reservesList[0]);
+  const [availableReserves, setAvailableReserves] = useState(animalsList[formAnimal].reserves)
+  const [formReserve, setFormReserve] = useState(availableReserves[0]);
   const [formNotes, setFormNotes] = useState('');
 
   const [weightInvalid, setWeightInvalid] = useState(false);
@@ -60,11 +61,16 @@ const NewLogForm = ({ setLogs }) => {
 
   useEffect(() => {
     setAvailableFurTypes(animalsList[formAnimal].furtypes);
+    setAvailableReserves(animalsList[formAnimal].reserves)
   }, [formAnimal]);
 
   useEffect(() => {
     setFormFurtype(availableFurTypes[0]);
   }, [availableFurTypes]);
+
+  useEffect(() => {
+    setFormReserve(availableReserves[0]);
+  }, [availableReserves]);
 
   useEffect(() => {
     const animalRatings = animalsList[formAnimal].trophyscore;
@@ -438,7 +444,7 @@ const NewLogForm = ({ setLogs }) => {
                   value={formReserve}
                   onChange={(e) => setFormReserve(e.target.value)}
                 >
-                  {reservesList.map(option => <MenuItem key={option} value={option}>{option}</MenuItem>)}
+                  {availableReserves.map(option => <MenuItem key={option} value={option}>{option}</MenuItem>)}
                 </Select>
               </FormControl>
 
