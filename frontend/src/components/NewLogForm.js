@@ -221,197 +221,219 @@ const NewLogForm = ({ setLogs }) => {
           </DialogContentText>
 
           {previewSource ?
-            <Image src={previewSource} alt="chosen" sx={{m:1}} />
+            <Image src={previewSource} alt="chosen" sx={{ m: 1 }} />
             :
             <label htmlFor="imageuploadbutton">
               <Input sx={{ display: "none" }} type='file' id="imageuploadbutton" name='image'
                 accept=".jpg,.jpeg,.png" onChange={handleFileInputChange} />
               <Button sx={{
-                m:1,
-                height: { xs: 200, sm: 400, md: 600, lg: 800, xl: 950 },
-                width: { xs: 300, sm: 500, md: 800, lg: 1000, xl: 1200 },
+                m: 1,
+                height: { xs: 200, sm: 250, md: 400, lg: 500, xl: 650 },
+                width: { xs: 300, sm: 400, md: 600, lg: 800, xl: 1000 },
               }} variant="outlined" component="span">
                 <AddPhotoAlternateIcon />
               </Button>
             </label>
           }
           <form id="newLogForm" onSubmit={handleSubmitDialog}>
+            <Box sx={{
+              display: 'grid',
+              gap: 1,
+              gridTemplateColumns: { xs: "1fr 1fr", md: "1fr 1fr 1fr 1fr" },
+              gridTemplateRows: { xs: "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr", md: "1fr 1fr 1fr 1fr" },
+              gridTemplateAreas: {
+                xs: `"animal reserve"
+            "gender weapon"
+            "weight ammo"
+            "fur shotdistance"
+            "distance notes"
+            "difficulty notes"
+            "rating notes"
+            "badge notes"`,
+                md: `"animal distance reserve notes"
+            "gender difficulty weapon notes"
+            "weight rating ammo notes"
+            "fur badge shotdistance notes"`
+              }
+            }}>
 
-            <Autocomplete
-              id="animals-combobox"
-              options={animalOptions}
-              sx={{ width: 300 }}
-              disableClearable
-              value={formAnimal}
-              onChange={(e, newValue) => setFormAnimal(newValue)}
-              renderInput={(params) => <TextField {...params} label="Animal" />}
-            />
+              <Autocomplete
+                id="animals-combobox"
+                options={animalOptions}
+                sx={{ width: 200, gridArea: "animal" }}
+                disableClearable
+                value={formAnimal}
+                onChange={(e, newValue) => setFormAnimal(newValue)}
+                renderInput={(params) => <TextField {...params} label="Animal" />}
+              />
 
-            <FormControl sx={{ width: 150 }}>
-              <InputLabel id="animal-gender">Gender</InputLabel>
-              <Select
-                labelId="animal-gender"
-                label="Gender"
-                value={formGender}
-                onChange={(e) => setFormGender(e.target.value)}
-              >
-                <MenuItem value="Male">Male</MenuItem>
-                <MenuItem value="Female">Female</MenuItem>
-              </Select>
-            </FormControl>
+              <FormControl sx={{ width: 200, gridArea: "gender" }}>
+                <InputLabel id="animal-gender">Gender</InputLabel>
+                <Select
+                  labelId="animal-gender"
+                  label="Gender"
+                  value={formGender}
+                  onChange={(e) => setFormGender(e.target.value)}
+                >
+                  <MenuItem value="Male">Male</MenuItem>
+                  <MenuItem value="Female">Female</MenuItem>
+                </Select>
+              </FormControl>
 
-            <TextField
-              id="weight-textfield"
-              label="Weight"
-              variant="outlined"
-              InputLabelProps={{ shrink: true }}
-              sx={{ width: 150 }}
-              error={weightInvalid}
-              autoComplete="off"
-              inputProps={{ type: "number", step: "any", min: "0", max: "2000", }}
-              required
-              InputProps={{
-                endAdornment: <InputAdornment position="end">kg</InputAdornment>
+              <TextField
+                id="weight-textfield"
+                label="Weight"
+                variant="outlined"
+                InputLabelProps={{ shrink: true }}
+                sx={{ width: 200, gridArea: "weight" }}
+                error={weightInvalid}
+                autoComplete="off"
+                inputProps={{ type: "number", step: "any", min: "0", max: "2000", }}
+                required
+                InputProps={{
+                  endAdornment: <InputAdornment position="end">kg</InputAdornment>
 
-              }}
-              value={formWeight}
-              onChange={(e) => setFormWeight(e.target.value)}
-            />
+                }}
+                value={formWeight}
+                onChange={(e) => setFormWeight(e.target.value)}
+              />
 
-            <Autocomplete
-              disableClearable
-              id="furtypes-combobox"
-              options={availableFurTypes}
-              sx={{ width: 300 }}
-              value={formFurtype}
-              onChange={(e, newValue) => setFormFurtype(newValue)}
-              renderInput={(params) => <TextField {...params} label="Fur" />}
-            />
+              <Autocomplete
+                disableClearable
+                id="furtypes-combobox"
+                options={availableFurTypes}
+                sx={{ width: 200, gridArea: "fur" }}
+                value={formFurtype}
+                onChange={(e, newValue) => setFormFurtype(newValue)}
+                renderInput={(params) => <TextField {...params} label="Fur" />}
+              />
 
-            <TextField
-              id="distance-textfield"
-              label="Tracking distance"
-              variant="outlined"
-              InputLabelProps={{ shrink: true }}
-              sx={{ width: 150 }}
-              error={distanceInvalid}
-              autoComplete="off"
-              inputProps={{ type: "number", step: "any", min: "0", max: "50000", }}
-              required
-              InputProps={{
-                endAdornment: <InputAdornment position="end">m</InputAdornment>
+              <TextField
+                id="distance-textfield"
+                label="Tracking distance"
+                variant="outlined"
+                InputLabelProps={{ shrink: true }}
+                sx={{ width: 200, gridArea: "distance" }}
+                error={distanceInvalid}
+                autoComplete="off"
+                inputProps={{ type: "number", step: "any", min: "0", max: "50000", }}
+                required
+                InputProps={{
+                  endAdornment: <InputAdornment position="end">m</InputAdornment>
 
-              }}
-              value={formDistance}
-              onChange={(e) => setFormDistance(e.target.value)}
-            />
+                }}
+                value={formDistance}
+                onChange={(e) => setFormDistance(e.target.value)}
+              />
 
-            <FormControl sx={{ width: 150 }}>
-              <InputLabel id="difficulty">Difficulty</InputLabel>
-              <Select
-                labelId="difficulty"
-                label="Difficulty"
-                value={formDifficulty}
-                onChange={(e) => setFormDifficulty(e.target.value)}
-              >
-                {difficultyOptions.map(option => <MenuItem key={option} value={option}>{option}</MenuItem>)}
-              </Select>
-            </FormControl>
+              <FormControl sx={{ width: 200, gridArea: "difficulty" }}>
+                <InputLabel id="difficulty">Difficulty</InputLabel>
+                <Select
+                  labelId="difficulty"
+                  label="Difficulty"
+                  value={formDifficulty}
+                  onChange={(e) => setFormDifficulty(e.target.value)}
+                >
+                  {difficultyOptions.map(option => <MenuItem key={option} value={option}>{option}</MenuItem>)}
+                </Select>
+              </FormControl>
 
-            <TextField
-              id="rating-textfield"
-              label="Trophy rating"
-              required
-              InputLabelProps={{ shrink: true }}
-              sx={{ width: 100 }}
-              error={ratingInvalid}
-              autoComplete="off"
-              inputProps={{ type: "number", step: "any", min: "0", max: "1000", }}
-              variant="outlined"
-              value={formRating}
-              onChange={(e) => setFormRating(e.target.value)}
-            />
+              <TextField
+                id="rating-textfield"
+                label="Trophy rating"
+                required
+                InputLabelProps={{ shrink: true }}
+                sx={{ width: 200, gridArea: "rating" }}
+                error={ratingInvalid}
+                autoComplete="off"
+                inputProps={{ type: "number", step: "any", min: "0", max: "1000", }}
+                variant="outlined"
+                value={formRating}
+                onChange={(e) => setFormRating(e.target.value)}
+              />
 
-            <FormControl sx={{ width: 150 }}>
-              <InputLabel id="animal-gender">Badge</InputLabel>
-              <Select
-                labelId="animal-badge"
-                label="Badge"
-                value={formBadge}
-                onChange={(e) => setFormBadge(e.target.value)}
-              >
-                <MenuItem value="None">None</MenuItem>
-                <MenuItem value="Bronze">Bronze</MenuItem>
-                <MenuItem value="Silver">Silver</MenuItem>
-                <MenuItem value="Gold">Gold</MenuItem>
-                <MenuItem value="Diamond">Diamond</MenuItem>
-                <MenuItem value="Great One">Great One</MenuItem>
-              </Select>
-            </FormControl>
+              <FormControl sx={{ width: 200, gridArea: "badge" }}>
+                <InputLabel id="animal-badge">Badge</InputLabel>
+                <Select
+                  labelId="animal-badge"
+                  label="Badge"
+                  value={formBadge}
+                  onChange={(e) => setFormBadge(e.target.value)}
+                >
+                  <MenuItem value="None">None</MenuItem>
+                  <MenuItem value="Bronze">Bronze</MenuItem>
+                  <MenuItem value="Silver">Silver</MenuItem>
+                  <MenuItem value="Gold">Gold</MenuItem>
+                  <MenuItem value="Diamond">Diamond</MenuItem>
+                  <MenuItem value="Great One">Great One</MenuItem>
+                </Select>
+              </FormControl>
 
-            <Autocomplete
-              id="weapons-combobox"
-              options={weaponOptions}
-              isOptionEqualToValue={(option, value) => option.id === value.id}
-              groupBy={(option) => option.group}
-              sx={{ width: 200 }}
-              disableClearable
-              value={formWeapon}
-              onChange={(e, newValue) => setFormWeapon(newValue)}
-              renderInput={(params) => <TextField {...params} label="Weapon" />}
-            />
+              <Autocomplete
+                id="weapons-combobox"
+                options={weaponOptions}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                groupBy={(option) => option.group}
+                sx={{ width: 200, gridArea: "weapon" }}
+                disableClearable
+                value={formWeapon}
+                onChange={(e, newValue) => setFormWeapon(newValue)}
+                renderInput={(params) => <TextField {...params} label="Weapon" />}
+              />
 
-            <Autocomplete
-              id="ammo-combobox"
-              options={availableAmmo}
-              isOptionEqualToValue={(option, value) => option.id === value.id}
-              sx={{ width: 200 }}
-              disableClearable
-              value={formAmmo}
-              onChange={(e, newValue) => setFormAmmo(newValue)}
-              renderInput={(params) => <TextField {...params} label="Ammo" />}
-            />
+              <Autocomplete
+                id="ammo-combobox"
+                options={availableAmmo}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                sx={{ width: 200, gridArea: "ammo" }}
+                disableClearable
+                value={formAmmo}
+                onChange={(e, newValue) => setFormAmmo(newValue)}
+                renderInput={(params) => <TextField {...params} label="Ammo" />}
+              />
 
-            <TextField
-              id="shotdistance-textfield"
-              label="Shot Distance"
-              variant="outlined"
-              sx={{ width: 150 }}
-              error={shotDistanceInvalid}
-              inputProps={{ type: "number", step: "any", min: "0", max: "800", }}
-              required
-              autoComplete="off"
-              InputLabelProps={{ shrink: true }}
-              InputProps={{
-                endAdornment: <InputAdornment position="end">m</InputAdornment>
+              <TextField
+                id="shotdistance-textfield"
+                label="Shot Distance"
+                variant="outlined"
+                sx={{ width: 200, gridArea: "shotdistance" }}
+                error={shotDistanceInvalid}
+                inputProps={{ type: "number", step: "any", min: "0", max: "800", }}
+                required
+                autoComplete="off"
+                InputLabelProps={{ shrink: true }}
+                InputProps={{
+                  endAdornment: <InputAdornment position="end">m</InputAdornment>
 
-              }}
-              value={formShotDistance}
-              onChange={(e) => setFormShotDistance(e.target.value)}
-            />
-            <FormControl sx={{ width: 150 }}>
-              <InputLabel id="reserve">Reserve</InputLabel>
-              <Select
-                labelId="reserve"
-                label="Reserve"
-                value={formReserve}
-                onChange={(e) => setFormReserve(e.target.value)}
-              >
-                {reservesList.map(option => <MenuItem key={option} value={option}>{option}</MenuItem>)}
-              </Select>
-            </FormControl>
+                }}
+                value={formShotDistance}
+                onChange={(e) => setFormShotDistance(e.target.value)}
+              />
+              <FormControl sx={{ width: 200, gridArea: "reserve" }}>
+                <InputLabel id="reserve">Reserve</InputLabel>
+                <Select
+                  labelId="reserve"
+                  label="Reserve"
+                  value={formReserve}
+                  onChange={(e) => setFormReserve(e.target.value)}
+                >
+                  {reservesList.map(option => <MenuItem key={option} value={option}>{option}</MenuItem>)}
+                </Select>
+              </FormControl>
 
-            <TextField
-              id="notes-textfield"
-              label="Notes"
-              variant="outlined"
-              InputLabelProps={{ shrink: true }}
-              multiline
-              rows={4}
-              value={formNotes}
-              onChange={(e) => setFormNotes(e.target.value)}
-            />
+              <TextField
+                sx={{ width: 200, gridArea: "notes" }}
+                id="notes-textfield"
+                label="Notes"
+                variant="outlined"
+                InputLabelProps={{ shrink: true }}
+                multiline
+                rows={4}
+                value={formNotes}
+                onChange={(e) => setFormNotes(e.target.value)}
+              />
 
+            </Box>
           </form>
         </DialogContent>
         <DialogActions>
