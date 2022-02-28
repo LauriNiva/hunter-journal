@@ -67,7 +67,7 @@ const App = () => {
         <CssBaseline />
         <ConfirmProvider>
           <Nav username={username} />
-          <Paper className="container" sx={{width:{sm: "100%", md: "90%" }}}>
+          <Paper className="container" sx={{width:{sm: "100%", md: "95%" }, maxWidth: "1220px"}}>
             {isAuthenticated ?
               username ?
                 <Logs logs={logs} setLogs={setLogs} />
