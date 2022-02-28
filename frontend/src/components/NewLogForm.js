@@ -217,43 +217,47 @@ const NewLogForm = ({ setLogs }) => {
         <DialogTitle id="form-dialog-title">New log</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Add the image and the data
-          </DialogContentText>
 
-          {previewSource ?
-            <Image src={previewSource} alt="chosen" sx={{ m: 1 }} />
-            :
-            <label htmlFor="imageuploadbutton">
-              <Input sx={{ display: "none" }} type='file' id="imageuploadbutton" name='image'
-                accept=".jpg,.jpeg,.png" onChange={handleFileInputChange} />
-              <Button sx={{
-                m: 1,
-                height: { xs: 200, sm: 250, md: 400, lg: 500, xl: 650 },
-                width: { xs: 300, sm: 400, md: 600, lg: 800, xl: 1000 },
-              }} variant="outlined" component="span">
-                <AddPhotoAlternateIcon />
-              </Button>
-            </label>
-          }
+          </DialogContentText>
+          <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+            {previewSource ?
+              <Image src={previewSource} alt="chosen" sx={{}} />
+              :
+              <label htmlFor="imageuploadbutton">
+                <Input sx={{ display: "none" }} type='file' id="imageuploadbutton" name='image'
+                  accept=".jpg,.jpeg,.png" onChange={handleFileInputChange} />
+                <Button sx={{
+                  m: 1,
+                  height: { xs: 200, sm: 250, md: 400, lg: 500, xl: 650 },
+                  width: { xs: 300, sm: 400, md: 600, lg: 800, xl: 1000 },
+                }} variant="outlined" component="span">
+                  <AddPhotoAlternateIcon />
+                </Button>
+              </label>
+            }
+          </Box>
+
           <form id="newLogForm" onSubmit={handleSubmitDialog}>
             <Box sx={{
+              mt: 3,
               display: 'grid',
               gap: 1,
               gridTemplateColumns: { xs: "1fr 1fr", md: "1fr 1fr 1fr 1fr" },
-              gridTemplateRows: { xs: "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr", md: "1fr 1fr 1fr 1fr" },
+              gridTemplateRows: { xs: "1fr 1fr 1fr 1fr 1fr 1fr 1fr", md: "1fr 1fr 1fr 1fr" },
               gridTemplateAreas: {
-                xs: `"animal reserve"
-            "gender weapon"
-            "weight ammo"
-            "fur shotdistance"
-            "distance notes"
-            "difficulty notes"
-            "rating notes"
-            "badge notes"`,
-                md: `"animal distance reserve notes"
-            "gender difficulty weapon notes"
-            "weight rating ammo notes"
-            "fur badge shotdistance notes"`
+                xs:
+                  `"animal reserve"
+                    "gender distance"
+                    "weight weapon"
+                    "fur ammo"
+                    "difficulty shotdistance"
+                    "rating notes"
+                    "badge notes"`,
+                md:
+                  `"animal distance reserve notes"
+                  "gender difficulty weapon notes"
+                  "weight rating ammo notes"
+                  "fur badge shotdistance notes"`
               }
             }}>
 
