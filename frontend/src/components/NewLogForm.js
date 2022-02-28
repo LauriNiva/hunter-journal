@@ -217,6 +217,9 @@ const NewLogForm = ({ setLogs }) => {
     };
   };
 
+  const formInputWidth = () => {
+    return { xs: 150, sm: 200 };
+  }
 
   return (
 
@@ -277,14 +280,14 @@ const NewLogForm = ({ setLogs }) => {
               <Autocomplete
                 id="animals-combobox"
                 options={animalOptions}
-                sx={{ width: 200, gridArea: "animal" }}
+                sx={{ width: formInputWidth, gridArea: "animal" }}
                 disableClearable
                 value={formAnimal}
                 onChange={(e, newValue) => setFormAnimal(newValue)}
                 renderInput={(params) => <TextField {...params} label="Animal" />}
               />
 
-              <FormControl sx={{ width: 200, gridArea: "gender" }}>
+              <FormControl sx={{ width: formInputWidth, gridArea: "gender" }}>
                 <InputLabel id="animal-gender">Gender</InputLabel>
                 <Select
                   labelId="animal-gender"
@@ -302,7 +305,7 @@ const NewLogForm = ({ setLogs }) => {
                 label="Weight"
                 variant="outlined"
                 InputLabelProps={{ shrink: true }}
-                sx={{ width: 200, gridArea: "weight" }}
+                sx={{ width: formInputWidth, gridArea: "weight" }}
                 error={weightInvalid}
                 autoComplete="off"
                 inputProps={{ type: "number", step: "any", min: "0", max: "2000", }}
@@ -319,7 +322,7 @@ const NewLogForm = ({ setLogs }) => {
                 disableClearable
                 id="furtypes-combobox"
                 options={availableFurTypes}
-                sx={{ width: 200, gridArea: "fur" }}
+                sx={{ width: formInputWidth, gridArea: "fur" }}
                 value={formFurtype}
                 onChange={(e, newValue) => setFormFurtype(newValue)}
                 renderInput={(params) => <TextField {...params} label="Fur" />}
@@ -330,7 +333,7 @@ const NewLogForm = ({ setLogs }) => {
                 label="Tracking distance"
                 variant="outlined"
                 InputLabelProps={{ shrink: true }}
-                sx={{ width: 200, gridArea: "distance" }}
+                sx={{ width: formInputWidth, gridArea: "distance" }}
                 error={distanceInvalid}
                 autoComplete="off"
                 inputProps={{ type: "number", step: "any", min: "0", max: "50000", }}
@@ -343,7 +346,7 @@ const NewLogForm = ({ setLogs }) => {
                 onChange={(e) => setFormDistance(e.target.value)}
               />
 
-              <FormControl sx={{ width: 200, gridArea: "difficulty" }}>
+              <FormControl sx={{ width: formInputWidth, gridArea: "difficulty" }}>
                 <InputLabel id="difficulty">Difficulty</InputLabel>
                 <Select
                   labelId="difficulty"
@@ -360,7 +363,7 @@ const NewLogForm = ({ setLogs }) => {
                 label="Trophy rating"
                 required
                 InputLabelProps={{ shrink: true }}
-                sx={{ width: 200, gridArea: "rating" }}
+                sx={{ width: formInputWidth, gridArea: "rating" }}
                 error={ratingInvalid}
                 autoComplete="off"
                 inputProps={{ type: "number", step: "any", min: "0", max: "1000", }}
@@ -369,7 +372,7 @@ const NewLogForm = ({ setLogs }) => {
                 onChange={(e) => setFormRating(e.target.value)}
               />
 
-              <FormControl sx={{ width: 200, gridArea: "badge" }}>
+              <FormControl sx={{ width: formInputWidth, gridArea: "badge" }}>
                 <InputLabel id="animal-badge">Badge</InputLabel>
                 <Select
                   labelId="animal-badge"
@@ -391,7 +394,7 @@ const NewLogForm = ({ setLogs }) => {
                 options={weaponOptions}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 groupBy={(option) => option.group}
-                sx={{ width: 200, gridArea: "weapon" }}
+                sx={{ width: formInputWidth, gridArea: "weapon" }}
                 disableClearable
                 value={formWeapon}
                 onChange={(e, newValue) => setFormWeapon(newValue)}
@@ -402,7 +405,7 @@ const NewLogForm = ({ setLogs }) => {
                 id="ammo-combobox"
                 options={availableAmmo}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
-                sx={{ width: 200, gridArea: "ammo" }}
+                sx={{ width: formInputWidth, gridArea: "ammo" }}
                 disableClearable
                 value={formAmmo}
                 onChange={(e, newValue) => setFormAmmo(newValue)}
@@ -413,7 +416,7 @@ const NewLogForm = ({ setLogs }) => {
                 id="shotdistance-textfield"
                 label="Shot Distance"
                 variant="outlined"
-                sx={{ width: 200, gridArea: "shotdistance" }}
+                sx={{ width: formInputWidth, gridArea: "shotdistance" }}
                 error={shotDistanceInvalid}
                 inputProps={{ type: "number", step: "any", min: "0", max: "800", }}
                 required
@@ -426,7 +429,7 @@ const NewLogForm = ({ setLogs }) => {
                 value={formShotDistance}
                 onChange={(e) => setFormShotDistance(e.target.value)}
               />
-              <FormControl sx={{ width: 200, gridArea: "reserve" }}>
+              <FormControl sx={{ width: formInputWidth, gridArea: "reserve" }}>
                 <InputLabel id="reserve">Reserve</InputLabel>
                 <Select
                   labelId="reserve"
@@ -439,7 +442,7 @@ const NewLogForm = ({ setLogs }) => {
               </FormControl>
 
               <TextField
-                sx={{ width: 200, gridArea: "notes" }}
+                sx={{ width: formInputWidth, gridArea: "notes" }}
                 id="notes-textfield"
                 label="Notes"
                 variant="outlined"
