@@ -45,7 +45,8 @@ function Logs({ logs, setLogs }) {
   return (
 
     <>
-      <Container disableGutters id="logs-container" sx={{ display: "grid", gridTemplateColumns: "2fr 5fr" }}>
+      <Container disableGutters id="logs-container" 
+      sx={{ display: "grid", gridTemplateColumns: {xs: "1fr", md: "2fr 5fr"} }}>
 
         <LogFilteringList logs={logs} setFilteredLogs={setFilteredLogs} />
 
