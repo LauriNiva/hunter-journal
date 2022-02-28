@@ -66,9 +66,22 @@ const NewLogForm = ({ setLogs }) => {
   }, [availableFurTypes]);
 
   useEffect(() => {
+    const animalRatings = animalsList[formAnimal].trophyscore;
+    console.log('animalRatings', animalRatings)
+    if(formRating >= animalRatings.diamond) {
+      setFormBadge('Diamond')
+    } else if(formRating >= animalRatings.gold) {
+      setFormBadge('Gold')
+    } else if(formRating >= animalRatings.silver) {
+      setFormBadge('Silver')
+    } else if(formRating < animalRatings.silver) {
+      setFormBadge('Bronze')
+    }
+  },[formRating, formAnimal])
+
+  useEffect(() => {
     setAvailableAmmo(ammoArray[formWeapon.type]);
   }, [formWeapon]);
-
 
   useEffect(() => {
     setFormAmmo(availableAmmo[0]);

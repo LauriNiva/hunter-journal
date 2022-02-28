@@ -57,7 +57,7 @@ const animalsArray = {
     trophyscore: { silver: 14.4, gold: 19.2, diamond: 22.8 },
     furtypes: ['Black', 'Blonde', 'Brown', 'Cinnamon', 'Dark', 'Dusky']
   },
-  Blackbuck: {
+  'Blackbuck': {
     title: 'Blackbuck',
     animalclass: 3,
     trophytype: 'Horns',
@@ -114,14 +114,14 @@ const animalsArray = {
     trophyscore: { silver: 73.3, gold: 117.9, diamond: 151.4 },
     furtypes: ['Black', 'Grey', 'Brown', 'Albino', 'Leucistic']
   },
-  Caribou: {
+  'Caribou': {
     title: 'Caribou',
     animalclass: 6,
     trophytype: 'Antlers',
     trophyscore: { silver: 152.5, gold: 311.2, diamond: 430.2 },
     furtypes: ['Albino', 'Dark-Brown', 'Leucistic', 'Melanistic', 'Piebald']
   },
-  Chamois: {
+  'Chamois': {
     title: 'Chamois',
     animalclass: 3,
     trophytype: 'Horns',
@@ -176,7 +176,7 @@ const animalsArray = {
       'Grey Piebald'
     ]
   },
-  Coyote: {
+  'Coyote': {
     title: 'Coyote',
     animalclass: 2,
     trophytype: 'Weight',
@@ -222,7 +222,7 @@ const animalsArray = {
       'Red-Brown'
     ]
   },
-  Lynx: {
+  'Lynx': {
     title: 'Lynx',
     animalclass: 3,
     trophytype: 'Skull',
@@ -316,7 +316,7 @@ const animalsArray = {
       'Pink'
     ]
   },
-  Gemsbok: {
+  'Gemsbok': {
     title: 'Gemsbok',
     animalclass: 8,
     trophytype: 'Horns',
@@ -422,14 +422,14 @@ const animalsArray = {
       'Red Brown'
     ]
   },
-  Lion: {
+  'Lion': {
     title: 'Lion',
     animalclass: 9,
     trophytype: 'Skull',
     trophyscore: { silver: 38, gold: 44, diamond: 48.5 },
     furtypes: ['Albino', 'Blonde', 'Dark-Brown', 'Light Brown', 'Tan']
   },
-  Mallard: {
+  'Mallard': {
     title: 'Mallard',
     animalclass: 1,
     trophytype: 'Weight',
@@ -473,7 +473,7 @@ const animalsArray = {
       'Tan'
     ]
   },
-  Moose: {
+  'Moose': {
     title: 'Moose',
     animalclass: 8,
     trophytype: 'Antlers',
@@ -532,14 +532,14 @@ const animalsArray = {
     trophyscore: { silver: 50.7, gold: 148.1, diamond: 221.1 },
     furtypes: ['Common', 'Albino', 'Leucistic', 'Melanistic']
   },
-  Pronghorn: {
+  'Pronghorn': {
     title: 'Pronghorn',
     animalclass: 4,
     trophytype: 'Horns',
     trophyscore: { silver: 46, gold: 75.7, diamond: 98 },
     furtypes: ['Dark', 'Tan', 'Piebald', 'Albino', 'Leucistic']
   },
-  Puma: {
+  'Puma': {
     title: 'Puma',
     animalclass: 5,
     trophytype: 'Skull',
@@ -718,14 +718,14 @@ const animalsArray = {
       'Orange'
     ]
   },
-  Springbok: {
+  'Springbok': {
     title: 'Springbok',
     animalclass: 3,
     trophytype: 'Horns',
     trophyscore: { silver: 69.4, gold: 93, diamond: 110.7 },
     furtypes: ['Albino', 'Black-Brown', 'Dark-Brown', 'Orange']
   },
-  Warthog: {
+  'Warthog': {
     title: 'Warthog',
     animalclass: 4,
     trophytype: 'Tusks',
