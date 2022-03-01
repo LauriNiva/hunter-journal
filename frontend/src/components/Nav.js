@@ -14,7 +14,7 @@ function Nav({ username }) {
     <AppBar position="sticky" >
       <Toolbar id="navbar">
         <Typography variant='h4' sx={{ flexGrow: 1, fontFamily: 'Jaapokki', fontSize: { xs: 30, sm: 40 } }}>
-         <Link to='/'>Hunter's Log 0.1.2</Link> 
+         <Link to='/'>Hunter's Log 0.1.3</Link> 
         </Typography>
         <Typography sx={{ fontFamily: 'Jaapokki', mr:1}} > <Link to='/'>HOME</Link></Typography>
         {
