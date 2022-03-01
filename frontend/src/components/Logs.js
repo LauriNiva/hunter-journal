@@ -8,10 +8,13 @@ import NewLogForm from './NewLogForm.js';
 import { Container, FormControl, InputLabel, MenuItem, Select, Toolbar } from '@mui/material';
 import SortIcon from '@mui/icons-material/Sort';
 import LogFilteringList from './LogFilteringList';
+import { withAuthenticationRequired } from '@auth0/auth0-react';
 
 
 
-function Logs({ logs, setLogs }) {
+
+function Logs ({ logs, setLogs }) {
+
 
   const [filteredLogs, setFilteredLogs] = useState(logs);
 
@@ -76,4 +79,4 @@ function Logs({ logs, setLogs }) {
   );
 }
 
-export default Logs;
+export default withAuthenticationRequired(Logs);

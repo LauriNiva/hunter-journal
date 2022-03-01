@@ -2,6 +2,7 @@ import React from 'react';
 import AuthButton from './AuthButton';
 import { useAuth0 } from '@auth0/auth0-react';
 import { AppBar, Toolbar, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 
 function Nav({ username }) {
@@ -11,17 +12,21 @@ function Nav({ username }) {
   const greetings = ['Hi there', 'Happy hunting'];
 
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-   
+
 
   return (
     <AppBar position="sticky" >
-      <Toolbar>
-        <Typography variant='h4' sx={{ flexGrow: 1, fontFamily:'Jaapokki', fontSize:{xs: 30, sm: 40} }}>
-          Hunter's Log 0.1.2
+      <Toolbar id="navbar">
+        <Typography variant='h4' sx={{ flexGrow: 1, fontFamily: 'Jaapokki', fontSize: { xs: 30, sm: 40 } }}>
+         <Link to='/'>Hunter's Log 0.1.2</Link> 
         </Typography>
+        <Typography sx={{ fontFamily: 'Jaapokki', mr:1}} > <Link to='/'>HOME</Link></Typography>
         {
-        isAuthenticated && 
-        <Typography sx={{ mr: 2 }}>{greeting} {username}</Typography>
+          isAuthenticated &&
+          <>
+            <Typography sx={{ fontFamily: 'Jaapokki', mr:1}} ><Link to='/logs'>LOGS</Link></Typography>
+            <Typography sx={{ mr: 2 }}>{greeting} {username}</Typography>
+          </>
         }
         <AuthButton />
 

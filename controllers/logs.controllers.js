@@ -13,6 +13,11 @@ logsRouter.get('/', checkJwt, async (req, res) => {
   res.json(logs);
 });
 
+logsRouter.get('/recent', async (req, res) => {
+  const recentLogs = await Log.find().sort({_id: -1}).limit(10).populate('user', 'username');
+  res.json(recentLogs);
+});
+
 logsRouter.post('/', checkJwt, async (req, res) => {
   console.log('inside logsrouter: ', req.body)
   const body = req.body;
