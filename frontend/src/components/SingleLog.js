@@ -21,7 +21,7 @@ import StarHalfIcon from '@mui/icons-material/StarHalf';
 import ForestIcon from '@mui/icons-material/Forest';
 
 
-function SingleLog({ log, setLogs }) {
+function SingleLog({ log, setLogs, dataToShow }) {
 
 
   const [singleLogDialogOpen, setSingleLogDialogOpen] = useState(false);
@@ -117,7 +117,7 @@ function SingleLog({ log, setLogs }) {
         </Typography>
 
         <Typography variant="h6">
-          {log.rating}
+          {log[dataToShow]}
         </Typography>
         <ThumbUpOffAltIcon id="likeButton" />
       </Card>
@@ -144,7 +144,7 @@ function SingleLog({ log, setLogs }) {
               </Typography>
             </Tooltip>
 
-            <EditMenu />
+            { setLogs && <EditMenu /> }
 
           </Container>
           <Image src={imageUrl} showLoading sx={{}} />
