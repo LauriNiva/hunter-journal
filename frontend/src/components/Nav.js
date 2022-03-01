@@ -9,10 +9,6 @@ function Nav({ username }) {
 
   const { isAuthenticated } = useAuth0();
 
-  const greetings = ['Hi there', 'Happy hunting'];
-
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-
 
   return (
     <AppBar position="sticky" >
@@ -25,7 +21,7 @@ function Nav({ username }) {
           isAuthenticated &&
           <>
             <Typography sx={{ fontFamily: 'Jaapokki', mr:1}} ><Link to='/logs'>LOGS</Link></Typography>
-            <Typography sx={{ mr: 2 }}>{greeting} {username}</Typography>
+            <Typography sx={{ mr: 2 }}>{username}</Typography>
           </>
         }
         <AuthButton />
