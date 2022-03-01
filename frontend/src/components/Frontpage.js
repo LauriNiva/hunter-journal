@@ -1,55 +1,46 @@
-import { Box, CircularProgress, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
-import UserDataForm from './UserDataForm';
 import logsService from '../services/logs'
+import SingleLog from './SingleLog';
 
 function Frontpage({ usernameCheckedButNotFound, setUsername }) {
 
-  const { isLoading, isAuthenticated } = useAuth0();
 
-  const [mostRecentLogs , setMostRecentLogs] = useState([]);
+
+  const [mostRecentLogs, setMostRecentLogs] = useState([]);
 
   useEffect(() => {
-    logsService.getRecentLogs()
-  },[])
+    const getRecent = async () => {
+      setMostRecentLogs(await logsService.getRecentLogs())
+    }
+    getRecent();
+  }, [])
 
-
-
-  const NotAuthenticated = () => {
-    return (
-      <Box className="not-authenticated" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        {
-          isLoading ?
-            <CircularProgress />
-            : <Typography variant='h5' sx={{ fontFamily: 'Jaapokki', m: 2 }}>
-              Please log in or create a account to start.
-            </Typography>
-        }
-      </Box>
-    )
-  }
 
   return (
     <div>
-      <Typography variant='h3'>Frontpage</Typography> 
-      {isAuthenticated ?
-        usernameCheckedButNotFound && <UserDataForm setUsername={setUsername} />
-        : <NotAuthenticated />
-      }
       <Box sx={{
-        display:"grid",
-        gridTemplateColumns:"1fr 1fr",
-        gridTemplateRows:"1fr 4fr",
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        gridTemplateRows: "100px 1fr",
         gridTemplateAreas: `"head head"
         "new liked"
         `,
         justifyContent: 'center',
         alignItems: 'center'
-        }}>
-          <Typography sx={{gridArea:'head'}}>Head</Typography>
-          <Box sx={{gridArea:'new'}}>New</Box>
-          <Box sx={{gridArea:'liked'}}>Liked</Box>
+      }}>
+        <Box sx={{ gridArea: 'head' }}>
+        <Typography >Head</Typography>
+        </Box>
+
+        <Box sx={{ gridArea: 'new' }}>
+          <Typography variant="h6">Recently added logs</Typography>
+          {mostRecentLogs.map(log => <SingleLog key={`recent${log._id}`} log={log} dataToShow='user' />)}
+        </Box>
+
+        <Box sx={{ gridArea: 'liked' }}>
+          <Typography variant="h6">Most liked logs</Typography>
+        </Box>
       </Box>
     </div>
   )
