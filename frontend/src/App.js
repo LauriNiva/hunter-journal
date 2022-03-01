@@ -9,6 +9,8 @@ import { ConfirmProvider } from 'material-ui-confirm';
 import usersService from './services/user';
 import UserDataForm from './components/UserDataForm';
 import { Box } from '@mui/system';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Frontpage from './components/Frontpage';
 
 const darkTheme = createTheme({
   palette: {
@@ -46,38 +48,28 @@ const App = () => {
       })()
   }, [isAuthenticated, username, getAccessTokenSilently]);
 
-  const NotAuthenticated = () => {
-    return (
-      <Box className="not-authenticated" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        {
-          isLoading ?
-            <CircularProgress />
-            : <Typography variant='h5' sx={{ fontFamily: 'Jaapokki', m: 2 }}>
-              Please log in or create a account to start.
-            </Typography>
-        }
-      </Box>
-    )
-  }
+
 
   return (
-    <div>
-
+    <BrowserRouter>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <ConfirmProvider>
           <Nav username={username} />
-          <Paper className="container" sx={{width:{sm: "100%", md: "95%" }, maxWidth: "1220px"}}>
-            {isAuthenticated ?
-              username ?
-                <Logs logs={logs} setLogs={setLogs} />
-                : usernameCheckedButNotFound && <UserDataForm setUsername={setUsername} />
-              : <NotAuthenticated />
-            }
+          <Paper className="container" sx={{ width: { sm: "100%", md: "95%" }, maxWidth: "1220px" }}>
+            <Routes>
+              <Route path="/" element={
+                <Frontpage username={username} usernameCheckedButNotFound={usernameCheckedButNotFound} setUsername={setUsername} />
+              } />
+              <Route path="logs" element={<Logs logs={logs} setLogs={setLogs} />} />
+              <Route path="*" element={<h1>404</h1>} />
+              
+            </Routes>
+
           </Paper>
         </ConfirmProvider>
       </ThemeProvider>
-    </div>
+    </BrowserRouter>
   );
 }
 
