@@ -2,8 +2,13 @@ import axios from "axios";
 
 const baseURL = `/api/logs`;
 
-//kun prod /api/logs
+//Hae uusimmat logit (10)
+const getRecentLogs = async () => {
+  const recentLogs = await axios.get(`${baseURL}/recent`);
+  console.log('recentlogs', recentLogs)
 
+  return recentLogs.data;
+};
 
 //Hae tykätyimmät logit etusivulle
 
@@ -25,7 +30,6 @@ const getAllLogs = async (token) => {
 //Lisää logi
 
 //Poista logi
-
 const deleteALog = async (logId, token) => {
   const request = await axios.delete(`${baseURL}/${logId}`,
     {
@@ -42,6 +46,6 @@ const deleteALog = async (logId, token) => {
 //Päivitä logia
 
 
-const logsService = { getAllLogs, deleteALog };
+const logsService = { getAllLogs, deleteALog, getRecentLogs };
 
 export default logsService;

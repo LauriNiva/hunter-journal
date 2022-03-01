@@ -59,7 +59,7 @@ const App = () => {
           <Paper className="container" sx={{ width: { sm: "100%", md: "95%" }, maxWidth: "1220px" }}>
             <Routes>
               <Route path="/" element={
-                <Frontpage username={username} usernameCheckedButNotFound={usernameCheckedButNotFound} setUsername={setUsername} />
+                <Frontpage usernameCheckedButNotFound={usernameCheckedButNotFound} setUsername={setUsername} />
               } />
               <Route path="logs" element={<Logs logs={logs} setLogs={setLogs} />} />
               <Route path="*" element={<h1>404</h1>} />
