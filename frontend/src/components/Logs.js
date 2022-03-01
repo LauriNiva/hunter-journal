@@ -8,12 +8,26 @@ import NewLogForm from './NewLogForm.js';
 import { Container, FormControl, InputLabel, MenuItem, Select, Toolbar } from '@mui/material';
 import SortIcon from '@mui/icons-material/Sort';
 import LogFilteringList from './LogFilteringList';
-import { withAuthenticationRequired } from '@auth0/auth0-react';
+import { withAuthenticationRequired, useAuth0 } from '@auth0/auth0-react';
+
+import logsService from '../services/logs';
 
 
 
 
-function Logs ({ logs, setLogs }) {
+function Logs() {
+
+  const [logs, setLogs] = useState([]);
+
+  const { getAccessTokenSilently } = useAuth0();
+
+  useEffect(() => {
+    (async () => {
+      const token = await getAccessTokenSilently();
+      setLogs(await logsService.getAllLogs(token));
+    })()
+  }, [getAccessTokenSilently]);
+
 
 
   const [filteredLogs, setFilteredLogs] = useState(logs);
@@ -25,10 +39,12 @@ function Logs ({ logs, setLogs }) {
   const sortsForLogs = ['Newest First', 'Oldest First', 'Highest Rating', 'Lowest Rating'];
 
 
+  
+
   useEffect(() => {
 
     // console.log("Sorting the logs...")
-    
+
     let sortedLogs = filteredLogs;
 
     if (selectedSortForLogs === 'Newest First') {
@@ -48,8 +64,8 @@ function Logs ({ logs, setLogs }) {
   return (
 
     <>
-      <Container disableGutters id="logs-container" 
-      sx={{ display: "grid", gridTemplateColumns: {xs: "1fr", md: "2fr 5fr"} }}>
+      <Container disableGutters id="logs-container"
+        sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "2fr 5fr" } }}>
 
         <LogFilteringList logs={logs} setFilteredLogs={setFilteredLogs} />
 
@@ -69,7 +85,7 @@ function Logs ({ logs, setLogs }) {
           </Toolbar>
           {
             logsToDisplay.map(log => (
-              <SingleLog key={log._id} log={log} setLogs={setLogs} />
+              <SingleLog key={log._id} log={log} dataToShow='rating' setLogs={setLogs} />
             ))
           }
         </Container>
