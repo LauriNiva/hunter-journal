@@ -29,8 +29,12 @@ function Frontpage({ usernameCheckedButNotFound, setUsername }) {
         justifyContent: 'center',
         alignItems: 'center'
       }}>
-        <Box sx={{ gridArea: 'head' }}>
-        <Typography >Head</Typography>
+        <Box sx={{ gridArea: 'head', display:'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <Typography sx={{m:1, p:1, fontSize: '20px'}}>
+          Site to log your harvests from the game 
+          <Typography variant='body1' variantMapping={{body1:'span'}} sx={{fontSize: '20px', display:'inline', fontFamily: 'Jaapokki'}}> theHunter: Call of the Wild</Typography>.
+          <br/> In future you will be able to share your logs and see your fellow hunter's logs.
+        </Typography>
         </Box>
 
         <Box sx={{ gridArea: 'new' }}>
