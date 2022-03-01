@@ -2,7 +2,6 @@ import User from '../models/user.model.js';
 import express from 'express';
 import checkJwt from '../middleware/jwtCheck.js';
 
-
 const usersRouter = express.Router();
 
 usersRouter.get('/', checkJwt, async (req, res) => {
@@ -17,8 +16,6 @@ usersRouter.get('/', checkJwt, async (req, res) => {
 });
 
 usersRouter.post('/', checkJwt, async (req, res) => {
-
-
 
   const body = req.body;
   try {
@@ -37,7 +34,6 @@ usersRouter.post('/', checkJwt, async (req, res) => {
     console.log('error creating a user: ', error.errors);
     res.status(500).json({ error })
   }
-
 
 });
 

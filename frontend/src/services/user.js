@@ -4,7 +4,7 @@ import axios from "axios";
 const baseURL = `/api/users`;
 
 
-//Hae käyttäjän omat logit
+//Hae käyttäjän omat tiedot
 const getUser = async (token) => {
   const userData = await axios
     .get(`${baseURL}`,
