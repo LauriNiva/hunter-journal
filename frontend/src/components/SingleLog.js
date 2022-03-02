@@ -10,6 +10,7 @@ import Image from 'mui-image';
 import FemaleIcon from '@mui/icons-material/Female';
 import MaleIcon from '@mui/icons-material/Male';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import ScaleIcon from '@mui/icons-material/Scale';
 import PetsIcon from '@mui/icons-material/Pets';
 import ArticleIcon from '@mui/icons-material/Article';
@@ -23,16 +24,30 @@ import ForestIcon from '@mui/icons-material/Forest';
 
 function SingleLog({ log, setLogs, dataToShow }) {
 
+  const { getAccessTokenSilently } = useAuth0();
+
 
   const [singleLogDialogOpen, setSingleLogDialogOpen] = useState(false);
+  const [liked, setLiked] = useState(false);
 
 
   const handleOpen = (e) => {
-    if(e.target.id !== 'likeButton') setSingleLogDialogOpen(true);
+    if (e.target.id !== 'likeButton') setSingleLogDialogOpen(true);
   };
 
   const handleClose = () => {
     setSingleLogDialogOpen(false);
+  };
+
+  const handleLikeClick = async () => {
+    console.log("click", liked)
+    const token = await getAccessTokenSilently();
+    try {
+      const updatedlog = await logsService.likeALog(log._id, token);
+      console.log(updatedlog)
+    } catch (error) {
+      console.log(error)
+    }
   };
 
 
@@ -58,7 +73,6 @@ function SingleLog({ log, setLogs, dataToShow }) {
   };
 
   const EditMenu = () => {
-    const { getAccessTokenSilently } = useAuth0();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const menuOpen = Boolean(anchorEl);
 
@@ -107,7 +121,7 @@ function SingleLog({ log, setLogs, dataToShow }) {
   return (
     <>
       {/* Yksittäinen logi listalla */}
-      <Card sx={{ m: 1, mr: 0, p: 2, display: 'grid', gridTemplateColumns: '40px 3fr 1fr 20px' }} elevation={6}
+      <Card sx={{ m: 1, mr: 0, p: 2, display: 'grid', gridTemplateColumns: '40px 5fr 2fr 40px' }} elevation={6}
         onClick={handleOpen}>
         <Tooltip title={log.badge}>
           <MilitaryTechIcon fontSize="large" sx={{ color: logBadgeColor }} />
@@ -116,16 +130,18 @@ function SingleLog({ log, setLogs, dataToShow }) {
           {log.animal}
         </Typography>
 
-        <Typography variant="h6">
+        <Typography variant="h6" sx={{ fontSize: { xs: '1rem', lg: '1.5rem' } }}>
           {log[dataToShow]}
         </Typography>
-        <ThumbUpOffAltIcon id="likeButton" />
+        <IconButton id="likeButton" onClick={handleLikeClick}>
+          {liked ? <ThumbUpAltIcon id="likeButton" /> : <ThumbUpOffAltIcon id="likeButton" />}
+        </IconButton>
       </Card>
 
       {/* Yksittäisen login näkymä avatessa */}
       <Dialog onClose={handleClose} open={singleLogDialogOpen} maxWidth="lg">
         <Card sx={{ padding: 3 }} >
-          <Container disableGutters sx={{mb:2, display: 'grid', gridTemplateColumns: '1fr 40px 50px 20px' }}>
+          <Container disableGutters sx={{ mb: 2, display: 'grid', gridTemplateColumns: '1fr 40px 50px 20px' }}>
 
             <Typography variant="h4">
               {log.animal}
@@ -144,11 +160,11 @@ function SingleLog({ log, setLogs, dataToShow }) {
               </Typography>
             </Tooltip>
 
-            { setLogs && <EditMenu /> }
+            {setLogs && <EditMenu />}
 
           </Container>
           <Image src={imageUrl} showLoading sx={{}} />
-          <Container disableGutters sx={{ mt:2, display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+          <Container disableGutters sx={{ mt: 2, display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
 
             <Tooltip title="Weight">
               <Typography variant="h6">
