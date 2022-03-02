@@ -20,19 +20,31 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import RadarIcon from '@mui/icons-material/Radar';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
 import ForestIcon from '@mui/icons-material/Forest';
+import { useEffect } from 'react';
+import { Box } from '@mui/system';
 
 
-function SingleLog({ log, setLogs, dataToShow }) {
+function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
 
   const { getAccessTokenSilently } = useAuth0();
 
 
   const [singleLogDialogOpen, setSingleLogDialogOpen] = useState(false);
   const [liked, setLiked] = useState(false);
+  const [likes, setLikes] = useState();
 
+  useEffect(() =>{
+    setLikes(log.likes.length)
+  },[log.likes.length]);
+
+  useEffect(() => {
+    if (likedLogs.includes(log._id)) {
+      setLiked(true)
+    }
+  }, [likedLogs, setLiked, log._id]);
 
   const handleOpen = (e) => {
-    if (e.target.id !== 'likeButton') setSingleLogDialogOpen(true);
+    setSingleLogDialogOpen(true);
   };
 
   const handleClose = () => {
@@ -40,15 +52,22 @@ function SingleLog({ log, setLogs, dataToShow }) {
   };
 
   const handleLikeClick = async () => {
-    console.log("click", liked)
     const token = await getAccessTokenSilently();
-    try {
-      const updatedlog = await logsService.likeALog(log._id, token);
-      console.log(updatedlog)
-    } catch (error) {
-      console.log(error)
+    if (!liked) {
+      try {
+        const updatedlog = await logsService.likeALog(log._id, token);
+        console.log('updatedlog', updatedlog)
+        if (!likedLogs.includes(updatedlog.id)) {
+          setLikedLogs(likedLogs.concat(updatedlog.id))
+          setLiked(true)
+          setLikes(updatedlog.numberOfLikes)
+        }
+      } catch (error) {
+        console.log(error)
+      }
     }
   };
+
 
 
   const imageUrl = `https://res.cloudinary.com/devniva/image/upload/v1636547210/${log.images[0]}`;
@@ -116,13 +135,20 @@ function SingleLog({ log, setLogs, dataToShow }) {
     )
   };
 
+  const LikeButton = () => {
+    return (
+      <IconButton sx={{p:0}} id="likeButton" onClick={handleLikeClick}>
+        {liked ? <ThumbUpAltIcon id="likeButton" /> : <ThumbUpOffAltIcon id="likeButton" />}
+      </IconButton>
+    )
+  }
 
 
   return (
     <>
       {/* Yksittäinen logi listalla */}
-      <Card sx={{ m: 1, mr: 0, p: 2, display: 'grid', gridTemplateColumns: '40px 5fr 2fr 40px' }} elevation={6}
-        onClick={handleOpen}>
+      <Card sx={{ m: 1, mr: 0, p: 2, alignItems: 'center', display: 'grid', gridTemplateColumns: '40px 5fr 2fr 40px' }} elevation={6}
+      >
         <Tooltip title={log.badge}>
           <MilitaryTechIcon fontSize="large" sx={{ color: logBadgeColor }} />
         </Tooltip>
@@ -130,18 +156,19 @@ function SingleLog({ log, setLogs, dataToShow }) {
           {log.animal}
         </Typography>
 
-        <Typography variant="h6" sx={{ fontSize: { xs: '1rem', lg: '1.5rem' } }}>
+        <Typography onClick={handleOpen} variant="h6" sx={{ fontSize: { xs: '1rem', lg: '1.5rem' } }}>
           {log[dataToShow]}
         </Typography>
-        <IconButton id="likeButton" onClick={handleLikeClick}>
-          {liked ? <ThumbUpAltIcon id="likeButton" /> : <ThumbUpOffAltIcon id="likeButton" />}
-        </IconButton>
+        <LikeButton />
       </Card>
 
       {/* Yksittäisen login näkymä avatessa */}
       <Dialog onClose={handleClose} open={singleLogDialogOpen} maxWidth="lg">
         <Card sx={{ padding: 3 }} >
-          <Container disableGutters sx={{ mb: 2, display: 'grid', gridTemplateColumns: '1fr 40px 50px 20px' }}>
+          <Container disableGutters sx={{
+            mb: 2, alignItems: 'center',
+            display: 'grid', gridTemplateColumns: '1fr 40px 50px 100px 20px'
+          }}>
 
             <Typography variant="h4">
               {log.animal}
@@ -159,7 +186,10 @@ function SingleLog({ log, setLogs, dataToShow }) {
                 {log.rating}
               </Typography>
             </Tooltip>
-
+            <Box sx={{display:'flex', flexDirection:'column', justifyContent: 'end', alignItems: 'center'}}>
+              <LikeButton />
+              <Typography>{likes}</Typography>
+            </Box>
             {setLogs && <EditMenu />}
 
           </Container>

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import logsService from '../services/logs'
 import SingleLog from './SingleLog';
 
-function Frontpage({ usernameCheckedButNotFound, setUsername }) {
+function Frontpage({ likedLogs, setLikedLogs }) {
 
 
 
@@ -39,7 +39,7 @@ function Frontpage({ usernameCheckedButNotFound, setUsername }) {
 
         <Box sx={{ gridArea: 'new' }}>
           <Typography variant="h6">Recently added logs</Typography>
-          {mostRecentLogs.map(log => <SingleLog key={`recent${log._id}`} log={log} dataToShow='user' />)}
+          {mostRecentLogs.map(log => <SingleLog key={`recent${log._id}`} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs} dataToShow='user' />)}
         </Box>
 
         <Box sx={{ gridArea: 'liked' }}>

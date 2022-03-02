@@ -22,6 +22,7 @@ const App = () => {
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
 
   const [username, setUsername] = useState();
+  const [likedLogs, setLikedLogs] = useState([]);
   const [firstTimeSetupDialogOpen, setFirstTimeSetupDialogOpen] = useState(false);
   
   useEffect(() => {
@@ -32,6 +33,7 @@ const App = () => {
           const user = await usersService.getUser(token);
           if(user?.username) {
             setUsername(user.username);
+            setLikedLogs(user?.likedLogs)
           }else{
             setFirstTimeSetupDialogOpen(true);
           }
@@ -55,8 +57,8 @@ const App = () => {
           }
 
             <Routes>
-              <Route path="/" element={<Frontpage />} />
-              <Route path="logs" element={<Logs />} />
+              <Route path="/" element={<Frontpage likedLogs={likedLogs} setLikedLogs={setLikedLogs} />} />
+              <Route path="logs" element={<Logs likedLogs={likedLogs} setLikedLogs={setLikedLogs} />} />
               <Route path="*" element={<h1>404</h1>} />
 
             </Routes>

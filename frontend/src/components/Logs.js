@@ -15,7 +15,7 @@ import logsService from '../services/logs';
 
 
 
-function Logs() {
+function Logs({ likedLogs, setLikedLogs }) {
 
   const [logs, setLogs] = useState([]);
 
@@ -39,7 +39,7 @@ function Logs() {
   const sortsForLogs = ['Newest First', 'Oldest First', 'Highest Rating', 'Lowest Rating'];
 
 
-  
+
 
   useEffect(() => {
 
@@ -85,7 +85,7 @@ function Logs() {
           </Toolbar>
           {
             logsToDisplay.map(log => (
-              <SingleLog key={log._id} log={log} dataToShow='rating' setLogs={setLogs} />
+              <SingleLog key={log._id} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs} dataToShow='rating' setLogs={setLogs} />
             ))
           }
         </Container>
