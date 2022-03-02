@@ -13,6 +13,18 @@ const getRecentLogs = async () => {
 //Hae tykätyimmät logit etusivulle
 
 //Tykkää logista
+const likeALog = async (logId, token) => {
+  const updatedLog = await axios
+    .put(`${baseURL}/${logId}/likes`, "like",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+      }
+    );
+
+  return updatedLog.data;
+};
 
 //Hae käyttäjän omat logit
 const getAllLogs = async (token) => {
@@ -31,13 +43,14 @@ const getAllLogs = async (token) => {
 
 //Poista logi
 const deleteALog = async (logId, token) => {
-  const request = await axios.delete(`${baseURL}/${logId}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
-    }
-  );
+  const request = await axios
+    .delete(`${baseURL}/${logId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+      }
+    );
   console.log('delete request.data', request)
   return request.data;
 
@@ -46,6 +59,6 @@ const deleteALog = async (logId, token) => {
 //Päivitä logia
 
 
-const logsService = { getAllLogs, deleteALog, getRecentLogs };
+const logsService = { getAllLogs, deleteALog, getRecentLogs, likeALog };
 
 export default logsService;
