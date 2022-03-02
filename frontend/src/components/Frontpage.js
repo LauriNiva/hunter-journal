@@ -8,12 +8,20 @@ function Frontpage({ likedLogs, setLikedLogs }) {
 
 
   const [mostRecentLogs, setMostRecentLogs] = useState([]);
+  const [mostLikedLogs, setMostLikedLogs] = useState([]);
 
   useEffect(() => {
     const getRecent = async () => {
       setMostRecentLogs(await logsService.getRecentLogs())
     }
     getRecent();
+  }, [])
+
+  useEffect(() => {
+    const getMostLiked = async () => {
+      setMostLikedLogs(await logsService.getMostLikedLogs())
+    }
+    getMostLiked();
   }, [])
 
 
@@ -37,13 +45,14 @@ function Frontpage({ likedLogs, setLikedLogs }) {
         </Typography>
         </Box>
 
-        <Box sx={{ gridArea: 'new' }}>
-          <Typography variant="h6">Recently added logs</Typography>
+        <Box sx={{ gridArea: 'new',  }}>
+          <Typography variant="h6" sx={{ml:3}} >Recently added logs</Typography>
           {mostRecentLogs.map(log => <SingleLog key={`recent${log._id}`} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs} dataToShow='user' />)}
         </Box>
 
         <Box sx={{ gridArea: 'liked' }}>
-          <Typography variant="h6">Most liked logs</Typography>
+          <Typography variant="h6" sx={{ml:3}} >Most liked logs</Typography>
+          {mostLikedLogs.map(log => <SingleLog key={`recent${log._id}`} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs} dataToShow='likes' />)}
         </Box>
       </Box>
     </div>

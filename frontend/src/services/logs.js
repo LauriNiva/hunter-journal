@@ -11,6 +11,12 @@ const getRecentLogs = async () => {
 };
 
 //Hae tykätyimmät logit etusivulle
+const getMostLikedLogs = async () => {
+  const mostLikedLogs = await axios.get(`${baseURL}/mostliked`);
+  console.log('mostLikedLogs', mostLikedLogs)
+
+  return mostLikedLogs.data;
+};
 
 //Tykkää logista
 const likeALog = async (logId, token) => {
@@ -59,6 +65,6 @@ const deleteALog = async (logId, token) => {
 //Päivitä logia
 
 
-const logsService = { getAllLogs, deleteALog, getRecentLogs, likeALog };
+const logsService = { getAllLogs, deleteALog, getRecentLogs, getMostLikedLogs, likeALog };
 
 export default logsService;

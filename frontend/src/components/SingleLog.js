@@ -26,7 +26,7 @@ import { Box } from '@mui/system';
 
 function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
 
-  const { getAccessTokenSilently } = useAuth0();
+  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
 
 
   const [singleLogDialogOpen, setSingleLogDialogOpen] = useState(false);
@@ -137,7 +137,7 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
 
   const LikeButton = () => {
     return (
-      <IconButton sx={{p:0}} id="likeButton" onClick={handleLikeClick}>
+      <IconButton sx={{p:0}} id="likeButton" onClick={handleLikeClick} disabled={!isAuthenticated} >
         {liked ? <ThumbUpAltIcon id="likeButton" /> : <ThumbUpOffAltIcon id="likeButton" />}
       </IconButton>
     )
@@ -146,9 +146,9 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
 
   return (
     <>
-      {/* Yksittäinen logi listalla */}
-      <Card sx={{ m: 1, mr: 0, p: 2, alignItems: 'center', display: 'grid', gridTemplateColumns: '40px 5fr 2fr 40px' }} elevation={6}
-      >
+      {/* ----Yksittäinen logi listalla---- */}
+      <Card sx={{ m: 1, mr: 0, p: 2, alignItems: 'center', 
+      display: 'grid', gridTemplateColumns: '40px 5fr 2fr 40px' }} elevation={6} >
         <Tooltip title={log.badge}>
           <MilitaryTechIcon fontSize="large" sx={{ color: logBadgeColor }} />
         </Tooltip>
@@ -156,13 +156,13 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
           {log.animal}
         </Typography>
 
-        <Typography onClick={handleOpen} variant="h6" sx={{ fontSize: { xs: '1rem', lg: '1.5rem' } }}>
-          {log[dataToShow]}
+        <Typography onClick={handleOpen} variant="h6" sx={{ justifySelf: 'end',fontSize: { xs: '1rem', lg: '1.5rem' } }}>
+          {(dataToShow==='likes') ? likes : log[dataToShow]}
         </Typography>
         <LikeButton />
       </Card>
 
-      {/* Yksittäisen login näkymä avatessa */}
+      {/* ----Yksittäisen login näkymä avatessa---- */}
       <Dialog onClose={handleClose} open={singleLogDialogOpen} maxWidth="lg">
         <Card sx={{ padding: 3 }} >
           <Container disableGutters sx={{

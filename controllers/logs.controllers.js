@@ -18,6 +18,12 @@ logsRouter.get('/recent', async (req, res) => {
   res.json(recentLogs);
 });
 
+logsRouter.get('/mostliked', async (req, res) => {
+  const mostLikedLogs = await Log.find({ 'likes': { $exists: true } }).sort({likes: 1}).limit(10).populate('user').populate('likes','username -_id');
+  res.json(mostLikedLogs);
+});
+
+
 logsRouter.post('/', checkJwt, async (req, res) => {
   console.log('inside logsrouter: ', req.body)
   const body = req.body;
