@@ -99,9 +99,18 @@ logsRouter.delete('/:id/likes', checkJwt, async (req, res) => {
   const logId = req.params.id;
   const userid = req.user.sub;
   try {
-    
+    const logToDislike = await Log.findById(logId);
+    logToDislike.likes.pull(userid);
+    const updatedLog = await logToDislike.save();
+
+    const userToUpdate = await User.findById(userid);
+    userToUpdate.likedLogs.pull(updatedLog._id);
+    await userToUpdate.save();
+    console.log('updatedLog', updatedLog)
+    res.json({'id': updatedLog._id, 'numberOfLikes': updatedLog.likes.length });
   } catch (error) {
-    
+    console.log(error)
+    res.status(500).json({ error: error})
   }
 });
 

@@ -20,7 +20,7 @@ function Nav({ username }) {
         {
           isAuthenticated &&
           <>
-            <Typography sx={{ fontFamily: 'Jaapokki', mr:1}} ><Link to='/logs'>LOGS</Link></Typography>
+            <Typography sx={{ fontFamily: 'Jaapokki', mr:1}} ><Link to='/logs'>OWN LOGS</Link></Typography>
             <Typography sx={{ mr: 2 }}>{username}</Typography>
           </>
         }

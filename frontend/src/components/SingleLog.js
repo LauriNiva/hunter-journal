@@ -2,7 +2,7 @@
 // Logi saadaan Logs komponentilta
 
 import { Card, Container, Dialog, IconButton, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logsService from '../services/logs.js'
 import { useAuth0 } from '@auth0/auth0-react';
 import Image from 'mui-image';
@@ -20,7 +20,8 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import RadarIcon from '@mui/icons-material/Radar';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
 import ForestIcon from '@mui/icons-material/Forest';
-import { useEffect } from 'react';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+
 import { Box } from '@mui/system';
 
 
@@ -60,6 +61,18 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
         if (!likedLogs.includes(updatedlog.id)) {
           setLikedLogs(likedLogs.concat(updatedlog.id))
           setLiked(true)
+          setLikes(updatedlog.numberOfLikes)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    } else {
+      try {
+        const updatedlog = await logsService.dislikeALog(log._id, token);
+        console.log('updatedlog', updatedlog)
+        if (likedLogs.includes(updatedlog.id)) {
+          setLikedLogs(likedLogs.filter(log => log !== updatedlog.id))
+          setLiked(false)
           setLikes(updatedlog.numberOfLikes)
         }
       } catch (error) {

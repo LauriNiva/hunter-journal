@@ -5,7 +5,7 @@ const baseURL = `/api/logs`;
 //Hae uusimmat logit (10)
 const getRecentLogs = async () => {
   const recentLogs = await axios.get(`${baseURL}/recent`);
- // console.log('recentlogs', recentLogs)
+  console.log('recentlogs', recentLogs)
 
   return recentLogs.data;
 };
@@ -13,7 +13,7 @@ const getRecentLogs = async () => {
 //Hae tykätyimmät logit etusivulle
 const getMostLikedLogs = async () => {
   const mostLikedLogs = await axios.get(`${baseURL}/mostliked`);
-  //console.log('mostLikedLogs', mostLikedLogs)
+  console.log('mostLikedLogs', mostLikedLogs)
 
   return mostLikedLogs.data;
 };
@@ -31,6 +31,21 @@ const likeALog = async (logId, token) => {
 
   return updatedLog.data;
 };
+
+//Poista tykkäys logista
+const dislikeALog = async (logId, token) => {
+  const updatedLog = await axios
+    .delete(`${baseURL}/${logId}/likes`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+      }
+    );
+
+  return updatedLog.data;
+};
+
 
 //Hae käyttäjän omat logit
 const getAllLogs = async (token) => {
@@ -65,6 +80,6 @@ const deleteALog = async (logId, token) => {
 //Päivitä logia
 
 
-const logsService = { getAllLogs, deleteALog, getRecentLogs, getMostLikedLogs, likeALog };
+const logsService = { getAllLogs, deleteALog, getRecentLogs, getMostLikedLogs, likeALog, dislikeALog };
 
 export default logsService;
