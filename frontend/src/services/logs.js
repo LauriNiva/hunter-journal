@@ -5,7 +5,7 @@ const baseURL = `/api/logs`;
 //Hae uusimmat logit (10)
 const getRecentLogs = async () => {
   const recentLogs = await axios.get(`${baseURL}/recent`);
-  console.log('recentlogs', recentLogs)
+ // console.log('recentlogs', recentLogs)
 
   return recentLogs.data;
 };
@@ -13,7 +13,7 @@ const getRecentLogs = async () => {
 //Hae tykätyimmät logit etusivulle
 const getMostLikedLogs = async () => {
   const mostLikedLogs = await axios.get(`${baseURL}/mostliked`);
-  console.log('mostLikedLogs', mostLikedLogs)
+  //console.log('mostLikedLogs', mostLikedLogs)
 
   return mostLikedLogs.data;
 };
