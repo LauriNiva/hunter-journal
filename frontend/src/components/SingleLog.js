@@ -105,7 +105,7 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
   };
 
   const EditMenu = () => {
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
     const menuOpen = Boolean(anchorEl);
 
     const handleMenuClick = (event) => {
