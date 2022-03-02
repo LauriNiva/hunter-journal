@@ -55,8 +55,7 @@ const logSchema = new mongoose.Schema({
     required: true
   },
   reserve: {
-    type: String,
-    required: true
+    type: String
   },
   notes: {
     type: String
