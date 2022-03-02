@@ -5,39 +5,40 @@
 import React, { useEffect, useState } from 'react';
 import SingleLog from './SingleLog';
 import NewLogForm from './NewLogForm.js';
-import { Container, FormControl, InputLabel, MenuItem, Select, Toolbar } from '@mui/material';
+import { Container, FormControl, InputLabel, MenuItem, Select, Toolbar, Typography } from '@mui/material';
 import SortIcon from '@mui/icons-material/Sort';
 import LogFilteringList from './LogFilteringList';
 import { withAuthenticationRequired, useAuth0 } from '@auth0/auth0-react';
 
 import logsService from '../services/logs';
+import { useParams } from 'react-router-dom';
 
 
 
 
-function Logs({ likedLogs, setLikedLogs }) {
+function Logs({ likedLogs, setLikedLogs, user  }) {
 
+  const { usernameForLogs } = useParams();
+
+  const [isOwner, setIsOwner] = useState(false);
   const [logs, setLogs] = useState([]);
+  const [filteredLogs, setFilteredLogs] = useState(logs);
+  const [logsToDisplay, setLogsToDisplay] = useState([]);
+  const [selectedSortForLogs, setSelectedSortForLogs] = useState('Newest First');
+  const sortsForLogs = ['Newest First', 'Oldest First', 'Highest Rating', 'Lowest Rating'];
 
   const { getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
+    setIsOwner(user===usernameForLogs)
+  },[user, usernameForLogs ])
+
+  useEffect(() => {
     (async () => {
       const token = await getAccessTokenSilently();
-      setLogs(await logsService.getAllLogs(token));
+      setLogs(await logsService.getAllLogs(usernameForLogs, token));
     })()
-  }, [getAccessTokenSilently]);
-
-
-
-  const [filteredLogs, setFilteredLogs] = useState(logs);
-
-  const [logsToDisplay, setLogsToDisplay] = useState([]);
-
-  const [selectedSortForLogs, setSelectedSortForLogs] = useState('Newest First');
-
-  const sortsForLogs = ['Newest First', 'Oldest First', 'Highest Rating', 'Lowest Rating'];
-
+  }, [getAccessTokenSilently,usernameForLogs]);
 
 
 
@@ -71,7 +72,7 @@ function Logs({ likedLogs, setLikedLogs }) {
 
         <Container id="logs-list-container" disableGutters >
           <Toolbar sx={{ justifyContent: 'space-between' }}>
-
+          
             <FormControl>
               <InputLabel id="sort-dropdown-label"><SortIcon /></InputLabel>
               <Select labelId="sort-dropdown-label" id="sort-dropdown" label="Sort"
@@ -81,11 +82,11 @@ function Logs({ likedLogs, setLikedLogs }) {
               </Select>
             </FormControl>
 
-            <NewLogForm setLogs={setLogs} />
+            { isOwner && <NewLogForm setLogs={setLogs} /> }
           </Toolbar>
           {
             logsToDisplay.map(log => (
-              <SingleLog key={log._id} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs} dataToShow='rating' setLogs={setLogs} />
+              <SingleLog key={log._id} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs} dataToShow='rating' setLogs={isOwner && setLogs} />
             ))
           }
         </Container>

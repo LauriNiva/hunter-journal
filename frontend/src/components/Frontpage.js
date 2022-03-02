@@ -2,6 +2,7 @@ import { Box, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import logsService from '../services/logs'
 import SingleLog from './SingleLog';
+import UserSearch from './UserSearch';
 
 function Frontpage({ likedLogs, setLikedLogs }) {
 
@@ -43,6 +44,8 @@ function Frontpage({ likedLogs, setLikedLogs }) {
           <Typography variant='body1' variantMapping={{body1:'span'}} sx={{fontSize: '20px', display:'inline', fontFamily: 'Jaapokki'}}> theHunter: Call of the Wild</Typography>.
           <br/> In future you will be able to share your logs and see your fellow hunter's logs.
         </Typography>
+        <UserSearch />
+
         </Box>
 
         <Box sx={{ gridArea: 'new',  }}>

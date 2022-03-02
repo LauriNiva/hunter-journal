@@ -47,10 +47,10 @@ const dislikeALog = async (logId, token) => {
 };
 
 
-//Hae käyttäjän omat logit
-const getAllLogs = async (token) => {
+//Hae käyttäjän logit
+const getAllLogs = async (username, token) => {
   const allLogs = await axios
-    .get(`${baseURL}`,
+    .get(`${baseURL}/user/${username}`,
       {
         headers: {
           Authorization: `Bearer ${token}`

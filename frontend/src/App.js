@@ -57,7 +57,13 @@ const App = () => {
 
           <Routes>
             <Route path="/" element={<Frontpage likedLogs={likedLogs} setLikedLogs={setLikedLogs} />} />
-            <Route path="logs" element={<Logs likedLogs={likedLogs} setLikedLogs={setLikedLogs} />} />
+            <Route path="logs" element={<Logs user={username} likedLogs={likedLogs} setLikedLogs={setLikedLogs} />} >
+              <Route path=":usernameForLogs" element={<Logs user={username} likedLogs={likedLogs} setLikedLogs={setLikedLogs} />} />
+            
+            </Route>
+            
+
+
             <Route path="*" element={<h1>404</h1>} />
 
           </Routes>

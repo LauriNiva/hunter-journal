@@ -15,6 +15,17 @@ usersRouter.get('/', checkJwt, async (req, res) => {
   }
 });
 
+usersRouter.get('/find/:query', checkJwt, async (req, res) => {
+  try {
+    const query = req.params.query;
+    const users = await User.find({username: new RegExp('^'+query, "i")}).select('username -_id');
+    console.log('users', users)
+    res.json(users);
+  } catch (error) {
+    res.status(404).end();
+  }
+});
+
 usersRouter.post('/', checkJwt, async (req, res) => {
 
   const body = req.body;

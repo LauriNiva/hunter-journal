@@ -3,6 +3,20 @@ import axios from "axios";
 
 const baseURL = `/api/users`;
 
+//Hae käyttäjänimiä
+
+const searchUsername = async (query, token) => {
+  const usersFound = await axios
+    .get(`${baseURL}/find/${query}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+      },
+    );
+  return usersFound.data;
+
+};
 
 //Hae käyttäjän omat tiedot
 const getUser = async (token) => {
@@ -17,7 +31,7 @@ const getUser = async (token) => {
   return userData.data;
 };
 
-
+//Luo käyttäjä, eli lisää puuttuvat tiedot
 const createUser = async (user, token) => {
 
   const newUser = user;
@@ -36,6 +50,6 @@ const createUser = async (user, token) => {
 
 
 
-const usersService = { getUser, createUser };
+const usersService = { getUser, createUser, searchUsername };
 
 export default usersService;

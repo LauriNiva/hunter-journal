@@ -73,7 +73,7 @@ function UserDataForm({ username, setUsername, dialogOpen, setDialogOpen }) {
                   error={usernameError}
                   helperText={usernameHelperText}
                   required
-                  inputProps={{ pattern: "[a-zA-Z0-9-]+" }}
+                  inputProps={{ pattern: "[a-zA-Z0-9]+" }}
                   value={formUsername}
                   onChange={handleChange}
                 />

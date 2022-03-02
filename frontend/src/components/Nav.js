@@ -31,7 +31,7 @@ const UserMenu = ({ username }) => {
     <>
       <Button id="usermenu-button" disableFocusRipple disableRipple sx={{ textTransform: 'none'}}
       onClick={handleMenuClick}>
-        <Typography sx={{ }}>{username}</Typography>
+        <Typography sx={{ mr: 2 }}>{username}</Typography>
       </Button>
       <Menu anchorEl={anchorEl} open={menuOpen} onClose={handleMenuClose}>
         <MenuItem onClick={handleLogoutClick}>
@@ -60,7 +60,7 @@ function Nav({ username }) {
         {
           isAuthenticated ?
             <>
-              <Typography sx={{ fontFamily: 'Jaapokki', mr: 1 }} ><Link to='/logs'>OWN LOGS</Link></Typography>
+              <Typography sx={{ fontFamily: 'Jaapokki', mr: 1 }} ><Link to={`/logs/${username}`} >OWN LOGS</Link></Typography>
               <UserMenu username={username} />
             </>
             : <LoginButton />
