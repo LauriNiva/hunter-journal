@@ -1,8 +1,48 @@
-import React from 'react';
-import AuthButton from './AuthButton';
+import React, { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { AppBar, Toolbar, Typography } from '@mui/material';
+import { AppBar, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
+import LoginButton from './LoginButton';
+import LogoutButton from './LogoutButton';
+import { Button } from '@mui/material';
+
+const UserMenu = ({ username }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const menuOpen = Boolean(anchorEl);
+
+  const { logout } = useAuth0();
+
+
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogoutClick = () => { 
+    logout({
+      returnTo: window.location.origin,
+    })
+   };
+
+
+  return (
+    <>
+      <Button id="usermenu-button" disableFocusRipple disableRipple sx={{ textTransform: 'none'}}
+      onClick={handleMenuClick}>
+        <Typography sx={{ }}>{username}</Typography>
+      </Button>
+      <Menu anchorEl={anchorEl} open={menuOpen} onClose={handleMenuClose}>
+        <MenuItem onClick={handleLogoutClick}>
+          Logout
+        </MenuItem>
+      </Menu>
+    </>
+  )
+};
+
+
 
 
 function Nav({ username }) {
@@ -14,17 +54,18 @@ function Nav({ username }) {
     <AppBar position="sticky" >
       <Toolbar id="navbar">
         <Typography variant='h4' sx={{ flexGrow: 1, fontFamily: 'Jaapokki', fontSize: { xs: 30, sm: 40 } }}>
-         <Link to='/'>Hunter's Log 0.1.3</Link> 
+          <Link to='/'>Hunter's Log 0.1.3</Link>
         </Typography>
-        <Typography sx={{ fontFamily: 'Jaapokki', mr:1}} > <Link to='/'>HOME</Link></Typography>
+        <Typography sx={{ fontFamily: 'Jaapokki', mr: 1 }} > <Link to='/'>HOME</Link></Typography>
         {
-          isAuthenticated &&
-          <>
-            <Typography sx={{ fontFamily: 'Jaapokki', mr:1}} ><Link to='/logs'>OWN LOGS</Link></Typography>
-            <Typography sx={{ mr: 2 }}>{username}</Typography>
-          </>
+          isAuthenticated ?
+            <>
+              <Typography sx={{ fontFamily: 'Jaapokki', mr: 1 }} ><Link to='/logs'>OWN LOGS</Link></Typography>
+              <UserMenu username={username} />
+            </>
+            : <LoginButton />
         }
-        <AuthButton />
+
 
       </Toolbar>
     </AppBar>
