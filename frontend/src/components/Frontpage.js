@@ -1,3 +1,4 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import { Box, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import logsService from '../services/logs'
@@ -6,7 +7,7 @@ import UserSearch from './UserSearch';
 
 function Frontpage({ likedLogs, setLikedLogs }) {
 
-
+  const { isAuthenticated } = useAuth0();
 
   const [mostRecentLogs, setMostRecentLogs] = useState([]);
   const [mostLikedLogs, setMostLikedLogs] = useState([]);
@@ -38,23 +39,23 @@ function Frontpage({ likedLogs, setLikedLogs }) {
         justifyContent: 'center',
         alignItems: 'center'
       }}>
-        <Box sx={{ gridArea: 'head', display:'flex', justifyContent: 'center', alignItems: 'center'}}>
-        <Typography sx={{m:1, p:1, fontSize: '20px'}}>
-          Site to log your harvests from the game 
-          <Typography variant='body1' variantMapping={{body1:'span'}} sx={{fontSize: '20px', display:'inline', fontFamily: 'Jaapokki'}}> theHunter: Call of the Wild</Typography>.
-          <br/> In future you will be able to share your logs and see your fellow hunter's logs.
-        </Typography>
-        <UserSearch />
+        <Box sx={{ gridArea: 'head', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Typography sx={{ m: 1, p: 1, fontSize: '20px' }}>
+            Site to log your harvests from the game
+            <Typography variant='body1' variantMapping={{ body1: 'span' }} sx={{ fontSize: '20px', display: 'inline', fontFamily: 'Jaapokki' }}> theHunter: Call of the Wild</Typography>.
+            <br /> In future you will be able to share your logs and see your fellow hunter's logs.
+          </Typography>
+          {isAuthenticated && <UserSearch />}
 
         </Box>
 
-        <Box sx={{ gridArea: 'new',  }}>
-          <Typography variant="h6" sx={{ml:3}} >Recently added logs</Typography>
+        <Box sx={{ gridArea: 'new', }}>
+          <Typography variant="h6" sx={{ ml: 3 }} >Recently added logs</Typography>
           {mostRecentLogs.map(log => <SingleLog key={`recent${log._id}`} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs} dataToShow='user' />)}
         </Box>
 
         <Box sx={{ gridArea: 'liked' }}>
-          <Typography variant="h6" sx={{ml:3}} >Most liked logs</Typography>
+          <Typography variant="h6" sx={{ ml: 3 }} >Most liked logs</Typography>
           {mostLikedLogs.map(log => <SingleLog key={`recent${log._id}`} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs} dataToShow='likes' />)}
         </Box>
       </Box>
