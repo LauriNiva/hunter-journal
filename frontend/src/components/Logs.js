@@ -72,7 +72,7 @@ function Logs({ likedLogs, setLikedLogs, user  }) {
 
         <Container id="logs-list-container" disableGutters >
           <Toolbar sx={{ justifyContent: 'space-between' }}>
-          
+          <Typography variant="h4" sx={{fontFamily: 'Jaapokki'}}>{usernameForLogs} 's logs</Typography>
             <FormControl>
               <InputLabel id="sort-dropdown-label"><SortIcon /></InputLabel>
               <Select labelId="sort-dropdown-label" id="sort-dropdown" label="Sort"
