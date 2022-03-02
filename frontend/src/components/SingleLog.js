@@ -147,7 +147,7 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
   return (
     <>
       {/* ----Yksittäinen logi listalla---- */}
-      <Card sx={{ m: 1, mr: 0, p: 2, alignItems: 'center', 
+      <Card sx={{ m: 1, p: 2, alignItems: 'center', 
       display: 'grid', gridTemplateColumns: '40px 5fr 2fr 40px' }} elevation={6} >
         <Tooltip title={log.badge}>
           <MilitaryTechIcon fontSize="large" sx={{ color: logBadgeColor }} />
