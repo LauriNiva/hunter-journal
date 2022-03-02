@@ -16,7 +16,11 @@ const userSchema = new mongoose.Schema({
   _id: {
     type: String,
     required: true,
-  }
+  },
+  likedLogs:[{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Log'
+  }],
 });
 
 userSchema.set('toJSON', {
