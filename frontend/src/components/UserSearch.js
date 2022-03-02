@@ -12,14 +12,14 @@ function UserSearch() {
   const [searchValue, setSearchValue] = useState('');
   const [usersFound, setUsersFound] = useState([]);
 
-  const regExp = new RegExp('[a-zA-Z0-9]+');
-
+  
   useEffect(() => {
     const searchTheUser = async () => {
       if (!searchValue){
         setUsersFound([]);
         return;
       };
+      const regExp = new RegExp('[a-zA-Z0-9]+');
       if(regExp.test(searchValue)){
         const token = await getAccessTokenSilently();
         const foundUsers = await usersService.searchUsername(searchValue, token)
@@ -38,11 +38,11 @@ function UserSearch() {
       options={usersFound}
       sx={{ width: 300 }}
       freeSolo={false}
-      noOptionsText={'Search users'}
+      noOptionsText={'Search by writing'}
       inputValue={searchValue}
       onChange={(e, value)=> navigate(`/logs/${value}`)}
       onInputChange={(e, newValue) => setSearchValue(newValue)}
-      renderInput={(params) => <TextField {...params} />}
+      renderInput={(params) => <TextField {...params} label='Search users' />}
     />
   )
 }
