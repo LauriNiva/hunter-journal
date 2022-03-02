@@ -1,20 +1,20 @@
 import Log from '../models/logs.model.js';
+import User from '../models/users.model.js';
 import express from 'express';
 import cloudinary from '../utils/cloudinary.js';
 import checkJwt from '../middleware/jwtCheck.js';
-import mongoose  from 'mongoose';
 
 
 const logsRouter = express.Router();
 
 logsRouter.get('/', checkJwt, async (req, res) => {
   const userid = req.user.sub;
-  const logs = await Log.find({ user: userid }).populate('user', 'username');
+  const logs = await Log.find({ user: userid }).populate('user').populate('likes','username -_id');
   res.json(logs);
 });
 
 logsRouter.get('/recent', async (req, res) => {
-  const recentLogs = await Log.find().sort({_id: -1}).limit(10).populate('user', 'username');
+  const recentLogs = await Log.find().sort({_id: -1}).limit(10).populate('user').populate('likes','username -_id');
   res.json(recentLogs);
 });
 
@@ -57,8 +57,6 @@ logsRouter.post('/', checkJwt, async (req, res) => {
     console.log(error);
     res.status(500).json({ error: 'Something went wrong with the upload' })
   }
-
-
 });
 
 logsRouter.delete('/:id', checkJwt, async (req, res) => {
@@ -69,9 +67,36 @@ logsRouter.delete('/:id', checkJwt, async (req, res) => {
   }catch (error) {
     console.log('error with delete',error)
     res.status(500).json({ error: error})
+  }  
+});
+
+logsRouter.put('/:id/likes', checkJwt, async (req, res) => {
+  const logId = req.params.id;
+  const userid = req.user.sub;
+  try {
+    const logToLike = await Log.findById(logId);
+    logToLike.likes.addToSet(userid);
+    const updatedLog = await logToLike.save();
+
+    const userToUpdate = await User.findById(userid);
+    userToUpdate.likedLogs.addToSet(updatedLog._id);
+    await userToUpdate.save();
+
+    res.json(updatedLog._id);
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: error})
   }
-  
+});
+
+logsRouter.delete('/:id/likes', checkJwt, async (req, res) => {
+  const logId = req.params.id;
+  const userid = req.user.sub;
+  try {
     
+  } catch (error) {
+    
+  }
 });
 
 
