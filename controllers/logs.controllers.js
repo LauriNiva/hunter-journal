@@ -82,7 +82,7 @@ logsRouter.put('/:id/likes', checkJwt, async (req, res) => {
     userToUpdate.likedLogs.addToSet(updatedLog._id);
     await userToUpdate.save();
 
-    res.json(updatedLog._id);
+    res.json({'id': updatedLog._id, 'numberOfLikes': updatedLog.likes.length });
   } catch (error) {
     console.log(error)
     res.status(500).json({ error: error})
