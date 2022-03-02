@@ -72,7 +72,7 @@ const logSchema = new mongoose.Schema({
 
   logSchema.set('toJSON', {
     transform: (document, returnedObject) => {
-      returnedObject.user = returnedObject.user.username
+      returnedObject.user = returnedObject.user?.username ?? '??'
       delete returnedObject.__v
     }
   })
