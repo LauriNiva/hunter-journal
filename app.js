@@ -1,6 +1,7 @@
 import express from 'express';
 const app = express();
 import mongoose from 'mongoose';
+import path from 'path';
 import cors from 'cors';
 import 'dotenv/config.js';
 import logsRouter from './controllers/logs.controllers.js';
@@ -31,9 +32,9 @@ app.use('/api/users', usersRouter);
 
 app.use(express.static('./frontend/build'));
 
-/* app.get('*', (req, res) => {
-
-}); */
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
+});
 
 const PORT = process.env.PORT || 3001;
 
