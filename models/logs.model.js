@@ -64,6 +64,10 @@ const logSchema = new mongoose.Schema({
   images: [{
     type: String
   }],
+  likes: [{ 
+    type: String,
+    ref: 'User',
+  }]
 },
   { timestamps: true });
 
