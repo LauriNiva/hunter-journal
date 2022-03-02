@@ -156,7 +156,8 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
           {log.animal}
         </Typography>
 
-        <Typography onClick={handleOpen} variant="h6" sx={{ justifySelf: 'end',fontSize: { xs: '1rem', lg: '1.5rem' } }}>
+        <Typography onClick={handleOpen} variant="h6"
+        sx={{ justifySelf: (dataToShow === 'likes') ? 'end' : 'center',fontSize: { xs: '1rem', lg: '1.5rem' } }}>
           {(dataToShow==='likes') ? likes : log[dataToShow]}
         </Typography>
         <LikeButton />
@@ -186,7 +187,8 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
                 {log.rating}
               </Typography>
             </Tooltip>
-            <Box sx={{display:'flex', flexDirection:'column', justifyContent: 'end', alignItems: 'center'}}>
+            <Box sx={{display:'flex', flexDirection:'column', justifyContent: 'end', alignItems: 'center'
+          }}>
               <LikeButton />
               <Typography>{likes}</Typography>
             </Box>
