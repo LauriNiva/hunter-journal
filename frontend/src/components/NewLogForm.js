@@ -31,6 +31,11 @@ const NewLogForm = ({ setLogs }) => {
   const difficultyOptions = ["1 - Trivial", "2 - Minor", "3 - Very easy", "4 - Easy", "5 - Medium",
     "6 - Hard", "7 - Very hard", "8 - Mythical", "9 - Legendary", "10 - Fabled"];
 
+  const canBeGreatOne = (animal) => { 
+    const currentGreatOnes = ['Red Deer', 'Whitetail Deer'];
+    return currentGreatOnes.includes(animal);
+   }
+
   const [formAnimal, setFormAnimal] = useState(animalOptions[0]);
   const [availableFurTypes, setAvailableFurTypes] = useState(animalsList[formAnimal].furtypes);
   const [formFurtype, setFormFurtype] = useState(availableFurTypes[0])
@@ -392,7 +397,7 @@ const NewLogForm = ({ setLogs }) => {
                   <MenuItem value="Silver">Silver</MenuItem>
                   <MenuItem value="Gold">Gold</MenuItem>
                   <MenuItem value="Diamond">Diamond</MenuItem>
-                  <MenuItem value="Great One">Great One</MenuItem>
+                  { canBeGreatOne(formAnimal) && <MenuItem value="Great One">Great One</MenuItem> }
                 </Select>
               </FormControl>
 
