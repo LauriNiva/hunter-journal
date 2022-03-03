@@ -343,7 +343,7 @@ const animalsArray =
       'Dark Brown',
       'Pink'
     ],
-    reserves: ['Te Awaroa', 'Mississippi Acres']
+    reserves: ['Te Awaroa']
   },
   Gemsbok: {
     title: 'Gemsbok',
@@ -572,7 +572,7 @@ const animalsArray =
     animalclass: 9,
     trophytype: 'Horns',
     trophyscore: { silver: 50.7, gold: 148.1, diamond: 221.1 },
-    furtypes: ['Common', 'Common', 'Albino', 'Leucistic', 'Melanistic'],
+    furtypes: ['Common', 'Common', 'Albino','Light Brown' ,'Leucistic', 'Melanistic'],
     reserves: ['Yukon Valley', 'Silver Ridge Peaks']
   },
   Pronghorn: {
@@ -580,7 +580,7 @@ const animalsArray =
     animalclass: 4,
     trophytype: 'Horns',
     trophyscore: { silver: 46, gold: 75.7, diamond: 98 },
-    furtypes: ['Common', 'Dark', 'Tan', 'Piebald', 'Albino', 'Leucistic'],
+    furtypes: ['Common', 'Brown', 'Dark', 'Tan', 'Piebald', 'Albino', 'Leucistic'],
     reserves: ['Silver Ridge Peaks']
   },
   Puma: {
@@ -837,7 +837,25 @@ const animalsArray =
       'Melanistic'
     ],
     reserves: ['Hirschfelden', 'Medved Taiga', 'Cuatro Colinas']
-  }
+  },
+  'Wild Hog': {
+    title: 'Wild Hog',
+    animalclass: 4,
+    trophytype: 'Tusks',
+    trophyscore: { silver: 37.5, gold: 98.5, diamond: 144.2 },
+    furtypes: ['Common',
+      'Albino',
+      'Blackgold',
+      'Black Spots',
+      'Brown',
+      'Brown Hybrid',
+      'Dark Brown',
+      'Pink'
+    ],
+    reserves: ['Mississippi Acres']
+  },
+
 }
+
 
 export default animalsArray;
