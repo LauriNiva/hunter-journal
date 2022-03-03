@@ -183,13 +183,17 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
             mb: 2, alignItems: 'center',
             display: 'grid', gridTemplateColumns: '1fr 40px 50px 100px 20px'
           }}>
-
+            <Box>
+            { isAuthenticated ? <Typography onClick={()=> window.open(`${window.location.origin}/logs/${log.user}`, '_blank')} 
+            variant="h7">{log.user}<OpenInNewIcon sx={{ fontSize: 15 }}  /></Typography>
+            : <Typography variant="h7">{log.user}</Typography>}
             <Typography variant="h4">
               {log.animal}
               <Tooltip title={log.gender}>
                 {genderIcon()}
               </Tooltip>
             </Typography>
+            </Box>
 
             <Tooltip title={log.badge}>
               <MilitaryTechIcon fontSize="large" sx={{ color: logBadgeColor }} />
