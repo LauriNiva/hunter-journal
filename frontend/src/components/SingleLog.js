@@ -177,7 +177,7 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
       </Card>
 
       {/* ----Yksittäisen login näkymä avatessa---- */}
-      <Dialog onClose={handleClose} open={singleLogDialogOpen} maxWidth="lg">
+      <Dialog onClose={handleClose} open={singleLogDialogOpen} scroll={'body'} maxWidth="lg">
         <Card sx={{ padding: 3 }} >
           <Container disableGutters sx={{
             mb: 2, alignItems: 'center',
