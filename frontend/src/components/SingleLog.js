@@ -150,7 +150,8 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
 
   const LikeButton = () => {
     return (
-      <IconButton sx={{p:0}} id="likeButton" onClick={handleLikeClick} disabled={!isAuthenticated} >
+      <IconButton sx={{p:0,"&.MuiButtonBase-root:hover": {bgcolor: "transparent"}}} 
+      id="likeButton" onClick={handleLikeClick} disabled={!isAuthenticated} >
         {liked ? <ThumbUpAltIcon id="likeButton" /> : <ThumbUpOffAltIcon id="likeButton" />}
       </IconButton>
     )
