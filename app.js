@@ -1,5 +1,4 @@
 import express from 'express';
-const app = express();
 import mongoose from 'mongoose';
 import path from 'path';
 import cors from 'cors';
@@ -7,7 +6,13 @@ import 'dotenv/config.js';
 import logsRouter from './controllers/logs.controllers.js';
 import usersRouter from './controllers/users.controller.js'
 import requestlogger from './middleware/requestlogger.js';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const app = express();
 
 mongoose.connect(process.env.MONGODB_URI,
   { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
