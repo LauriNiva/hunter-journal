@@ -21,6 +21,7 @@ import RadarIcon from '@mui/icons-material/Radar';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
 import ForestIcon from '@mui/icons-material/Forest';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 
 import { Box } from '@mui/system';
 
@@ -34,9 +35,9 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState();
 
-  useEffect(() =>{
+  useEffect(() => {
     setLikes(log.likes.length)
-  },[log.likes.length]);
+  }, [log.likes.length]);
 
   useEffect(() => {
     if (likedLogs.includes(log._id)) {
@@ -150,29 +151,45 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
 
   const LikeButton = () => {
     return (
-      <IconButton sx={{p:0,"&.MuiButtonBase-root:hover": {bgcolor: "transparent"}}} 
-      id="likeButton" onClick={handleLikeClick} disabled={!isAuthenticated} >
+      <IconButton sx={{ p: 0, "&.MuiButtonBase-root:hover": { bgcolor: "transparent" } }}
+        id="likeButton" onClick={handleLikeClick} disabled={!isAuthenticated} >
         {liked ? <ThumbUpAltIcon id="likeButton" /> : <ThumbUpOffAltIcon id="likeButton" />}
       </IconButton>
     )
   }
 
+  const showData = () => {
+    let dataToReturn = '';
+
+    if (dataToShow === 'likes') {
+      dataToReturn = likes
+    } else if (dataToShow === 'createdAt') {
+      dataToReturn = new Date(log[dataToShow]).toLocaleDateString()
+    }
+    else {
+      dataToReturn = log[dataToShow]
+    }
+    return dataToReturn;
+  };
+
 
   return (
     <>
       {/* ----Yksittäinen logi listalla---- */}
-      <Card sx={{ m: 1, p: 2, alignItems: 'center', 
-      display: 'grid', gridTemplateColumns: '40px 5fr 2fr 40px' }} elevation={6} >
+      <Card sx={{
+        m: 1, p: 2, alignItems: 'center',
+        display: 'grid', gridTemplateColumns: '40px 5fr 2fr 40px'
+      }} elevation={6} >
         <Tooltip title={log.badge}>
           <MilitaryTechIcon fontSize="large" sx={{ color: logBadgeColor }} />
         </Tooltip>
         <Typography onClick={handleOpen} variant="h5">
-          {log.animal}
+          {log.animal}{log.notes && <HistoryEduIcon sx={{fontSize: "20px", opacity: "50%" }}/>}
         </Typography>
 
         <Typography onClick={handleOpen} variant="h6"
-        sx={{ justifySelf: (dataToShow === 'likes') ? 'end' : 'center',fontSize: { xs: '1rem', lg: '1.5rem' } }}>
-          {(dataToShow==='likes') ? likes : log[dataToShow]}
+          sx={{ justifySelf: (dataToShow === 'likes') ? 'end' : 'center', fontSize: { xs: '1rem', lg: '1.5rem' } }}>
+          {showData()}
         </Typography>
         <LikeButton />
       </Card>
@@ -185,15 +202,15 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
             display: 'grid', gridTemplateColumns: '1fr 40px 50px 100px 20px'
           }}>
             <Box>
-            { isAuthenticated ? <Typography onClick={()=> window.open(`${window.location.origin}/logs/${log.user}`, '_blank')} 
-            variant="h7">{log.user}<OpenInNewIcon sx={{ fontSize: 15 }}  /></Typography>
-            : <Typography variant="h7">{log.user}</Typography>}
-            <Typography variant="h4">
-              {log.animal}
-              <Tooltip title={log.gender}>
-                {genderIcon()}
-              </Tooltip>
-            </Typography>
+              {isAuthenticated ? <Typography onClick={() => window.open(`${window.location.origin}/logs/${log.user}`, '_blank')}
+                variant="h7">{log.user}<OpenInNewIcon sx={{ fontSize: 15 }} /></Typography>
+                : <Typography variant="h7">{log.user}</Typography>}
+              <Typography variant="h4">
+                {log.animal}
+                <Tooltip title={log.gender}>
+                  {genderIcon()}
+                </Tooltip>
+              </Typography>
             </Box>
 
             <Tooltip title={log.badge}>
@@ -205,8 +222,9 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
                 {log.rating}
               </Typography>
             </Tooltip>
-            <Box sx={{display:'flex', flexDirection:'column', justifyContent: 'end', alignItems: 'center'
-          }}>
+            <Box sx={{
+              display: 'flex', flexDirection: 'column', justifyContent: 'end', alignItems: 'center'
+            }}>
               <LikeButton />
               <Typography>{likes}</Typography>
             </Box>
