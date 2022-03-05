@@ -281,7 +281,7 @@ function LogFilteringList({ logs, setFilteredLogs }) {
 
 
   return (
-    <Paper sx={{ maxHeight: '80vh', overflow: 'scroll', }} elevation={6}>
+    <Paper sx={{ maxHeight: '85vh', overflow: 'scroll', }} elevation={6}>
       <List>
         <Button onClick={() => resetFilters()}>Clear filters</Button>
 
