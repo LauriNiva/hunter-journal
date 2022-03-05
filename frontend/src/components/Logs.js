@@ -26,6 +26,9 @@ function Logs({ likedLogs, setLikedLogs, user }) {
   const [logsToDisplay, setLogsToDisplay] = useState([]);
   const [selectedSortForLogs, setSelectedSortForLogs] = useState('createdAt-asc');
 
+  const [data, sort] = selectedSortForLogs.split('-');
+
+
   const { getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
@@ -47,9 +50,9 @@ function Logs({ likedLogs, setLikedLogs, user }) {
   };
 
   const sortObjects = {
+    createdAt: createSort("Newest First", "Oldest First", "createdAt"),
     rating: createSort("Lowest Rating", "Highest Rating", "rating"),
     badge: createSort("Worst Badge", "Best Badge", "badge"),
-    createdAt: createSort("Newest First", "Oldest First", "createdAt"),
     distance: createSort("Shortest tracking", "Longest Tracking", "distance"),
     weight: createSort("Lightest animal", "Heaviest animal", "weight")
 
@@ -71,7 +74,6 @@ function Logs({ likedLogs, setLikedLogs, user }) {
 
     let sortedLogs = filteredLogs;
 
-    const [data, sort] = selectedSortForLogs.split('-');
 
     console.log(selectedSortForLogs.split('-'))
 
@@ -97,12 +99,15 @@ function Logs({ likedLogs, setLikedLogs, user }) {
 
 
     setLogsToDisplay(sortedLogs)
-  }, [logs, filteredLogs, selectedSortForLogs]);
+  }, [sort, data, logs, filteredLogs, selectedSortForLogs]);
 
   const SortDropdown = () => {
     return (
       <FormControl>
-        <InputLabel id="sort-dropdown-label"><SortIcon /></InputLabel>
+        <InputLabel id="sort-dropdown-label">
+          {(sort==="asc") ? <SortIcon sx={{transform: "scaleY(-1)"}} />
+          : <SortIcon />}
+          </InputLabel>
         <Select labelId="sort-dropdown-label" id="sort-dropdown" label="Sort"
           value={selectedSortForLogs} onChange={(e) => setSelectedSortForLogs(e.target.value)} >
           {
