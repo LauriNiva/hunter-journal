@@ -51,6 +51,7 @@ function Logs({ likedLogs, setLikedLogs, user }) {
     badge: createSort("Worst Badge", "Best Badge", "badge"),
     createdAt: createSort("Newest First", "Oldest First", "createdAt"),
     distance: createSort("Shortest tracking", "Longest Tracking", "distance"),
+    weight: createSort("Lightest animal", "Heaviest animal", "weight")
 
   };
 
