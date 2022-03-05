@@ -184,7 +184,8 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
           <MilitaryTechIcon fontSize="large" sx={{ color: logBadgeColor }} />
         </Tooltip>
         <Typography onClick={handleOpen} variant="h5">
-          {log.animal}{log.notes && <HistoryEduIcon sx={{fontSize: "20px", opacity: "50%" }}/>}
+          {log.animal}
+          {log.notes && <HistoryEduIcon sx={{ fontSize: "20px", opacity: "50%" }} />}
         </Typography>
 
         <Typography onClick={handleOpen} variant="h6"
