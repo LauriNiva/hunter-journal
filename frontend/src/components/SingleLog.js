@@ -21,6 +21,7 @@ import RadarIcon from '@mui/icons-material/Radar';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
 import ForestIcon from '@mui/icons-material/Forest';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 
 import { Box } from '@mui/system';
 
@@ -183,7 +184,7 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
           <MilitaryTechIcon fontSize="large" sx={{ color: logBadgeColor }} />
         </Tooltip>
         <Typography onClick={handleOpen} variant="h5">
-          {log.animal}
+          {log.animal}{log.notes && <HistoryEduIcon sx={{fontSize: "20px", opacity: "50%" }}/>}
         </Typography>
 
         <Typography onClick={handleOpen} variant="h6"
