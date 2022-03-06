@@ -41,12 +41,10 @@ logsRouter.post('/', checkJwt, async (req, res) => {
   console.log('inside logsrouter: ', req.body)
   const body = req.body;
   try {
-
     const fileStr = body.imagedata;
     const uploadResponse = await cloudinary.v2.uploader
       .upload(fileStr, { upload_preset: 'hunter_setup', });
     const imageid = uploadResponse.public_id;
-
     const newLog = new Log({
       user: req.user.sub,
       animal: body.animal,

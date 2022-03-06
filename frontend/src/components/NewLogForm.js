@@ -192,7 +192,7 @@ const NewLogForm = ({ setLogs }) => {
       shotdistance: formShotDistance,
       reserve: formReserve,
       notes: formNotes,
-      imageid: compressedImage,
+      imagedata: compressedImage,
     };
 
     console.log(`newLog`, newLog)
