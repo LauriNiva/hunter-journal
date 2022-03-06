@@ -178,15 +178,21 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
       {/* ----Yksittäinen logi listalla---- */}
       <Card sx={{
         m: 1, p: 2, alignItems: 'center',
-        display: 'grid', gridTemplateColumns: '40px 5fr 2fr 40px'
+        display: 'grid', gridTemplateColumns: {xs: '40px 5fr 25px 2fr 40px'},
+        gridTemplateRows: { xs: '1fr'}
       }} elevation={6} >
         <Tooltip title={log.badge}>
           <MilitaryTechIcon fontSize="large" sx={{ color: logBadgeColor }} />
         </Tooltip>
-        <Typography onClick={handleOpen} variant="h5">
+        <Typography onClick={handleOpen} variant="h5" 
+        sx={{overflow: 'hidden',whiteSpace: 'nowrap',
+        fontSize: { xs: '1.2rem', sm:'1.2rem',md:'1.4rem', lg: '1.6rem' }}}>
           {log.animal}
-          {log.notes && <HistoryEduIcon sx={{ fontSize: "20px", opacity: "50%" }} />}
         </Typography>
+        <Box>
+          {log.notes && <HistoryEduIcon sx={{ fontSize: "20px", opacity: "50%" }} />}
+
+        </Box>
 
         <Typography onClick={handleOpen} variant="h6"
           sx={{ justifySelf: (dataToShow === 'likes') ? 'end' : 'center', fontSize: { xs: '1rem', lg: '1.5rem' } }}>
