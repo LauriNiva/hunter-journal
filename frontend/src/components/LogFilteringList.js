@@ -93,7 +93,7 @@ function LogFilteringList({ logs, setFilteredLogs }) {
 
   useEffect(() => {
     //Do the actual filtering of the logs
-    console.log("Filtering the logs...");
+    //console.log("Filtering the logs...");
 
 
     let logsBeingFiltered = logs;
