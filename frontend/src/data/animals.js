@@ -479,8 +479,8 @@ const animalsArray =
     ],
     reserves: ['Layton Lake']
   },
-  "Merriam's Turkey": {
-    title: "Merriam's Turkey",
+  "Merriam Turkey": {
+    title: "Merriam Turkey",
     animalclass: 1,
     trophytype: 'Weight',
     trophyscore: { silver: 3.3, gold: 4, diamond: 4.6 },
