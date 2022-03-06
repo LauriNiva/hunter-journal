@@ -102,7 +102,7 @@ const animalsArray =
     difficulty: 5,
     trophytype: 'Horns',
     trophyscore: { silver: 21.6, gold: 30.8, diamond: 37.7 },
-    furtypes: ['Common', 'Albino', 'Crowned', 'Gold', 'Grey'],
+    furtypes: ['Common', 'Albino', 'Crowned', 'Gold', 'Grey', 'Dark Brown'],
     reserves: ['Vurhonga Savanna']
   },
   'Bobwhite Quail': {
@@ -379,7 +379,7 @@ const animalsArray =
     difficulty: 5,
     trophytype: 'Horns',
     trophyscore: { silver: 194.8, gold: 276.3, diamond: 337.5 },
-    furtypes: ['Common', 'Dark', 'Common', 'Beige', 'Grey', 'Gold'],
+    furtypes: ['Common', 'Dark', 'Common', 'Beige', 'Grey', 'Light Grey', 'Gold'],
     reserves: ['Vurhonga Savanna']
   },
   'Gray Fox': {
@@ -860,7 +860,7 @@ const animalsArray =
     difficulty: 5,
     trophytype: 'Tusks',
     trophyscore: { silver: 24.6, gold: 43.8, diamond: 58.2 },
-    furtypes: ['Common', 'Albino', 'Grey', 'Common', 'Red Brown', 'Red'],
+    furtypes: ['Common', 'Albino', 'Dark', 'Grey', 'Common', 'Red Brown', 'Red'],
     reserves: ['Vurhonga Savanna']
   },
   'Water Buffalo': {
