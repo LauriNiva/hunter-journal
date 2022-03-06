@@ -31,10 +31,10 @@ const NewLogForm = ({ setLogs }) => {
   const difficultyOptions = ["1 - Trivial", "2 - Minor", "3 - Very easy", "4 - Easy", "5 - Medium",
     "6 - Hard", "7 - Very hard", "8 - Mythical", "9 - Legendary", "10 - Fabled"];
 
-  const canBeGreatOne = (animal) => { 
+  const canBeGreatOne = (animal) => {
     const currentGreatOnes = ['Red Deer', 'Whitetail Deer'];
     return currentGreatOnes.includes(animal);
-   }
+  }
 
   const [formAnimal, setFormAnimal] = useState(animalOptions[0]);
   const [availableFurTypes, setAvailableFurTypes] = useState(animalsList[formAnimal].furtypes);
@@ -43,7 +43,7 @@ const NewLogForm = ({ setLogs }) => {
   const [formWeight, setFormWeight] = useState('');
   const [formDistance, setFormDistance] = useState('');
   const [animalDifficulty, setAnimalDifficulty] = useState(9)
-  const [formDifficulty, setFormDifficulty] = useState(difficultyOptions[0])
+  const [formDifficulty, setFormDifficulty] = useState(difficultyOptions[animalDifficulty - 1])
   const [formRating, setFormRating] = useState('');
   const [formBadge, setFormBadge] = useState('None');
   const [formWeapon, setFormWeapon] = useState(weaponOptions[0]);
@@ -68,8 +68,13 @@ const NewLogForm = ({ setLogs }) => {
   useEffect(() => {
     setAvailableFurTypes(animalsList[formAnimal].furtypes);
     setAvailableReserves(animalsList[formAnimal].reserves)
-    setAnimalDifficulty(animalsList[formAnimal].difficulty)
+    setAnimalDifficulty(animalsList[formAnimal].difficulty);
   }, [formAnimal]);
+
+  useEffect(() => {
+    setFormDifficulty(difficultyOptions[animalDifficulty - 1])
+
+  }, [animalDifficulty, setFormDifficulty, difficultyOptions])
 
   useEffect(() => {
     setFormFurtype(availableFurTypes[0]);
@@ -82,16 +87,16 @@ const NewLogForm = ({ setLogs }) => {
   useEffect(() => {
     const animalRatings = animalsList[formAnimal].trophyscore;
     //console.log('animalRatings', animalRatings)
-    if(formRating >= animalRatings.diamond) {
+    if (formRating >= animalRatings.diamond) {
       setFormBadge('Diamond')
-    } else if(formRating >= animalRatings.gold) {
+    } else if (formRating >= animalRatings.gold) {
       setFormBadge('Gold')
-    } else if(formRating >= animalRatings.silver) {
+    } else if (formRating >= animalRatings.silver) {
       setFormBadge('Silver')
-    } else if(formRating < animalRatings.silver) {
+    } else if (formRating < animalRatings.silver) {
       setFormBadge('Bronze')
     }
-  },[formRating, formAnimal])
+  }, [formRating, formAnimal])
 
   useEffect(() => {
     setAvailableAmmo(availableAmmoList[formWeapon.label].ammo);
@@ -147,12 +152,12 @@ const NewLogForm = ({ setLogs }) => {
     const token = await getAccessTokenSilently();
 
     try {
-      const detectedAnimal = await axios.post('/api/logs/ocrimage', { imagedata: compressedImageData.data}, {
+      const detectedAnimal = await axios.post('/api/logs/ocrimage', { imagedata: compressedImageData.data }, {
         headers: {
           Authorization: `Bearer ${token}`
         },
       });
-      
+
       setFormAnimal(detectedAnimal.data)
     } catch (error) {
       console.log(error);
@@ -177,7 +182,7 @@ const NewLogForm = ({ setLogs }) => {
 
     const compressedImageArray = await compress.compress([imageFile], { size: 1, quality: 1 })
     const compressedImageData = compressedImageArray[0];
-    const compressedImage = `data:${compressedImageData.ext};base64,${compressedImageData.data}` 
+    const compressedImage = `data:${compressedImageData.ext};base64,${compressedImageData.data}`
 
     const newLog = {
       animal: formAnimal,
@@ -238,7 +243,9 @@ const NewLogForm = ({ setLogs }) => {
     clearForm();
   };
 
-  const handleCloseDialog = () => {
+  const handleCloseDialog = (event, reason) => {
+    if (reason && reason === "backdropClick")
+      return;
     setOpen(false);
   };
 
@@ -262,7 +269,7 @@ const NewLogForm = ({ setLogs }) => {
         +
       </Button>
 
-      <Dialog open={open} onClose={handleCloseDialog} fullWidth maxWidth="lg">
+      <Dialog open={open} onClose={handleCloseDialog} fullWidth maxWidth="lg" >
         <DialogTitle id="form-dialog-title">New log</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -387,7 +394,7 @@ const NewLogForm = ({ setLogs }) => {
                   value={formDifficulty}
                   onChange={(e) => setFormDifficulty(e.target.value)}
                 >
-                  {difficultyOptions.slice(0, animalDifficulty).map(option => <MenuItem key={option} value={option}>{option}</MenuItem>)}
+                  {difficultyOptions.slice(0, animalDifficulty).reverse().map(option => <MenuItem key={option} value={option}>{option}</MenuItem>)}
                 </Select>
               </FormControl>
 
@@ -418,7 +425,7 @@ const NewLogForm = ({ setLogs }) => {
                   <MenuItem value="Silver">Silver</MenuItem>
                   <MenuItem value="Gold">Gold</MenuItem>
                   <MenuItem value="Diamond">Diamond</MenuItem>
-                  { canBeGreatOne(formAnimal) && <MenuItem value="Great One">Great One</MenuItem> }
+                  {canBeGreatOne(formAnimal) && <MenuItem value="Great One">Great One</MenuItem>}
                 </Select>
               </FormControl>
 
