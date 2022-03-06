@@ -75,7 +75,7 @@ function Logs({ likedLogs, setLikedLogs, user }) {
     let sortedLogs = filteredLogs;
 
 
-    console.log(selectedSortForLogs.split('-'))
+    //console.log(selectedSortForLogs.split('-'))
 
     if (sort === 'desc') {
       //Descending order
