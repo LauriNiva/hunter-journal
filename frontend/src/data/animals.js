@@ -3,14 +3,16 @@ const animalsArray =
   'American Alligator': {
     title: 'American Alligator',
     animalclass: 6,
+    difficulty: 9,
     trophytype: 'Length',
     trophyscore: { silver: 266, gold: 378, diamond: 492 },
     furtypes: ['Common', 'Albino', 'Dark-Brown', 'Melanistic', 'Olive', 'Piebald'],
-    reserves: ['Mississippi Acres']
+    reserves: ['Mississippi Acres'],
   },
   'Antelope Jackrabbit': {
     title: 'Antelope Jackrabbit',
     animalclass: 1,
+    difficulty: 3,
     trophytype: 'Weight',
     trophyscore: { silver: 2.8, gold: 4.8, diamond: 6.3 },
     furtypes: ['Common',
@@ -26,6 +28,7 @@ const animalsArray =
   'Axis Deer': {
     title: 'Axis Deer',
     animalclass: 3,
+    difficulty: 5,
     trophytype: 'Antlers',
     trophyscore: { silver: 72.8, gold: 155.3, diamond: 217.2 },
     furtypes: ['Common', 'Albino', 'Dark', 'Melanistic', 'Orange', 'Piebald', 'Spotted'],
@@ -34,6 +37,7 @@ const animalsArray =
   'Beceite Ibex': {
     title: 'Beceite Ibex',
     animalclass: 4,
+    difficulty: 5,
     trophytype: 'Horns',
     trophyscore: { silver: 78, gold: 142.9, diamond: 191.6 },
     furtypes: ['Common',
@@ -51,6 +55,7 @@ const animalsArray =
   'Bighorn Sheep': {
     title: 'Bighorn Sheep',
     animalclass: 4,
+    difficulty: 5,
     trophytype: 'Horns',
     trophyscore: { silver: 90.3, gold: 132.7, diamond: 164.6 },
     furtypes: ['Common', 'Albino', 'Black', 'Bronze', 'Brown', 'Grey-Brown'],
@@ -59,6 +64,7 @@ const animalsArray =
   'Black Bear': {
     title: 'Black Bear',
     animalclass: 7,
+    difficulty: 9,
     trophytype: 'Skull',
     trophyscore: { silver: 14.4, gold: 19.2, diamond: 22.8 },
     furtypes: ['Common', 'Black', 'Blonde', 'Brown', 'Cinnamon', 'Dark', 'Dusky'],
@@ -67,6 +73,7 @@ const animalsArray =
   Blackbuck: {
     title: 'Blackbuck',
     animalclass: 3,
+    difficulty: 5,
     trophytype: 'Horns',
     trophyscore: { silver: 71.8, gold: 106.3, diamond: 132.2 },
     furtypes: ['Common', 'Melanistic', 'Black', 'Leucistic', 'Brown', 'Dark'],
@@ -75,6 +82,7 @@ const animalsArray =
   'Blacktail Deer': {
     title: 'Blacktail Deer',
     animalclass: 4,
+    difficulty: 5,
     trophytype: 'Antlers',
     trophyscore: { silver: 76.9, gold: 134.4, diamond: 177.5 },
     furtypes: ['Common',
@@ -91,6 +99,7 @@ const animalsArray =
   'Blue Wildebeest': {
     title: 'Blue Wildebeest',
     animalclass: 6,
+    difficulty: 5,
     trophytype: 'Horns',
     trophyscore: { silver: 21.6, gold: 30.8, diamond: 37.7 },
     furtypes: ['Common', 'Albino', 'Crowned', 'Gold', 'Grey'],
@@ -99,6 +108,7 @@ const animalsArray =
   'Bobwhite Quail': {
     title: 'Bobwhite Quail',
     animalclass: 1,
+    difficulty: 3,
     trophytype: 'Combined',
     trophyscore: { silver: 159, gold: 217, diamond: 260.5 },
     furtypes: ['Common', 'Brown', 'Grey', 'Red', 'Red-Brown', 'Albino'],
@@ -107,6 +117,7 @@ const animalsArray =
   'Canada Goose': {
     title: 'Canada Goose',
     animalclass: 1,
+    difficulty: 5,
     trophytype: 'Weight',
     trophyscore: { silver: 4.4, gold: 6.8, diamond: 8.5 },
     furtypes: ['Common',
@@ -122,6 +133,7 @@ const animalsArray =
   'Cape Buffalo': {
     title: 'Cape Buffalo',
     animalclass: 9,
+    difficulty: 9,
     trophytype: 'Horns',
     trophyscore: { silver: 73.3, gold: 117.9, diamond: 151.4 },
     furtypes: ['Common', 'Black', 'Grey', 'Brown', 'Albino', 'Leucistic'],
@@ -130,6 +142,7 @@ const animalsArray =
   Caribou: {
     title: 'Caribou',
     animalclass: 6,
+    difficulty: 5,
     trophytype: 'Antlers',
     trophyscore: { silver: 152.5, gold: 311.2, diamond: 430.2 },
     furtypes: ['Common', 'Albino', 'Dark-Brown', 'Leucistic', 'Melanistic', 'Piebald'],
@@ -138,6 +151,7 @@ const animalsArray =
   Chamois: {
     title: 'Chamois',
     animalclass: 3,
+    difficulty: 5,
     trophytype: 'Horns',
     trophyscore: { silver: 30.8, gold: 46.3, diamond: 58 },
     furtypes: ['Common',
@@ -155,6 +169,7 @@ const animalsArray =
   'Cinnamon Teal': {
     title: 'Cinnamon Teal',
     animalclass: 1,
+    difficulty: 3,
     trophytype: 'Weight',
     trophyscore: { silver: 3.4, gold: 4.1, diamond: 4.6 },
     furtypes: ['Common', 'Beige', 'Cinnamon', 'Melanistic', 'Piebald', 'Red'],
@@ -163,6 +178,7 @@ const animalsArray =
   'Collared Peccary': {
     title: 'Collared Peccary',
     animalclass: 4,
+    difficulty: 3,
     trophytype: 'Tusks',
     trophyscore: { silver: 37.5, gold: 98.5, diamond: 144.2 },
     furtypes: ['Common',
@@ -180,6 +196,7 @@ const animalsArray =
   'Common Raccoon': {
     title: 'Common Raccoon',
     animalclass: 2,
+    difficulty: 3,
     trophytype: 'Weight',
     trophyscore: { silver: 5, gold: 9, diamond: 12 },
     furtypes: ['Common',
@@ -197,6 +214,7 @@ const animalsArray =
   Coyote: {
     title: 'Coyote',
     animalclass: 2,
+    difficulty: 9,
     trophytype: 'Weight',
     trophyscore: { silver: 38.4, gold: 48.9, diamond: 56.8 },
     furtypes: ['Common',
@@ -213,6 +231,7 @@ const animalsArray =
   'Eastern Cottontail Rabbit': {
     title: 'Eastern Cottontail Rabbit',
     animalclass: 1,
+    difficulty: 3,
     trophytype: 'Weight',
     trophyscore: { silver: 1, gold: 1.5, diamond: 1.9 },
     furtypes: ['Common', 'Brown', 'Grey', 'Light Brown'],
@@ -221,6 +240,7 @@ const animalsArray =
   'Eastern Wild Turkey': {
     title: 'Eastern Wild Turkey',
     animalclass: 1,
+    difficulty: 3,
     trophytype: 'Weight',
     trophyscore: { silver: 2.5, gold: 3.7, diamond: 4.6 },
     furtypes: ['Common', 'Bronze', 'Brown', 'Light Bronze', 'Light Brown'],
@@ -229,6 +249,7 @@ const animalsArray =
   'Brown Bear': {
     title: 'Brown Bear',
     animalclass: 7,
+    difficulty: 9,
     trophytype: 'Skull',
     trophyscore: { silver: 18.6, gold: 23.8, diamond: 27.7 },
     furtypes: ['Common',
@@ -247,6 +268,7 @@ const animalsArray =
   Lynx: {
     title: 'Lynx',
     animalclass: 3,
+    difficulty: 9,
     trophytype: 'Skull',
     trophyscore: { silver: 18.6, gold: 23.8, diamond: 27.7 },
     furtypes: ['Common', 'Albino', 'Grey', 'Light Brown', 'Melanistic', 'Piebald'],
@@ -255,6 +277,7 @@ const animalsArray =
   'European Bison': {
     title: 'European Bison',
     animalclass: 9,
+    difficulty: 5,
     trophytype: 'Horns',
     trophyscore: { silver: 63.2, gold: 181.6, diamond: 270.4 },
     furtypes: ['Common',
@@ -270,6 +293,7 @@ const animalsArray =
   'European Hare': {
     title: 'European Hare',
     animalclass: 1,
+    difficulty: 3,
     trophytype: 'Weight',
     trophyscore: { silver: 3.5, gold: 5, diamond: 6.5 },
     furtypes: ['Common',
@@ -285,6 +309,7 @@ const animalsArray =
   'European Rabbit': {
     title: 'European Rabbit',
     animalclass: 1,
+    difficulty: 3,
     trophytype: 'Weight',
     trophyscore: { silver: 1, gold: 1.9, diamond: 2.4 },
     furtypes: ['Common',
@@ -302,6 +327,7 @@ const animalsArray =
   'Fallow Deer': {
     title: 'Fallow Deer',
     animalclass: 4,
+    difficulty: 5,
     trophytype: 'Antlers',
     trophyscore: { silver: 68, gold: 173, diamond: 251.7 },
     furtypes: ['Common',
@@ -318,6 +344,7 @@ const animalsArray =
   'Feral Goat': {
     title: 'Feral Goat',
     animalclass: 3,
+    difficulty: 5,
     trophytype: 'Horns',
     trophyscore: { silver: 89.4, gold: 157.6, diamond: 208.7 },
     furtypes: ['Common',
@@ -332,6 +359,7 @@ const animalsArray =
   'Feral Pig': {
     title: 'Feral Pig',
     animalclass: 4,
+    difficulty: 5,
     trophytype: 'Tusks',
     trophyscore: { silver: 37.5, gold: 98.5, diamond: 144.2 },
     furtypes: ['Common',
@@ -348,6 +376,7 @@ const animalsArray =
   Gemsbok: {
     title: 'Gemsbok',
     animalclass: 8,
+    difficulty: 5,
     trophytype: 'Horns',
     trophyscore: { silver: 194.8, gold: 276.3, diamond: 337.5 },
     furtypes: ['Common', 'Dark', 'Common', 'Beige', 'Grey', 'Gold'],
@@ -356,6 +385,7 @@ const animalsArray =
   'Gray Fox': {
     title: 'Gray Fox',
     animalclass: 2,
+    difficulty: 9,
     trophytype: 'Weight',
     trophyscore: { silver: 3.8, gold: 5.3, diamond: 6.4 },
     furtypes: ['Common',
@@ -372,6 +402,7 @@ const animalsArray =
   'Gray Wolf': {
     title: 'Gray Wolf',
     animalclass: 5,
+    difficulty: 9,
     trophytype: 'Skull',
     trophyscore: { silver: 32, gold: 36, diamond: 39 },
     furtypes: ['Common', 'Albino', 'Eggwhite', 'Grey', 'Melanistic', 'Red Brown'],
@@ -380,6 +411,7 @@ const animalsArray =
   'Gredos Ibex': {
     title: 'Gredos Ibex',
     animalclass: 4,
+    difficulty: 5,
     trophytype: 'Horns',
     trophyscore: { silver: 54.3, gold: 80.5, diamond: 100.1 },
     furtypes: ['Common',
@@ -397,6 +429,7 @@ const animalsArray =
   'Grizzly Bear': {
     title: 'Grizzly Bear',
     animalclass: 7,
+    difficulty: 9,
     trophytype: 'Skull',
     trophyscore: { silver: 52.6, gold: 60.8, diamond: 67 },
     furtypes: ['Common', 'Common', 'Melanistic', 'Brown', 'Albino'],
@@ -405,6 +438,7 @@ const animalsArray =
   'Harlequin Duck': {
     title: 'Harlequin Duck',
     animalclass: 1,
+    difficulty: 3,
     trophytype: 'Weight',
     trophyscore: { silver: 5.3, gold: 6.4, diamond: 7.2 },
     furtypes: ['Common', 'Common', 'Dark', 'Piebald', 'Grey', 'Albino', 'Melanistic'],
@@ -413,6 +447,7 @@ const animalsArray =
   'Iberian Mouflon': {
     title: 'Iberian Mouflon',
     animalclass: 4,
+    difficulty: 5,
     trophytype: 'Horns',
     trophyscore: { silver: 97, gold: 144.2, diamond: 179.6 },
     furtypes: ['Common', 'Albino', 'Brown', 'Grey', 'Light Brown', 'Melanistic'],
@@ -421,6 +456,7 @@ const animalsArray =
   'Iberian Wolf': {
     title: 'Iberian Wolf',
     animalclass: 5,
+    difficulty: 9,
     trophytype: 'Skull',
     trophyscore: { silver: 32, gold: 36, diamond: 39 },
     furtypes: ['Common',
@@ -435,6 +471,7 @@ const animalsArray =
   'White-tailed Jackrabbit': {
     title: 'White-tailed Jackrabbit',
     animalclass: 1,
+    difficulty: 3,
     trophytype: 'Weight',
     trophyscore: { silver: 2.8, gold: 4.8, diamond: 6.3 },
     furtypes: ['Common', 'Albino', 'Brown', 'Grey', 'Light Brown'],
@@ -443,6 +480,7 @@ const animalsArray =
   'Lesser Kudu': {
     title: 'Lesser Kudu',
     animalclass: 4,
+    difficulty: 5,
     trophytype: 'Horns',
     trophyscore: { silver: 107.8, gold: 132.8, diamond: 151.6 },
     furtypes: ['Common',
@@ -459,6 +497,7 @@ const animalsArray =
   Lion: {
     title: 'Lion',
     animalclass: 9,
+    difficulty: 9,
     trophytype: 'Skull',
     trophyscore: { silver: 38, gold: 44, diamond: 48.5 },
     furtypes: ['Common', 'Albino', 'Blonde', 'Dark-Brown', 'Light Brown', 'Tan'],
@@ -467,6 +506,7 @@ const animalsArray =
   Mallard: {
     title: 'Mallard',
     animalclass: 1,
+    difficulty: 3,
     trophytype: 'Weight',
     trophyscore: { silver: 9.9, gold: 15.4, diamond: 19.6 },
     furtypes: ['Common',
@@ -482,6 +522,7 @@ const animalsArray =
   "Merriam Turkey": {
     title: "Merriam Turkey",
     animalclass: 1,
+    difficulty: 3,
     trophytype: 'Weight',
     trophyscore: { silver: 3.3, gold: 4, diamond: 4.6 },
     furtypes: ['Common',
@@ -498,6 +539,7 @@ const animalsArray =
   'Mexican Bobcat': {
     title: 'Mexican Bobcat',
     animalclass: 3,
+    difficulty: 3,
     trophytype: 'Skull',
     trophyscore: { silver: 18.5, gold: 23.7, diamond: 27.6 },
     furtypes: ['Common',
@@ -514,6 +556,7 @@ const animalsArray =
   Moose: {
     title: 'Moose',
     animalclass: 8,
+    difficulty: 5,
     trophytype: 'Antlers',
     trophyscore: { silver: 86.2, gold: 194, diamond: 274.9 },
     furtypes: ['Common',
@@ -531,6 +574,7 @@ const animalsArray =
   'Mountain Goat': {
     title: 'Mountain Goat',
     animalclass: 4,
+    difficulty: 5,
     trophytype: 'Horns',
     trophyscore: { silver: 52.7, gold: 84.1, diamond: 107.6 },
     furtypes: ['Common',
@@ -546,6 +590,7 @@ const animalsArray =
   'Mountain Lion': {
     title: 'Mountain Lion',
     animalclass: 5,
+    difficulty: 9,
     trophytype: 'Skull',
     trophyscore: { silver: 32, gold: 36, diamond: 39 },
     furtypes: ['Common', 'Albino', 'Dark Red', 'Grey', 'Light Brown', 'Melanistic'],
@@ -554,6 +599,7 @@ const animalsArray =
   'Mule Deer': {
     title: 'Mule Deer',
     animalclass: 6,
+    difficulty: 5,
     trophytype: 'Antlers',
     trophyscore: { silver: 98.9, gold: 222.2, diamond: 314.8 },
     furtypes: ['Common',
@@ -570,6 +616,7 @@ const animalsArray =
   'Plains Bison': {
     title: 'Plains Bison',
     animalclass: 9,
+    difficulty: 5,
     trophytype: 'Horns',
     trophyscore: { silver: 50.7, gold: 148.1, diamond: 221.1 },
     furtypes: ['Common', 'Common', 'Albino','Light Brown' ,'Leucistic', 'Melanistic'],
@@ -578,6 +625,7 @@ const animalsArray =
   Pronghorn: {
     title: 'Pronghorn',
     animalclass: 4,
+    difficulty: 5,
     trophytype: 'Horns',
     trophyscore: { silver: 46, gold: 75.7, diamond: 98 },
     furtypes: ['Common', 'Brown', 'Dark', 'Tan', 'Piebald', 'Albino', 'Leucistic'],
@@ -586,6 +634,7 @@ const animalsArray =
   Puma: {
     title: 'Puma',
     animalclass: 5,
+    difficulty: 9,
     trophytype: 'Skull',
     trophyscore: { silver: 32, gold: 36, diamond: 39 },
     furtypes: ['Common', 'Albino', 'Dark Red', 'Grey', 'Light Brown', 'Melanistic'],
@@ -594,6 +643,7 @@ const animalsArray =
   'Red Deer': {
     title: 'Red Deer',
     animalclass: 6,
+    difficulty: 9,
     trophytype: 'Antlers',
     trophyscore: { silver: 90.5, gold: 182.2, diamond: 251.6 },
     furtypes: ['Common',
@@ -616,6 +666,7 @@ const animalsArray =
   'Red Fox': {
     title: 'Red Fox',
     animalclass: 2,
+    difficulty: 9,
     trophytype: 'Weight',
     trophyscore: { silver: 4.7, gold: 10, diamond: 14.1 },
     furtypes: ['Common', 'Albino', 'Dark Red', 'Melanistic', 'Orange', 'Piebald', 'Red'],
@@ -624,6 +675,7 @@ const animalsArray =
   Reindeer: {
     title: 'Reindeer',
     animalclass: 6,
+    difficulty: 5,
     trophytype: 'Antlers',
     trophyscore: { silver: 152.5, gold: 311.2, diamond: 430.2 },
     furtypes: ['Common',
@@ -641,6 +693,7 @@ const animalsArray =
   'Ring-Necked Pheasant': {
     title: 'Ring-Necked Pheasant',
     animalclass: 1,
+    difficulty: 3,
     trophytype: 'Combined',
     trophyscore: { silver: 9.1, gold: 15.5, diamond: 20.3 },
     furtypes: ['Common', 'Albino', 'Brown', 'Grey', 'Leucistic', 'Melanistic', 'Molting'],
@@ -649,6 +702,7 @@ const animalsArray =
   'Rio Grande Turkey': {
     title: 'Rio Grande Turkey',
     animalclass: 1,
+    difficulty: 3,
     trophytype: 'Combined',
     trophyscore: { silver: 3.3, gold: 4, diamond: 4.6 },
     furtypes: ['Common',
@@ -666,6 +720,7 @@ const animalsArray =
   'Rocky Mountain Elk': {
     title: 'Rocky Mountain Elk',
     animalclass: 8,
+    difficulty: 5,
     trophytype: 'Antlers',
     trophyscore: { silver: 177.8, gold: 351.3, diamond: 481.4 },
     furtypes: ['Common',
@@ -681,6 +736,7 @@ const animalsArray =
   'Roe Deer': {
     title: 'Roe Deer',
     animalclass: 3,
+    difficulty: 3,
     trophytype: 'Antlers',
     trophyscore: { silver: 41, gold: 64.3, diamond: 81.8 },
     furtypes: ['Common',
@@ -698,6 +754,7 @@ const animalsArray =
   'Ronda Ibex': {
     title: 'Ronda Ibex',
     animalclass: 4,
+    difficulty: 5,
     trophytype: 'Horns',
     trophyscore: { silver: 69.2, gold: 91.4, diamond: 107.9 },
     furtypes: ['Common',
@@ -714,6 +771,7 @@ const animalsArray =
   'Roosevelt Elk': {
     title: 'Roosevelt Elk',
     animalclass: 8,
+    difficulty: 5,
     trophytype: 'Antlers',
     trophyscore: { silver: 128.7, gold: 272.8, diamond: 380.8 },
     furtypes: ['Common', 'Albino', 'Brown', 'Melanistic', 'Orange', 'Piebald', 'Tan'],
@@ -722,6 +780,7 @@ const animalsArray =
   'Scrub Hare': {
     title: 'Scrub Hare',
     animalclass: 1,
+    difficulty: 3,
     trophytype: 'Weight',
     trophyscore: { silver: 2.4, gold: 4.1, diamond: 5.3 },
     furtypes: ['Common', 'Grey', 'Light Grey', 'Chestnut', 'Brown'],
@@ -730,6 +789,7 @@ const animalsArray =
   'Musk Deer': {
     title: 'Musk Deer',
     animalclass: 2,
+    difficulty: 3,
     trophytype: 'Tusks',
     trophyscore: { silver: 60, gold: 168, diamond: 249 },
     furtypes: ['Common',
@@ -745,6 +805,7 @@ const animalsArray =
   'Side-Striped Jackal': {
     title: 'Side-Striped Jackal',
     animalclass: 2,
+    difficulty: 9,
     trophytype: 'Weight',
     trophyscore: { silver: 16.8, gold: 23.8, diamond: 29.1 },
     furtypes: ['Common', 'Grey', 'Light Brown', 'Grey Brown', 'Albino', 'Melanistic'],
@@ -753,6 +814,7 @@ const animalsArray =
   'Sika Deer': {
     title: 'Sika Deer',
     animalclass: 4,
+    difficulty: 5,
     trophytype: 'Antlers',
     trophyscore: { silver: 53.2, gold: 136.4, diamond: 198.7 },
     furtypes: ['Common',
@@ -768,6 +830,7 @@ const animalsArray =
   'Southeastern Spanish Ibex': {
     title: 'Southeastern Spanish Ibex',
     animalclass: 4,
+    difficulty: 5,
     trophytype: 'Horns',
     trophyscore: { silver: 49.7, gold: 72.5, diamond: 89.6 },
     furtypes: ['Common',
@@ -785,6 +848,7 @@ const animalsArray =
   Springbok: {
     title: 'Springbok',
     animalclass: 3,
+    difficulty: 5,
     trophytype: 'Horns',
     trophyscore: { silver: 69.4, gold: 93, diamond: 110.7 },
     furtypes: ['Common', 'Albino', 'Black-Brown', 'Dark-Brown', 'Orange'],
@@ -793,6 +857,7 @@ const animalsArray =
   Warthog: {
     title: 'Warthog',
     animalclass: 4,
+    difficulty: 5,
     trophytype: 'Tusks',
     trophyscore: { silver: 24.6, gold: 43.8, diamond: 58.2 },
     furtypes: ['Common', 'Albino', 'Grey', 'Common', 'Red Brown', 'Red'],
@@ -801,6 +866,7 @@ const animalsArray =
   'Water Buffalo': {
     title: 'Water Buffalo',
     animalclass: 9,
+    difficulty: 9,
     trophytype: 'Horns',
     trophyscore: { silver: 84.2, gold: 138.1, diamond: 167.5 },
     furtypes: ['Common', 'Albino', 'Black', 'Brown', 'Grey', 'Orange'],
@@ -809,6 +875,7 @@ const animalsArray =
   'Whitetail Deer': {
     title: 'Whitetail Deer',
     animalclass: 4,
+    difficulty: 3,
     trophytype: 'Antlers',
     trophyscore: { silver: 112, gold: 193.7, diamond: 255 },
     furtypes: ['Common',
@@ -826,6 +893,7 @@ const animalsArray =
   'Wild Boar': {
     title: 'Wild Boar',
     animalclass: 4,
+    difficulty: 5,
     trophytype: 'Tusks',
     trophyscore: { silver: 37.5, gold: 98.5, diamond: 144.2 },
     furtypes: ['Common',
@@ -841,6 +909,7 @@ const animalsArray =
   'Wild Hog': {
     title: 'Wild Hog',
     animalclass: 4,
+    difficulty: 3,
     trophytype: 'Tusks',
     trophyscore: { silver: 37.5, gold: 98.5, diamond: 144.2 },
     furtypes: ['Common',

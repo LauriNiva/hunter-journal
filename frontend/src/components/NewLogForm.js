@@ -42,6 +42,7 @@ const NewLogForm = ({ setLogs }) => {
   const [formGender, setFormGender] = useState('Male');
   const [formWeight, setFormWeight] = useState('');
   const [formDistance, setFormDistance] = useState('');
+  const [animalDifficulty, setAnimalDifficulty] = useState(9)
   const [formDifficulty, setFormDifficulty] = useState(difficultyOptions[0])
   const [formRating, setFormRating] = useState('');
   const [formBadge, setFormBadge] = useState('None');
@@ -67,6 +68,7 @@ const NewLogForm = ({ setLogs }) => {
   useEffect(() => {
     setAvailableFurTypes(animalsList[formAnimal].furtypes);
     setAvailableReserves(animalsList[formAnimal].reserves)
+    setAnimalDifficulty(animalsList[formAnimal].difficulty)
   }, [formAnimal]);
 
   useEffect(() => {
@@ -385,7 +387,7 @@ const NewLogForm = ({ setLogs }) => {
                   value={formDifficulty}
                   onChange={(e) => setFormDifficulty(e.target.value)}
                 >
-                  {difficultyOptions.map(option => <MenuItem key={option} value={option}>{option}</MenuItem>)}
+                  {difficultyOptions.slice(0, animalDifficulty).map(option => <MenuItem key={option} value={option}>{option}</MenuItem>)}
                 </Select>
               </FormControl>
 
