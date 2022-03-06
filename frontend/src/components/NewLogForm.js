@@ -133,18 +133,16 @@ const NewLogForm = ({ setLogs }) => {
 
   const [previewSource, setPreviewSource] = useState('');
   const [imageFile, setImageFile] = useState('');
-  const [imageid, setImageid] = useState('');
 
   const handleFileInputChange = async (e) => {
     const file = e.target.files[0];
     previewFile(file);
-    setImageFile(file)
+    setImageFile(e.target.files[0])
 
     const compressedImageArray = await compress.compress([file], { size: 0.2, quality: 1 })
     const compressedImageData = compressedImageArray[0];
 
     const token = await getAccessTokenSilently();
-
 
     try {
       const detectedAnimal = await axios.post('/api/logs/ocrimage', { imagedata: compressedImageData.data}, {
