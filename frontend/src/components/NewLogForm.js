@@ -72,17 +72,18 @@ const NewLogForm = ({ setLogs }) => {
   }, [formAnimal]);
 
   useEffect(() => {
+    setFormReserve(availableReserves[0])
+  },[availableReserves])
+
+  useEffect(() => {
     setFormDifficulty(difficultyOptions[animalDifficulty - 1])
 
-  }, [animalDifficulty, setFormDifficulty, difficultyOptions])
+  }, [animalDifficulty, setFormDifficulty])
 
   useEffect(() => {
     setFormFurtype(availableFurTypes[0]);
   }, [availableFurTypes]);
 
-  useEffect(() => {
-    setFormReserve(availableReserves[0]);
-  }, [availableReserves]);
 
   useEffect(() => {
     const animalRatings = animalsList[formAnimal].trophyscore;
@@ -152,12 +153,14 @@ const NewLogForm = ({ setLogs }) => {
     const token = await getAccessTokenSilently();
 
     try {
+      const startTime = Date.now();
       const detectedAnimal = await axios.post('/api/logs/ocrimage', { imagedata: compressedImageData.data }, {
         headers: {
           Authorization: `Bearer ${token}`
         },
       });
-
+      const timeTakenForOCR = `${(Date.now() - startTime)/1000} seconds `
+      console.log('OCR took ', timeTakenForOCR);
       setFormAnimal(detectedAnimal.data)
     } catch (error) {
       console.log(error);
@@ -235,7 +238,7 @@ const NewLogForm = ({ setLogs }) => {
     setAvailableAmmo(ammoArray[formWeapon.type]);
     setFormAmmo(ammoArray[formWeapon.type][0]);
     setFormShotDistance('');
-    setFormReserve(reservesList[0]);
+    setFormReserve(availableReserves[0])
   };
 
   const handleClickOpenDialog = () => {
