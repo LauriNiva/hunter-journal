@@ -4,6 +4,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Compress from 'compress.js';
 import jimp from 'jimp';
+import { createWorker } from 'tesseract.js';
+import stringSimilarity from 'string-similarity';
+
 import animalsList from '../data/animals.js';
 import weaponsList from '../data/weapons.js';
 import ammoArray from '../data/ammo.js';
@@ -154,14 +157,39 @@ const NewLogForm = ({ setLogs }) => {
       { size: 0.2, maxWidth: 1000, maxHeight:1000, quality: 0.8 });
     const compressedImageData = compressedImageArray[0];
 
+    console.log(`Compress took ${(Date.now() - startTime) / 1000} seconds`);
+    
     const fileStr = compressedImageData.data;
     const imageBuffer = Buffer.from(fileStr, 'base64');
-
+    
     const image = await jimp.read(imageBuffer);
-
+    
     const preparedImage = await image.crop(0, 0, 300, 150).invert().threshold({ max: 10 }).getBase64Async("image/png")
+    
+    console.log(`Complete preparation took ${(Date.now() - startTime) / 1000} seconds`);
+    
+    const worker = createWorker();
+    await worker.load();
+    await worker.loadLanguage('eng');
+    await worker.initialize('eng');
+    await worker.setParameters({
+      tessedit_char_whitelist: 'ABCDEFGHIJKLMNOPQRSTUWVXYZ- '
+    });
+    
+    const { data: { text } } = await worker.recognize(preparedImage);
+    const animal = text.split('\n')[0];
+    await worker.terminate();
+    
+    console.log(`OCR before similarity check took ${(Date.now() - startTime) / 1000} seconds`);
+    
+    const matchedAnimal = stringSimilarity.findBestMatch(animal.toLocaleLowerCase(), animalOptions)
+    
+    const timeTakenForOCR = `${(Date.now() - startTime) / 1000} seconds`;
+    console.log(`Complete OCR took ${timeTakenForOCR}`);
 
-    const token = await getAccessTokenSilently();
+    setFormAnimal(matchedAnimal.bestMatch.target)
+
+    /* const token = await getAccessTokenSilently();
 
     try {
       const detectedAnimal = await axios.post('/api/logs/ocrimage', { imagedata: preparedImage }, {
@@ -175,7 +203,7 @@ const NewLogForm = ({ setLogs }) => {
       setFormAnimal(detectedAnimal.data.animal)
     } catch (error) {
       console.log(error);
-    }
+    } */
   };
 
   const previewFile = (file) => {

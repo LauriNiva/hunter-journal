@@ -79,6 +79,7 @@ logsRouter.post('/', checkJwt, async (req, res) => {
 });
 
 logsRouter.post('/ocrimage', checkJwt, async (req, res) => {
+  //EI KÄYTÖSSÄ. OCR TEHDÄÄN SELAIMESSA
   const body = req.body;
   const startTime = Date.now();
 
