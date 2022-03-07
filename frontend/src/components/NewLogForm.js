@@ -3,11 +3,11 @@ import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Compress from 'compress.js';
+import jimp from 'jimp';
 import animalsList from '../data/animals.js';
 import weaponsList from '../data/weapons.js';
 import ammoArray from '../data/ammo.js';
 import availableAmmoList from '../data/availableAmmoList.js';
-import reservesList from '../data/reserves.js';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
 import { useAuth0 } from '@auth0/auth0-react';
@@ -73,7 +73,7 @@ const NewLogForm = ({ setLogs }) => {
 
   useEffect(() => {
     setFormReserve(availableReserves[0])
-  },[availableReserves])
+  }, [availableReserves])
 
   useEffect(() => {
     setFormDifficulty(difficultyOptions[animalDifficulty - 1])
@@ -147,27 +147,35 @@ const NewLogForm = ({ setLogs }) => {
     previewFile(file);
     setImageFile(e.target.files[0])
 
+
     const startTime = Date.now();
-    
-    const compressedImageArray = await compress.compress([file], { size: 0.2, quality: 1 })
+
+    const compressedImageArray = await compress.compress([file],
+      { size: 0.2, maxWidth: 1000, maxHeight:1000, quality: 0.8 });
     const compressedImageData = compressedImageArray[0];
+
+    const fileStr = compressedImageData.data;
+    const imageBuffer = Buffer.from(fileStr, 'base64');
+
+    const image = await jimp.read(imageBuffer);
+
+    const preparedImage = await image.crop(0, 0, 300, 150).invert().threshold({ max: 10 }).getBase64Async("image/png")
 
     const token = await getAccessTokenSilently();
 
     try {
-      const detectedAnimal = await axios.post('/api/logs/ocrimage', { imagedata: compressedImageData.data }, {
+      const detectedAnimal = await axios.post('/api/logs/ocrimage', { imagedata: preparedImage }, {
         headers: {
           Authorization: `Bearer ${token}`
         },
       });
-      const timeTakenForOCR = `${(Date.now() - startTime)/1000} seconds `
+      const timeTakenForOCR = `${(Date.now() - startTime) / 1000} seconds`;
       console.log('OCR took ', timeTakenForOCR);
+      
       setFormAnimal(detectedAnimal.data)
     } catch (error) {
       console.log(error);
     }
-
-
   };
 
   const previewFile = (file) => {

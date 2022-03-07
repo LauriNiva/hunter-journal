@@ -80,14 +80,16 @@ logsRouter.post('/', checkJwt, async (req, res) => {
 
 logsRouter.post('/ocrimage', checkJwt, async (req, res) => {
   const body = req.body;
+  const startTime = Date.now();
+
   try {
-    const fileStr = body.imagedata;
+/*     const fileStr = body.imagedata;
 
     const imageBuffer = Buffer.from(fileStr, 'base64');
 
     const image = await jimp.read(imageBuffer)
 
-    const preparedImage = await image.invert().threshold({ max: 10 }).getBase64Async("image/jpeg")
+    const preparedImage = await image.crop(0, 0, 600, 250).invert().threshold({ max: 10 }).getBase64Async("image/png") */
 
     const { createWorker } = Tesseract;
     const worker = createWorker();
@@ -99,12 +101,18 @@ logsRouter.post('/ocrimage', checkJwt, async (req, res) => {
     });
 
     const rectangle = { left: 0, top: 0, width: 600, height: 250 };
-    const { data: { text } } = await worker.recognize(preparedImage, { rectangle });
+    const { data: { text } } = await worker.recognize(body.imagedata, {  });
     const animal = text.split('\n')[0];
     await worker.terminate();
 
     const animals = Object.keys(animalsArray);
     const matchedAnimal = stringSimilarity.findBestMatch(animal.toLocaleLowerCase(), animals)
+
+    console.log('animal', animal)
+    console.log('matchedAnimal', matchedAnimal)
+
+    const timeTakenForOCR = `${(Date.now() - startTime)/1000} seconds `
+    console.log('Server-side OCR took ', timeTakenForOCR);
 
     res.json(matchedAnimal.bestMatch.target)
   } catch (error) {
