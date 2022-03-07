@@ -83,7 +83,7 @@ const NewLogForm = ({ setLogs }) => {
   }, [formAnimal]);
 
   useEffect(() => {
-    setAvailableAmmo(availableAmmoList[formWeapon.label].ammo);
+    setAvailableAmmo(availableAmmoList[formWeapon.label].ammo.reverse()); // reverse jotta polymer-tip on ensin 
   }, [formWeapon]);
 
   useEffect(() => {
