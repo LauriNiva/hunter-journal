@@ -154,7 +154,7 @@ const NewLogForm = ({ setLogs }) => {
     const startTime = Date.now();
 
     const compressedImageArray = await compress.compress([file],
-      { size: 0.2, maxWidth: 1000, maxHeight:1000, quality: 0.8 });
+      { size: 1, maxWidth: 1000, maxHeight:1000, quality: 1 });
     const compressedImageData = compressedImageArray[0];
 
     console.log(`Compress took ${(Date.now() - startTime) / 1000} seconds`);
