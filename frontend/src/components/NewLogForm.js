@@ -16,6 +16,10 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Image } from 'mui-image';
 
+const difficultyOptions = ["1 - Trivial", "2 - Minor", "3 - Very easy", "4 - Easy", "5 - Medium",
+  "6 - Hard", "7 - Very hard", "8 - Mythical", "9 - Legendary", "10 - Fabled"];
+
+
 const NewLogForm = ({ setLogs }) => {
 
   const compress = new Compress();
@@ -31,9 +35,6 @@ const NewLogForm = ({ setLogs }) => {
       'group': weapon[1].toUpperCase()
     }
   ));
-
-  const difficultyOptions = ["1 - Trivial", "2 - Minor", "3 - Very easy", "4 - Easy", "5 - Medium",
-    "6 - Hard", "7 - Very hard", "8 - Mythical", "9 - Legendary", "10 - Fabled"];
 
   const canBeGreatOne = (animal) => {
     const currentGreatOnes = ['Red Deer', 'Whitetail Deer'];
@@ -78,7 +79,7 @@ const NewLogForm = ({ setLogs }) => {
 
     setAnimalDifficulty(animalsList[formAnimal].difficulty);
     setFormDifficulty(difficultyOptions[animalsList[formAnimal].difficulty - 1])
-    
+
   }, [formAnimal]);
 
   useEffect(() => {
