@@ -170,9 +170,9 @@ const NewLogForm = ({ setLogs }) => {
         },
       });
       const timeTakenForOCR = `${(Date.now() - startTime) / 1000} seconds`;
-      console.log('OCR took ', timeTakenForOCR);
+      console.log(`OCR took ${timeTakenForOCR} (${detectedAnimal.data.time} on server)`);
       
-      setFormAnimal(detectedAnimal.data)
+      setFormAnimal(detectedAnimal.data.animal)
     } catch (error) {
       console.log(error);
     }

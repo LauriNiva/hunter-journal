@@ -111,10 +111,10 @@ logsRouter.post('/ocrimage', checkJwt, async (req, res) => {
     console.log('animal', animal)
     console.log('matchedAnimal', matchedAnimal)
 
-    const timeTakenForOCR = `${(Date.now() - startTime)/1000} seconds `
+    const timeTakenForOCR = `${(Date.now() - startTime)/1000}`
     console.log('Server-side OCR took ', timeTakenForOCR);
 
-    res.json(matchedAnimal.bestMatch.target)
+    res.json({ animal : matchedAnimal.bestMatch.target, time: timeTakenForOCR })
   } catch (error) {
     console.log('ocr error', error)
     res.status(500).json('ocr error')
