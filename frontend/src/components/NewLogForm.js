@@ -19,6 +19,8 @@ import { Image } from 'mui-image';
 const NewLogForm = ({ setLogs }) => {
 
   const compress = new Compress();
+  const { getAccessTokenSilently } = useAuth0();
+
 
   const animalOptions = Object.keys(animalsList);
   const weaponOptions = weaponsList.map(weapon =>
@@ -29,7 +31,6 @@ const NewLogForm = ({ setLogs }) => {
       'group': weapon[1].toUpperCase()
     }
   ));
-
 
   const difficultyOptions = ["1 - Trivial", "2 - Minor", "3 - Very easy", "4 - Easy", "5 - Medium",
     "6 - Hard", "7 - Very hard", "8 - Mythical", "9 - Legendary", "10 - Fabled"];
@@ -64,33 +65,32 @@ const NewLogForm = ({ setLogs }) => {
 
   const [open, setOpen] = useState(false);
 
-  const { getAccessTokenSilently } = useAuth0();
-
+  const [previewSource, setPreviewSource] = useState('');
+  const [imageFile, setImageFile] = useState('');
 
 
   useEffect(() => {
     setAvailableFurTypes(animalsList[formAnimal].furtypes);
-    setAvailableReserves(animalsList[formAnimal].reserves)
+    setFormFurtype(animalsList[formAnimal].furtypes[0]);
+
+    setAvailableReserves(animalsList[formAnimal].reserves);
+    setFormReserve(animalsList[formAnimal].reserves[0])
+
     setAnimalDifficulty(animalsList[formAnimal].difficulty);
+    setFormDifficulty(difficultyOptions[animalsList[formAnimal].difficulty - 1])
+    
   }, [formAnimal]);
 
   useEffect(() => {
-    setFormReserve(availableReserves[0])
-  }, [availableReserves])
+    setAvailableAmmo(availableAmmoList[formWeapon.label].ammo);
+  }, [formWeapon]);
 
   useEffect(() => {
-    setFormDifficulty(difficultyOptions[animalDifficulty - 1])
-
-  }, [animalDifficulty, setFormDifficulty])
-
-  useEffect(() => {
-    setFormFurtype(availableFurTypes[0]);
-  }, [availableFurTypes]);
-
+    setFormAmmo(availableAmmo[0]);
+  }, [availableAmmo]);
 
   useEffect(() => {
     const animalRatings = animalsList[formAnimal].trophyscore;
-    //console.log('animalRatings', animalRatings)
     if (formRating >= animalRatings.diamond) {
       setFormBadge('Diamond')
     } else if (formRating >= animalRatings.gold) {
@@ -102,14 +102,8 @@ const NewLogForm = ({ setLogs }) => {
     }
   }, [formRating, formAnimal])
 
-  useEffect(() => {
-    setAvailableAmmo(availableAmmoList[formWeapon.label].ammo);
-  }, [formWeapon]);
 
-  useEffect(() => {
-    setFormAmmo(availableAmmo[0]);
-  }, [availableAmmo]);
-
+  // ----Form validation----
   useEffect(() => {
     if (formWeight < 0 || formWeight > 2000) {
       setWeightInvalid(true)
@@ -141,33 +135,34 @@ const NewLogForm = ({ setLogs }) => {
       setShotDistanceInvalid(false)
     }
   }, [formShotDistance]);
+  // ^^^^Form validation^^^^
 
-  const [previewSource, setPreviewSource] = useState('');
-  const [imageFile, setImageFile] = useState('');
+
+
 
   const handleFileInputChange = async (e) => {
     const file = e.target.files[0];
     previewFile(file);
     setImageFile(e.target.files[0])
 
-
+    // OCR for animal name
     const startTime = Date.now();
 
     const compressedImageArray = await compress.compress([file],
-      { size: 1, maxWidth: 1000, maxHeight:1000, quality: 1 });
+      { size: 1, maxWidth: 1000, maxHeight: 1000, quality: 1 });
     const compressedImageData = compressedImageArray[0];
 
     console.log(`Compress took ${(Date.now() - startTime) / 1000} seconds`);
-    
+
     const fileStr = compressedImageData.data;
     const imageBuffer = Buffer.from(fileStr, 'base64');
-    
+
     const image = await jimp.read(imageBuffer);
-    
+
     const preparedImage = await image.crop(0, 0, 300, 150).invert().threshold({ max: 10 }).getBase64Async("image/png")
-    
+
     console.log(`Complete preparation took ${(Date.now() - startTime) / 1000} seconds`);
-    
+
     const worker = createWorker();
     await worker.load();
     await worker.loadLanguage('eng');
@@ -175,15 +170,15 @@ const NewLogForm = ({ setLogs }) => {
     await worker.setParameters({
       tessedit_char_whitelist: 'ABCDEFGHIJKLMNOPQRSTUWVXYZ- '
     });
-    
+
     const { data: { text } } = await worker.recognize(preparedImage);
     const animal = text.split('\n')[0];
     await worker.terminate();
-    
+
     console.log(`OCR before similarity check took ${(Date.now() - startTime) / 1000} seconds`);
-    
+
     const matchedAnimal = stringSimilarity.findBestMatch(animal.toLocaleLowerCase(), animalOptions)
-    
+
     const timeTakenForOCR = `${(Date.now() - startTime) / 1000} seconds`;
     console.log(`Complete OCR took ${timeTakenForOCR}`);
 
@@ -261,21 +256,21 @@ const NewLogForm = ({ setLogs }) => {
 
   const clearForm = () => {
     setFormAnimal(animalOptions[0]);
-    setAvailableFurTypes(animalsList[formAnimal].furtypes);
-    setFormFurtype(availableFurTypes[0])
+    //setAvailableFurTypes(animalsList[formAnimal].furtypes);
+    //setFormFurtype(availableFurTypes[0])
     setFormGender('Male');
     setFormWeight('');
     setFormDistance('');
-    setFormDifficulty(difficultyOptions[0]);
+    //setFormDifficulty(difficultyOptions[0]);
     setFormRating('');
     setFormBadge('None');
     setFormNotes('');
     setPreviewSource('');
-    setFormWeapon(weaponOptions[0]);
-    setAvailableAmmo(ammoArray[formWeapon.type]);
-    setFormAmmo(ammoArray[formWeapon.type][0]);
+    //setFormWeapon(weaponOptions[0]);
+    //setAvailableAmmo(ammoArray[formWeapon.type]);
+    //setFormAmmo(ammoArray[formWeapon.type][0]);
     setFormShotDistance('');
-    setFormReserve(availableReserves[0])
+    //setFormReserve(availableReserves[0])
   };
 
   const handleClickOpenDialog = () => {
