@@ -21,6 +21,14 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Log'
   }],
+  followers:[{
+    type: String,
+    ref: 'User',
+  }],
+  followed: [{
+    type: String,
+    ref: 'User',
+  }],
 });
 
 userSchema.set('toJSON', {
