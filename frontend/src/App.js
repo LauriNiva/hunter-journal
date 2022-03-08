@@ -9,6 +9,7 @@ import usersService from './services/user';
 import UserDataForm from './components/UserDataForm';
 import { Routes, Route } from 'react-router-dom';
 import Frontpage from './components/Frontpage';
+import Userpage from './components/Userpage';
 
 const darkTheme = createTheme({
   palette: {
@@ -21,12 +22,12 @@ const App = () => {
 
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
 
-  const [username, setUsername] = useState();
+  const [myUsername, setUsername] = useState();
   const [likedLogs, setLikedLogs] = useState([]);
   const [firstTimeSetupDialogOpen, setFirstTimeSetupDialogOpen] = useState(false);
 
   useEffect(() => {
-    (!username && isAuthenticated) &&
+    (!myUsername && isAuthenticated) &&
       (async () => {
         const token = await getAccessTokenSilently();
         try {
@@ -42,24 +43,26 @@ const App = () => {
 
         }
       })();
-  }, [username, isAuthenticated, getAccessTokenSilently]);
+  }, [myUsername, isAuthenticated, getAccessTokenSilently]);
 
 
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <ConfirmProvider>
-        <Nav username={username} />
+        <Nav myUsername={myUsername} />
         <Paper className="container" sx={{ width: { sm: "100%", md: "95%" }, maxWidth: "1220px" }}>
           {isAuthenticated &&
-            <UserDataForm username={username} setUsername={setUsername} dialogOpen={firstTimeSetupDialogOpen} setDialogOpen={setFirstTimeSetupDialogOpen} />
+            <UserDataForm myUsername={myUsername} setUsername={setUsername} dialogOpen={firstTimeSetupDialogOpen} setDialogOpen={setFirstTimeSetupDialogOpen} />
           }
 
           <Routes>
             <Route path="/" element={<Frontpage likedLogs={likedLogs} setLikedLogs={setLikedLogs} />} />
-            <Route path="logs" element={<Logs user={username} likedLogs={likedLogs} setLikedLogs={setLikedLogs} />} >
-              <Route path=":usernameForLogs" element={<Logs user={username} likedLogs={likedLogs} setLikedLogs={setLikedLogs} />} />
-            
+            <Route path="logs" element={<Logs myUsername={myUsername} likedLogs={likedLogs} setLikedLogs={setLikedLogs} />} >
+              <Route path=":usernameForLogs" element={<Logs myUsername={myUsername} likedLogs={likedLogs} setLikedLogs={setLikedLogs} />} />           
+            </Route>
+            <Route path='hunters'>
+              <Route path=':username' element={<Userpage />} />
             </Route>
             
 

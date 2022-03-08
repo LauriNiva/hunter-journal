@@ -3,7 +3,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Box, Button, Dialog, TextField, Typography } from '@mui/material';
 import usersService from '../services/user.js';
 
-function UserDataForm({ username, setUsername, dialogOpen, setDialogOpen }) {
+function UserDataForm({ myUsername, setUsername, dialogOpen, setDialogOpen }) {
 
   const { user, getAccessTokenSilently } = useAuth0();
   const [formUsername, setFormUsername] = useState('');
@@ -11,10 +11,10 @@ function UserDataForm({ username, setUsername, dialogOpen, setDialogOpen }) {
   const [usernameHelperText, setUsernameHelperText] = useState('');
 
   useEffect(() => {
-    if (username) {
+    if (myUsername) {
       setDialogOpen(false);
     }
-  }, [username, setDialogOpen])
+  }, [myUsername, setDialogOpen])
 
 
   const handleSubmit = async (e) => {
@@ -49,7 +49,7 @@ function UserDataForm({ username, setUsername, dialogOpen, setDialogOpen }) {
   }
 
   const handleCloseDialog = () => {
-    if (username) {
+    if (myUsername) {
       setDialogOpen(false);
     }
   };

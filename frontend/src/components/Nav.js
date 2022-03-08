@@ -3,10 +3,9 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { AppBar, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import LoginButton from './LoginButton';
-import LogoutButton from './LogoutButton';
 import { Button } from '@mui/material';
 
-const UserMenu = ({ username }) => {
+const UserMenu = ({ myUsername }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const menuOpen = Boolean(anchorEl);
 
@@ -31,7 +30,7 @@ const UserMenu = ({ username }) => {
     <>
       <Button id="usermenu-button" disableFocusRipple disableRipple sx={{ textTransform: 'none'}}
       onClick={handleMenuClick}>
-        <Typography sx={{ mr: 2 }}>{username}</Typography>
+        <Typography sx={{ mr: 2 }}>{myUsername}</Typography>
       </Button>
       <Menu anchorEl={anchorEl} open={menuOpen} onClose={handleMenuClose}>
         <MenuItem onClick={handleLogoutClick}>

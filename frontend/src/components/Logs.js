@@ -16,7 +16,7 @@ import { useParams } from 'react-router-dom';
 
 
 
-function Logs({ likedLogs, setLikedLogs, user }) {
+function Logs({ likedLogs, setLikedLogs, myUsername }) {
 
   const { usernameForLogs } = useParams();
 
@@ -32,8 +32,8 @@ function Logs({ likedLogs, setLikedLogs, user }) {
   const { getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
-    setIsOwner(user === usernameForLogs)
-  }, [user, usernameForLogs]);
+    setIsOwner(myUsername === usernameForLogs)
+  }, [myUsername, usernameForLogs]);
 
   useEffect(() => {
     (async () => {
