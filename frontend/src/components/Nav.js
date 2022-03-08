@@ -44,7 +44,7 @@ const UserMenu = ({ myUsername }) => {
 
 
 
-function Nav({ username }) {
+function Nav({ myUsername }) {
 
   const { isAuthenticated } = useAuth0();
 
@@ -59,8 +59,8 @@ function Nav({ username }) {
         {
           isAuthenticated ?
             <>
-              <Typography sx={{ fontFamily: 'Jaapokki', mr: 1 }} ><Link to={`/logs/${username}`} >OWN LOGS</Link></Typography>
-              <UserMenu username={username} />
+              <Typography sx={{ fontFamily: 'Jaapokki', mr: 1 }} ><Link to={`/logs/${myUsername}`} >OWN LOGS</Link></Typography>
+              <UserMenu myUsername={myUsername} />
             </>
             : <LoginButton />
         }
