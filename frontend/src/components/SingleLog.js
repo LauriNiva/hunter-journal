@@ -189,7 +189,7 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
         fontSize: { xs: '1.2rem', sm:'1.2rem',md:'1.4rem', lg: '1.6rem' }}}>
           {log.animal}
         </Typography>
-        <Box>
+        <Box onClick={handleOpen}>
           {log.notes && <HistoryEduIcon sx={{ fontSize: "20px", opacity: "50%" }} />}
 
         </Box>
