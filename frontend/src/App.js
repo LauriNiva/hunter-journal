@@ -10,6 +10,7 @@ import UserDataForm from './components/UserDataForm';
 import { Routes, Route } from 'react-router-dom';
 import Frontpage from './components/Frontpage';
 import Userpage from './components/Userpage';
+import Lodge from './components/Lodge';
 
 const darkTheme = createTheme({
   palette: {
@@ -66,6 +67,7 @@ const App = () => {
             <Route path='hunters'>
               <Route path=':username' element={<Userpage myUsername={myUsername} followedUsers={followedUsers} setFollowedUsers={setFollowedUsers} />} />
             </Route>
+            <Route path='lodge' element={<Lodge followedUsers={followedUsers} />} />
             
 
 
