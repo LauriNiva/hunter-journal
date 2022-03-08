@@ -62,7 +62,7 @@ const App = () => {
               <Route path=":usernameForLogs" element={<Logs myUsername={myUsername} likedLogs={likedLogs} setLikedLogs={setLikedLogs} />} />           
             </Route>
             <Route path='hunters'>
-              <Route path=':username' element={<Userpage />} />
+              <Route path=':username' element={<Userpage myUsername={myUsername} />} />
             </Route>
             
 
