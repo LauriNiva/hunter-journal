@@ -20,7 +20,8 @@ function Logs({ likedLogs, setLikedLogs, myUsername }) {
 
   const { usernameForLogs } = useParams();
 
-  const [isOwner, setIsOwner] = useState(false);
+  const isOwner = (myUsername === usernameForLogs);
+  
   const [logs, setLogs] = useState([]);
   const [filteredLogs, setFilteredLogs] = useState(logs);
   const [logsToDisplay, setLogsToDisplay] = useState([]);
@@ -31,9 +32,6 @@ function Logs({ likedLogs, setLikedLogs, myUsername }) {
 
   const { getAccessTokenSilently } = useAuth0();
 
-  useEffect(() => {
-    setIsOwner(myUsername === usernameForLogs)
-  }, [myUsername, usernameForLogs]);
 
   useEffect(() => {
     (async () => {
