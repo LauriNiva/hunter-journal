@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { AppBar, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LoginButton from './LoginButton';
 import { Button } from '@mui/material';
 
@@ -10,6 +10,7 @@ const UserMenu = ({ myUsername }) => {
   const menuOpen = Boolean(anchorEl);
 
   const { logout } = useAuth0();
+  const navigate = useNavigate();
 
 
   const handleMenuClick = (event) => {
@@ -33,6 +34,8 @@ const UserMenu = ({ myUsername }) => {
         <Typography sx={{ mr: 2 }}>{myUsername}</Typography>
       </Button>
       <Menu anchorEl={anchorEl} open={menuOpen} onClose={handleMenuClose}>
+        <MenuItem onClick={()=> navigate(`/logs/${myUsername}`)}>My Logs</MenuItem>
+        <MenuItem onClick={()=> navigate(`/hunters/${myUsername}`)}>My Profile</MenuItem>
         <MenuItem onClick={handleLogoutClick}>
           Logout
         </MenuItem>
@@ -55,11 +58,11 @@ function Nav({ myUsername }) {
         <Typography variant='h4' sx={{ flexGrow: 1, fontFamily: 'Jaapokki', fontSize: { xs: 30, sm: 40 } }}>
           <Link to='/'>Hunter's Log 0.1.4</Link>
         </Typography>
-        <Typography sx={{ fontFamily: 'Jaapokki', mr: 1 }} > <Link to='/'>HOME</Link></Typography>
+        <Typography sx={{ fontFamily: 'Jaapokki', mr: 2 }} > <Link to='/'>HOME</Link></Typography>
         {
           isAuthenticated ?
             <>
-              <Typography sx={{ fontFamily: 'Jaapokki', mr: 1 }} ><Link to={`/logs/${myUsername}`} >OWN LOGS</Link></Typography>
+              <Typography sx={{ fontFamily: 'Jaapokki', mr: 2 }} ><Link to={`/lodge`} >THE LODGE</Link></Typography>
               <UserMenu myUsername={myUsername} />
             </>
             : <LoginButton />
