@@ -40,7 +40,7 @@ function UserSearch() {
       freeSolo={false}
       noOptionsText={'Search by writing'}
       inputValue={searchValue}
-      onChange={(e, value)=> navigate(`/logs/${value}`)}
+      onChange={(e, value)=> navigate(`/hunters/${value}`)}
       onInputChange={(e, newValue) => setSearchValue(newValue)}
       renderInput={(params) => <TextField {...params} label='Search users' />}
     />
