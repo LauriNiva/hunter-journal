@@ -4,7 +4,6 @@ import axios from "axios";
 const baseURL = `/api/users`;
 
 //Hae käyttäjänimiä
-
 const searchUsername = async (query, token) => {
   const usersFound = await axios
     .get(`${baseURL}/find/${query}`,
@@ -48,8 +47,20 @@ const createUser = async (user, token) => {
   return userData.data;
 };
 
+const followAUser = async (userToFollow, token) => {
+  const updatedUser = await axios
+    .put(`${baseURL}/${userToFollow}/follow`,
+      'follow',
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+      },
+    );
+  return updatedUser.data;
+};
 
 
-const usersService = { getUser, createUser, searchUsername };
+const usersService = { getUser, createUser, searchUsername, followAUser };
 
 export default usersService;

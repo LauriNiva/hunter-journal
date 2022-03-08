@@ -24,6 +24,7 @@ const App = () => {
 
   const [myUsername, setUsername] = useState();
   const [likedLogs, setLikedLogs] = useState([]);
+  const [followedUsers, setFollowedUsers] = useState([]);
   const [firstTimeSetupDialogOpen, setFirstTimeSetupDialogOpen] = useState(false);
 
   useEffect(() => {
@@ -34,7 +35,8 @@ const App = () => {
           const user = await usersService.getUser(token);
           if (user?.username) {
             setUsername(user.username);
-            setLikedLogs(user?.likedLogs)
+            setLikedLogs(user?.likedLogs);
+            setFollowedUsers(user?.followed.map(user => user.username));
           } else {
             setFirstTimeSetupDialogOpen(true);
           }
@@ -62,7 +64,7 @@ const App = () => {
               <Route path=":usernameForLogs" element={<Logs myUsername={myUsername} likedLogs={likedLogs} setLikedLogs={setLikedLogs} />} />           
             </Route>
             <Route path='hunters'>
-              <Route path=':username' element={<Userpage myUsername={myUsername} />} />
+              <Route path=':username' element={<Userpage myUsername={myUsername} followedUsers={followedUsers} setFollowedUsers={setFollowedUsers} />} />
             </Route>
             
 

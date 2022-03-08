@@ -11,7 +11,7 @@ import LogFilteringList from './LogFilteringList';
 import { withAuthenticationRequired, useAuth0 } from '@auth0/auth0-react';
 
 import logsService from '../services/logs';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 
@@ -19,9 +19,11 @@ import { useParams } from 'react-router-dom';
 function Logs({ likedLogs, setLikedLogs, myUsername }) {
 
   const { usernameForLogs } = useParams();
+  const navigate = useNavigate();
+
 
   const isOwner = (myUsername === usernameForLogs);
-  
+
   const [logs, setLogs] = useState([]);
   const [filteredLogs, setFilteredLogs] = useState(logs);
   const [logsToDisplay, setLogsToDisplay] = useState([]);
@@ -136,7 +138,9 @@ function Logs({ likedLogs, setLikedLogs, myUsername }) {
         <Container id="logs-list-container" disableGutters sx={{ overflow: 'scroll', maxHeight: '85vh' }} >
           <Toolbar sx={{ justifyContent: 'space-between' }}>
 
-            <Typography variant="h4" sx={{ fontFamily: 'Jaapokki' }}>{usernameForLogs} 's logs</Typography>
+            <Typography variant="h4" sx={{ fontFamily: 'Jaapokki' }} onClick={() => navigate(`/hunters/${usernameForLogs}`)}>
+              {usernameForLogs} 's logs
+            </Typography>
 
 
             <SortDropdown />
