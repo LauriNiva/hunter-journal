@@ -196,7 +196,7 @@ const animalsArray =
   'Common Raccoon': {
     title: 'Common Raccoon',
     animalclass: 2,
-    difficulty: 3,
+    difficulty: 5,
     trophytype: 'Weight',
     trophyscore: { silver: 5, gold: 9, diamond: 12 },
     furtypes: ['Common',
