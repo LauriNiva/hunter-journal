@@ -60,15 +60,10 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
     if (!liked) {
       try {
         const updatedlog = await logsService.likeALog(log._id, token);
-        console.log('liked updatedlog', updatedlog)
          if (!likedLogs.includes(updatedlog.id)) {
-          console.log('1')
           setLikedLogs(likedLogs.concat(updatedlog.id))
-          console.log('2')
           setLiked(true)
-          console.log('3')
           setLikes(updatedlog.numberOfLikes)
-          console.log('4')
         } 
       } catch (error) {
         console.log(error)
@@ -76,15 +71,10 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
     } else {
       try {
         const updatedlog = await logsService.dislikeALog(log._id, token);
-        console.log('disliked updatedlog', updatedlog)
         if (likedLogs.includes(updatedlog.id)) {
-          console.log('1')
           setLikedLogs(likedLogs.filter(log => log !== updatedlog.id))
-          console.log('2')
           setLiked(false)
-          console.log('3')
           setLikes(updatedlog.numberOfLikes)
-          console.log('4')
         } 
       } catch (error) {
         console.log(error)

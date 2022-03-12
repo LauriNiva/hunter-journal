@@ -15,9 +15,6 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers }) {
 
   const [followed, setFollowed] = useState(false);
 
-  console.log('followedUsers', followedUsers)
-  console.log('username', username)
-
   useEffect(() => {
     setFollowed(followedUsers.includes(username))
   },[followedUsers, setFollowedUsers, username]);
