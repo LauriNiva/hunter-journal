@@ -31,8 +31,24 @@ logsRouter.get('/recent', async (req, res) => {
   res.json(recentLogs);
 });
 
+logsRouter.get('/recent/followed', checkJwt, async (req, res) => {
+  const userid = req.user.sub;
+  const followedUserIds = await User.findById(userid).select('followed');
+  const recentFollowedLogs = await Log.find().where('user').in(followedUserIds.followed)
+  .sort({ _id: -1 }).limit(30).populate('user').populate('likes', 'username -_id');
+  res.json(recentFollowedLogs);
+});
+
 logsRouter.get('/mostliked', async (req, res) => {
-  const mostLikedLogs = await Log.find({ 'likes': { $exists: true, $ne: [] } }).sort({ likes: 1 }).limit(10).populate('user').populate('likes', 'username -_id');
+  const listOfMostLikedLogs = await Log.aggregate([{$project: {numberOfLikes: {$cond: { if: { $isArray: "$likes" }, then: { $size: "$likes"}, else: 0 } } } } ])
+  .sort({ numberOfLikes: -1 }).limit(10)//.populate('user').populate('likes', 'username -_id');
+  //const mostLikedLogs = await Log.find({ 'likes': { $exists: true, $ne: [] } }).sort({ likes: 1 }).limit(10).populate('user').populate('likes', 'username -_id');
+  
+  const mostLikedLogs = await Log.find().where('_id').in(listOfMostLikedLogs.map(log => log._id))
+  .populate('user').populate('likes', 'username -_id');
+
+  mostLikedLogs.sort((a,b) => b.likes.length - a.likes.length)
+
   res.json(mostLikedLogs);
 });
 
