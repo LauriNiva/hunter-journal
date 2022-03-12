@@ -26,10 +26,12 @@ const App = () => {
   const [myUsername, setUsername] = useState();
   const [likedLogs, setLikedLogs] = useState([]);
   const [followedUsers, setFollowedUsers] = useState([]);
+
+
   const [firstTimeSetupDialogOpen, setFirstTimeSetupDialogOpen] = useState(false);
 
   useEffect(() => {
-    (!myUsername && isAuthenticated) &&
+    (!myUsername && isAuthenticated) && // Tämä selkeämmäksi
       (async () => {
         const token = await getAccessTokenSilently();
         try {
@@ -54,7 +56,9 @@ const App = () => {
       <CssBaseline />
       <ConfirmProvider>
         <Nav myUsername={myUsername} />
-        <Paper className="container" sx={{ width: { sm: "100%", md: "95%" }, maxWidth: "1220px" }}>
+        <Paper className="container"
+        sx={{ width: { sm: "100%", md: "95%" },  maxWidth: "1220px",minHeight: '80vh', maxHeight: '89vh',
+         p: 1}}>
           {isAuthenticated &&
             <UserDataForm myUsername={myUsername} setUsername={setUsername} dialogOpen={firstTimeSetupDialogOpen} setDialogOpen={setFirstTimeSetupDialogOpen} />
           }
@@ -67,7 +71,7 @@ const App = () => {
             <Route path='hunters'>
               <Route path=':username' element={<Userpage myUsername={myUsername} followedUsers={followedUsers} setFollowedUsers={setFollowedUsers} />} />
             </Route>
-            <Route path='lodge' element={<Lodge followedUsers={followedUsers} />} />
+            <Route path='lodge' element={<Lodge followedUsers={followedUsers} likedLogs={likedLogs} setLikedLogs={setLikedLogs} />} />
             
 
 

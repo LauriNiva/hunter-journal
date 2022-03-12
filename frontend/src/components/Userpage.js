@@ -1,4 +1,4 @@
-import { useAuth0 } from '@auth0/auth0-react';
+import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 import { Button, Container, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -29,7 +29,7 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers }) {
     }else{
       const token = await getAccessTokenSilently();
       const followedUser = await usersService.followAUser(username, token);
-      setFollowedUsers(followedUser.concat(followedUser))
+      setFollowedUsers(followedUsers.concat(followedUser))
 
       setFollowed(true);
     }
@@ -50,4 +50,4 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers }) {
   )
 }
 
-export default Userpage;
+export default withAuthenticationRequired(Userpage);

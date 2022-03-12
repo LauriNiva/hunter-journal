@@ -28,7 +28,6 @@ function Frontpage({ likedLogs, setLikedLogs }) {
 
 
   return (
-    <div>
       <Box sx={{
         display: "grid",
         gridTemplateColumns: "1fr 1fr",
@@ -49,17 +48,16 @@ function Frontpage({ likedLogs, setLikedLogs }) {
 
         </Box>
 
-        <Box sx={{ gridArea: 'new', }}>
+        <Box sx={{ gridArea: 'new', maxHeight: '74vh', overflow: 'scroll',}}>
           <Typography variant="h6" sx={{ ml: 3 }} >Recently added logs</Typography>
-          {mostRecentLogs.map(log => <SingleLog key={`recent${log._id}`} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs} dataToShow='user' />)}
+          {mostRecentLogs.map(log => <SingleLog key={`recentfp${log._id}`} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs} dataToShow='user' />)}
         </Box>
 
-        <Box sx={{ gridArea: 'liked' }}>
+        <Box sx={{ gridArea: 'liked', maxHeight: '74vh', overflow: 'scroll', }}>
           <Typography variant="h6" sx={{ ml: 3 }} >Most liked logs</Typography>
-          {mostLikedLogs.map(log => <SingleLog key={`recent${log._id}`} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs} dataToShow='likes' />)}
+          {mostLikedLogs.map(log => <SingleLog key={`likedfp${log._id}`} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs} dataToShow='likes' />)}
         </Box>
       </Box>
-    </div>
   )
 }
 

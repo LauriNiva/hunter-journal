@@ -36,7 +36,7 @@ function UserSearch() {
     <Autocomplete
       id="animals-combobox"
       options={usersFound}
-      sx={{ width: 300 }}
+      sx={{ width: 300, m:1 }}
       freeSolo={false}
       noOptionsText={'Search by writing'}
       inputValue={searchValue}
