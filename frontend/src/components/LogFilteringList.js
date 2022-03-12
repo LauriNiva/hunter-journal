@@ -262,7 +262,7 @@ function LogFilteringList({ logs, setFilteredLogs }) {
 
 
   //Pohja yleiselle filterille. Ei käytössä vielä
-  const NewFilter = (open, availableFiltersArray, filter, setFilter) => {
+  /* const NewFilter = (open, availableFiltersArray, filter, setFilter) => {
     console.log('availableFiltersArray', availableFiltersArray)
     return (
       <Collapse in={open}>
@@ -277,7 +277,7 @@ function LogFilteringList({ logs, setFilteredLogs }) {
         </List>
       </Collapse>
     )
-  };
+  }; */
 
 
   return (
