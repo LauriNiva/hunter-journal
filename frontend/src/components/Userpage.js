@@ -34,7 +34,7 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setL
   useEffect(() => {
     const getAvatar = async () => {
       const avatarNumber = await usersService.getAvatar(username);
-      setAvatar(username + avatarNumber)
+      setAvatar(avatarNumber)
     }
     getAvatar();
   },[username]);
@@ -59,10 +59,9 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setL
     try {
       const token = await getAccessTokenSilently();
       const updatedAvatar = await usersService.updateAvatar({avatar: rngAvatar}, token)
-      const newAvatarcode = myUsername + updatedAvatar
-      setAvatar(newAvatarcode);
-      setNewAvatar(newAvatarcode);
-      console.log('updatedAvatar', newAvatarcode)
+      setAvatar(updatedAvatar);
+      setNewAvatar(updatedAvatar);
+      console.log('updatedAvatar', updatedAvatar)
     } catch (error) {
       console.log(error)
     }

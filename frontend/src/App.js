@@ -27,6 +27,7 @@ const App = () => {
   const [avatar, setAvatar] = useState('')
   const [likedLogs, setLikedLogs] = useState([]);
   const [followedUsers, setFollowedUsers] = useState([]);
+  const [followedUseravatars, setFollowedUseravatars] = useState([]);
 
 
   const [firstTimeSetupDialogOpen, setFirstTimeSetupDialogOpen] = useState(false);
@@ -39,8 +40,10 @@ const App = () => {
           const user = await usersService.getUser(token);
           if (user?.username) {
             setUsername(user.username);
-            setLikedLogs(user?.likedLogs);
-            setFollowedUsers(user?.followed.map(user => user.username));
+            setLikedLogs(user.likedLogs);
+            console.log('user', user)
+            setFollowedUsers(user.followed.map(user => user.username));
+            setFollowedUseravatars(user.followed.reduce((acc, user) =>{ acc[user.username] = user.username+user.avatar; return acc },{}))
           } else {
             setFirstTimeSetupDialogOpen(true);
           }
@@ -54,10 +57,8 @@ const App = () => {
   useEffect(() => {
 
     const getAvatar = async () => {
-      console.log('getAvatar in frontpage')
       const avatarmodifier = await usersService.getAvatar(myUsername);
-      console.log('avatarmodifier', avatarmodifier)
-      setAvatar(`${myUsername}${avatarmodifier}`);
+      setAvatar(avatarmodifier);
     }
     myUsername && getAvatar();
   }, [myUsername])
@@ -86,7 +87,7 @@ const App = () => {
               <Route path=':username' element={<Userpage myUsername={myUsername} likedLogs={likedLogs} setLikedLogs={setLikedLogs}
                 followedUsers={followedUsers} setFollowedUsers={setFollowedUsers} setNewAvatar={setAvatar} />} />
             </Route>
-            <Route path='lodge' element={<Lodge followedUsers={followedUsers} likedLogs={likedLogs} setLikedLogs={setLikedLogs} />} />
+            <Route path='lodge' element={<Lodge followedUsers={followedUsers} followedUseravatars={followedUseravatars} likedLogs={likedLogs} setLikedLogs={setLikedLogs} />} />
 
 
 

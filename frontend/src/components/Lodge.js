@@ -1,12 +1,12 @@
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
-import { Button, Container, Paper, Typography } from '@mui/material';
+import { Avatar, Button, Container, Paper, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logsService from '../services/logs';
 import SingleLog from './SingleLog';
 import UserSearch from './UserSearch';
 
-function Lodge({ followedUsers, likedLogs, setLikedLogs }) {
+function Lodge({ followedUsers, likedLogs, setLikedLogs, followedUseravatars }) {
 
   const navigate = useNavigate();
   const { getAccessTokenSilently } = useAuth0();
@@ -22,13 +22,23 @@ function Lodge({ followedUsers, likedLogs, setLikedLogs }) {
     recent();
   }, [getAccessTokenSilently])
 
+  useEffect(() => {
+
+  }, [followedUsers])
+
   const ListOfFollowedUsers = () => {
+
+
     return (
       <Paper elevation={4} sx={{ gridArea: 'followed', }}>
         <UserSearch />
         <Typography align="center" sx={{ marginTop: 4 }} >Hunters you follow</Typography>
+
         {followedUsers.map(user =>
-          <Button onClick={() => navigate(`/hunters/${user}`)} key={`following-${user}`}>{user}</Button>
+          <Button onClick={() => navigate(`/hunters/${user}`)} key={`following-${user}`}>
+            <Avatar sx={{ width: 30, height: 30, mr: 1, ml: 1 }} src={`https://avatars.dicebear.com/api/identicon/${followedUseravatars[user]}.svg?scale=85`} alt={`${user}avatar`} />
+            {user}
+          </Button>
         )}
       </Paper>
     )
@@ -49,13 +59,13 @@ function Lodge({ followedUsers, likedLogs, setLikedLogs }) {
       <Container sx={{ gridArea: 'head', }}>
         <Typography align="center" variant="h4" sx={{ fontFamily: 'Jaapokki' }}>The Lodge</Typography>
         <Typography align="center" >Lodge is the place to find and follow your fellow hunters.
-        Here you can easily see recent logs from the hunters you follow.</Typography>
+          Here you can easily see recent logs from the hunters you follow.</Typography>
       </Container>
       <ListOfFollowedUsers />
 
-      <Paper sx={{ gridArea: 'recent', width: '100%',  }}>
+      <Paper sx={{ gridArea: 'recent', width: '100%', }}>
         <Typography variant="h5" align="center" sx={{ fontFamily: 'Jaapokki' }} >Recent Logs</Typography>
-        <Container disableGutters sx={{overflow: 'scroll', height: '75vh', }} >
+        <Container disableGutters sx={{ overflow: 'scroll', height: '75vh', }} >
           {
             recentFollowedLogs.map(log =>
               <SingleLog key={`recentlodge${log._id}`} log={log} dataToShow={'user'} likedLogs={likedLogs} setLikedLogs={setLikedLogs} />
