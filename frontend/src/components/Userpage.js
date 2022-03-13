@@ -79,7 +79,7 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setL
         "avatar links"
         `,
       
-      maxHeight: '100px'
+      maxHeight: '120px'
        }}>
         { avatar && <Avatar sx={{ gridArea: 'avatar', justifySelf: 'end', alignSelf: 'center', width: 70, height: 70, m:2 }} 
         src={`https://avatars.dicebear.com/api/identicon/${avatar}.svg?scale=85`} alt={`${username}avatar`} />
