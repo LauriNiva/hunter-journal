@@ -15,6 +15,7 @@ import Lodge from './components/Lodge';
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
+    primary: { main: '#e3f2fd',}
   },
 });
 

@@ -35,7 +35,7 @@ function Lodge({ followedUsers, likedLogs, setLikedLogs, followedUseravatars }) 
         <Typography align="center" sx={{ marginTop: 4 }} >Hunters you follow</Typography>
 
         {followedUsers.map(user =>
-          <Button onClick={() => navigate(`/hunters/${user}`)} key={`following-${user}`}>
+          <Button sx={{textTransform: 'none', fontFamily: 'Jaapokki'}} onClick={() => navigate(`/hunters/${user}`)} key={`following-${user}`}>
             <Avatar sx={{ width: 30, height: 30, mr: 1, ml: 1 }} src={`https://avatars.dicebear.com/api/identicon/${followedUseravatars[user]}.svg?scale=85`} alt={`${user}avatar`} />
             {user}
           </Button>
