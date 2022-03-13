@@ -38,8 +38,8 @@ const UserMenu = ({ myUsername, avatar }) => {
       <Menu anchorEl={anchorEl} open={menuOpen} onClose={handleMenuClose}>
         <Typography align="center" sx={{ fontFamily: 'Jaapokki' }} >{myUsername}</Typography>
         <Divider />
-        <MenuItem onClick={()=> navigate(`/logs/${myUsername}`)}>My Logs</MenuItem>
-        <MenuItem onClick={()=> navigate(`/hunters/${myUsername}`)}>My Profile</MenuItem>
+        <MenuItem onClick={()=>{ handleMenuClose(); navigate(`/logs/${myUsername}`) } }>My Logs</MenuItem>
+        <MenuItem onClick={()=>{ handleMenuClose(); navigate(`/hunters/${myUsername}`) } }>My Profile</MenuItem>
         <MenuItem onClick={handleLogoutClick}>
           Logout
         </MenuItem>
