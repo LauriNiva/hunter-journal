@@ -47,6 +47,29 @@ const createUser = async (user, token) => {
   return userData.data;
 };
 
+const getAvatar = async (username) => {
+  const avatar = await axios.get(`${baseURL}/${username}/avatar`);
+  console.log('avatar.data', avatar.data)
+  return avatar.data;
+};
+
+const updateAvatar = async (avatar, token) => {
+
+  const newAvatar = avatar;
+
+  const updatedAvatar = await axios
+  .put(`${baseURL}/avatar`,
+  newAvatar,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+    },
+  );
+return updatedAvatar.data;
+
+};
+
 const followAUser = async (userToFollow, token) => {
   const updatedUser = await axios
     .put(`${baseURL}/${userToFollow}/follow`,
@@ -61,6 +84,6 @@ const followAUser = async (userToFollow, token) => {
 };
 
 
-const usersService = { getUser, createUser, searchUsername, followAUser };
+const usersService = { getUser, createUser, searchUsername, followAUser, updateAvatar, getAvatar };
 
 export default usersService;

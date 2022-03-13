@@ -23,7 +23,8 @@ const App = () => {
 
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
 
-  const [myUsername, setUsername] = useState();
+  const [myUsername, setUsername] = useState('');
+  const [avatar, setAvatar] = useState('')
   const [likedLogs, setLikedLogs] = useState([]);
   const [followedUsers, setFollowedUsers] = useState([]);
 
@@ -50,15 +51,28 @@ const App = () => {
       })();
   }, [myUsername, isAuthenticated, getAccessTokenSilently]);
 
+  useEffect(() => {
+
+    const getAvatar = async () => {
+      console.log('getAvatar in frontpage')
+      const avatarmodifier = await usersService.getAvatar(myUsername);
+      console.log('avatarmodifier', avatarmodifier)
+      setAvatar(`${myUsername}${avatarmodifier}`);
+    }
+    myUsername && getAvatar();
+  }, [myUsername])
+
 
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <ConfirmProvider>
-        <Nav myUsername={myUsername} />
+        <Nav myUsername={myUsername} avatar={avatar} />
         <Paper className="container"
-        sx={{ width: { sm: "100%", md: "95%" },  maxWidth: "1220px",minHeight: '80vh', maxHeight: '89vh',
-         p: 1}}>
+          sx={{
+            width: { sm: "100%", md: "95%" }, maxWidth: "1220px", minHeight: '80vh', maxHeight: '89vh',
+            p: 1
+          }}>
           {isAuthenticated &&
             <UserDataForm myUsername={myUsername} setUsername={setUsername} dialogOpen={firstTimeSetupDialogOpen} setDialogOpen={setFirstTimeSetupDialogOpen} />
           }
@@ -66,13 +80,14 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Frontpage likedLogs={likedLogs} setLikedLogs={setLikedLogs} />} />
             <Route path="logs" element={<Logs myUsername={myUsername} likedLogs={likedLogs} setLikedLogs={setLikedLogs} />} >
-              <Route path=":usernameForLogs" element={<Logs myUsername={myUsername} likedLogs={likedLogs} setLikedLogs={setLikedLogs} />} />           
+              <Route path=":usernameForLogs" element={<Logs myUsername={myUsername} likedLogs={likedLogs} setLikedLogs={setLikedLogs} />} />
             </Route>
             <Route path='hunters'>
-              <Route path=':username' element={<Userpage myUsername={myUsername} likedLogs={likedLogs} setLikedLogs={setLikedLogs} followedUsers={followedUsers} setFollowedUsers={setFollowedUsers} />} />
+              <Route path=':username' element={<Userpage myUsername={myUsername} likedLogs={likedLogs} setLikedLogs={setLikedLogs}
+                followedUsers={followedUsers} setFollowedUsers={setFollowedUsers} setNewAvatar={setAvatar} />} />
             </Route>
             <Route path='lodge' element={<Lodge followedUsers={followedUsers} likedLogs={likedLogs} setLikedLogs={setLikedLogs} />} />
-            
+
 
 
             <Route path="*" element={<h1>404</h1>} />

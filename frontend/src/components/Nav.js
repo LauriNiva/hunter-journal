@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { AppBar, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
+import { AppBar, Avatar, Divider, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import LoginButton from './LoginButton';
 import { Button } from '@mui/material';
 
-const UserMenu = ({ myUsername }) => {
+const UserMenu = ({ myUsername, avatar }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const menuOpen = Boolean(anchorEl);
 
@@ -31,9 +31,13 @@ const UserMenu = ({ myUsername }) => {
     <>
       <Button id="usermenu-button" disableFocusRipple disableRipple sx={{ textTransform: 'none'}}
       onClick={handleMenuClick}>
-        <Typography sx={{ mr: 2 }}>{myUsername}</Typography>
+        {/* <Typography sx={{ mr: 2, ml: 1 }}>{myUsername}</Typography> */}
+       {avatar &&  <Avatar sx={{ gridArea: 'avatar', justifySelf: 'end', alignSelf: 'center', width: 40, height: 40}} 
+        src={`https://avatars.dicebear.com/api/identicon/${avatar}.svg?scale=85`} alt={`${myUsername}avatar`} /> }
       </Button>
       <Menu anchorEl={anchorEl} open={menuOpen} onClose={handleMenuClose}>
+        <Typography align="center" sx={{ fontFamily: 'Jaapokki' }} >{myUsername}</Typography>
+        <Divider />
         <MenuItem onClick={()=> navigate(`/logs/${myUsername}`)}>My Logs</MenuItem>
         <MenuItem onClick={()=> navigate(`/hunters/${myUsername}`)}>My Profile</MenuItem>
         <MenuItem onClick={handleLogoutClick}>
@@ -47,7 +51,9 @@ const UserMenu = ({ myUsername }) => {
 
 
 
-function Nav({ myUsername }) {
+function Nav({ myUsername, avatar }) {
+  console.log('avatar in nav', avatar)
+
 
   const { isAuthenticated } = useAuth0();
 
@@ -63,7 +69,7 @@ function Nav({ myUsername }) {
           isAuthenticated ?
             <>
               <Typography sx={{ fontFamily: 'Jaapokki', mr: 2 }} ><Link to={`/lodge`} >THE LODGE</Link></Typography>
-              <UserMenu myUsername={myUsername} />
+              <UserMenu myUsername={myUsername} avatar={avatar} />
             </>
             : <LoginButton />
         }

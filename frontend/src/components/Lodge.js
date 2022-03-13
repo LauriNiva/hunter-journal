@@ -26,6 +26,7 @@ function Lodge({ followedUsers, likedLogs, setLikedLogs }) {
     return (
       <Paper elevation={4} sx={{ gridArea: 'followed', }}>
         <UserSearch />
+        <Typography align="center" sx={{ marginTop: 4 }} >Hunters you follow</Typography>
         {followedUsers.map(user =>
           <Button onClick={() => navigate(`/hunters/${user}`)} key={`following-${user}`}>{user}</Button>
         )}
@@ -46,7 +47,7 @@ function Lodge({ followedUsers, likedLogs, setLikedLogs }) {
     "followed recent"
     ` }}>
       <Container sx={{ gridArea: 'head', }}>
-        <Typography align="center"variant="h4" sx={{ fontFamily: 'Jaapokki' }}>The Lodge</Typography>
+        <Typography align="center" variant="h4" sx={{ fontFamily: 'Jaapokki' }}>The Lodge</Typography>
         <Typography align="center" >Lodge is the place to find and follow your fellow hunters.
         Here you can easily see recent logs from the hunters you follow.</Typography>
       </Container>

@@ -34,7 +34,8 @@ usersRouter.post('/', checkJwt, async (req, res) => {
       {
         username: body.username,
         email: body.email,
-        _id: req.user.sub
+        _id: req.user.sub,
+        avatar: '0'
       }
     );
 
@@ -46,6 +47,35 @@ usersRouter.post('/', checkJwt, async (req, res) => {
     res.status(500).json({ error })
   }
 
+});
+
+//Get avatar for the user (public access)
+usersRouter.get('/:username/avatar', async (req, res) => {
+  const username = req.params.username;
+  console.log('bloob',username)
+  try {
+    const userToFind = await User.findOne({ username: username });
+    res.json(userToFind.avatar);
+  } catch (error) {
+    console.log(error)
+  }
+
+
+});
+
+//Update users own avatar
+usersRouter.put('/avatar', checkJwt, async (req, res) => {
+  const userid = req.user.sub;
+  const body = req.body;
+
+  try {
+    const userToUpdate = await User.findById(userid);
+    userToUpdate.avatar = body.avatar;
+    const updatedUser = await userToUpdate.save();
+    res.json(updatedUser.avatar);
+  } catch (error) {
+    console.log(error)
+  }
 });
 
 usersRouter.put('/:username/follow', checkJwt, async (req, res) => {
