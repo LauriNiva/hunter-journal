@@ -73,6 +73,20 @@ const getAllLogs = async (username, token) => {
   return allLogs.data;
 };
 
+//Hae käyttäjä uusimmat logit 
+const getUsersRecentLogs = async (username, token) => {
+  const recentLogs = await axios
+    .get(`${baseURL}/user/${username}/recent`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+      },
+    );
+  return recentLogs.data;
+};
+
+
 //Lisää logi
 
 //Poista logi
@@ -93,6 +107,7 @@ const deleteALog = async (logId, token) => {
 //Päivitä logia
 
 
-const logsService = { getAllLogs, deleteALog, getRecentLogs, getMostLikedLogs, likeALog, dislikeALog, getRecentFollowedLogs };
+const logsService = { getAllLogs, deleteALog, getRecentLogs, getMostLikedLogs,
+  likeALog, dislikeALog, getUsersRecentLogs, getRecentFollowedLogs };
 
 export default logsService;

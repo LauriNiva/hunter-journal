@@ -26,6 +26,16 @@ logsRouter.get('/user/:username', checkJwt, async (req, res) => {
   res.json(logs);
 });
 
+logsRouter.get('/user/:username/recent', checkJwt, async (req, res) => {
+  const username = req.params.username;
+
+  const user = await User.findOne({ username: username });
+
+  const logs = await Log.find({ user: user }).sort({ _id: -1 }).limit(3).populate('user').populate('likes', 'username -_id');
+  res.json(logs);
+});
+
+
 logsRouter.get('/recent', async (req, res) => {
   const recentLogs = await Log.find().sort({ _id: -1 }).limit(10).populate('user').populate('likes', 'username -_id');
   res.json(recentLogs);

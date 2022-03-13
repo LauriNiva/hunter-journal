@@ -216,7 +216,7 @@ const NewLogForm = ({ setLogs }) => {
 
     const token = await getAccessTokenSilently();
 
-    const compressedImageArray = await compress.compress([imageFile], { size: 1, quality: 1 })
+    const compressedImageArray = await compress.compress([imageFile], { size: 0.3, quality: 0.8, maxWidth: 1200, maxHeight: 1000, })
     const compressedImageData = compressedImageArray[0];
     const compressedImage = `data:${compressedImageData.ext};base64,${compressedImageData.data}`
 
