@@ -96,7 +96,7 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setL
         </Container>
       </Paper>
 
-      <Container>
+      <Container sx={{pt:2}}>
         <Typography align="center" >Recent Logs</Typography>
         {recentLogs.map( log => <SingleLog key={`userpage${log._id}`} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs} dataToShow='createdAt' />)}
       </Container>
