@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node app.js",
-    "backend": "nodemon app.js",
+    "backend": "nodemon --ignore /frontend/ app.js",
     "frontend": "npm start --prefix frontend",
     "dev": "",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
