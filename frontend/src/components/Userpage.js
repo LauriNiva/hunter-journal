@@ -1,5 +1,5 @@
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
-import { Avatar, Button, Container, Typography, Paper } from '@mui/material';
+import { Avatar, Button, Container, Typography, Paper, Menu, MenuItem } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import logsService from '../services/logs.js';
@@ -7,7 +7,7 @@ import usersService from '../services/user.js';
 import SingleLog from './SingleLog.js';
 
 
-function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setLikedLogs, setNewAvatar}) {
+function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setLikedLogs, setNewAvatar }) {
 
   const { username } = useParams();
   const { getAccessTokenSilently } = useAuth0();
@@ -37,7 +37,7 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setL
       setAvatar(avatarNumber)
     }
     getAvatar();
-  },[username]);
+  }, [username]);
 
 
   const handFollowClick = async () => {
@@ -53,52 +53,79 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setL
   }
 
   const newAvatar = async () => {
-    const rngAvatar = Math.floor(Math.random()*100)
+    const rngAvatar = Math.floor(Math.random() * 100)
     console.log('rngAvatar', rngAvatar)
 
     try {
       const token = await getAccessTokenSilently();
-      const updatedAvatar = await usersService.updateAvatar({avatar: rngAvatar}, token)
+      const updatedAvatar = await usersService.updateAvatar({ avatar: rngAvatar }, token)
       setAvatar(updatedAvatar);
       setNewAvatar(updatedAvatar);
       console.log('updatedAvatar', updatedAvatar)
     } catch (error) {
       console.log(error)
     }
-  }
+  };
+
+  const [avatarAnchorEl, setAvatarAnchorEl] = useState(null);
+  const avatarMenuOpen = Boolean(avatarAnchorEl);
+
+  const handleAvatarClick = (e) => {
+    if (!isOwner) { return };
+    console.log('e', e)
+    setAvatarAnchorEl(e.currentTarget);
+  };
+
+  const handleAvatarMenuClose = () => {
+    setAvatarAnchorEl(null);
+  };
+
+  /* const UserAvatar = () => {
+    return (
+      <>
+
+
+      </>
+    )
+  } */
 
 
   return (
     <Container>
       <Paper elevation={3}
-      sx={{ 
-      display: 'grid',
-      gridTemplateColumns: "4fr 5fr",
-      gridTemplateRows: "1fr 1fr",
-      gridTemplateAreas: `"avatar username"
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: "4fr 5fr",
+          gridTemplateRows: "1fr 1fr",
+          gridTemplateAreas: `"avatar username"
         "avatar links"
         `,
-      
-      maxHeight: '120px'
-       }}>
-        { avatar && <Avatar sx={{ gridArea: 'avatar', justifySelf: 'end', alignSelf: 'center', width: 70, height: 70, m:2 }} 
-        src={`https://avatars.dicebear.com/api/identicon/${avatar}.svg?scale=85`} alt={`${username}avatar`} />
-      }
-        <Typography variant="h3" sx={{ gridArea: 'username', fontFamily: 'Jaapokki', mt:1 }}>{username}</Typography>
-        <Container disableGutters sx={{ gridArea: 'links'}}>
-          {!isOwner ?
-            <Button onClick={handFollowClick} sx={{ width: 100 }} > {followed ? 'Unfollow' : 'Follow'} </Button> :
-            <Button onClick={newAvatar} >New Avatar</Button>
-          }
 
+          maxHeight: '120px'
+        }}>
+          
+        {avatar && <>
+          <Avatar onClick={handleAvatarClick} sx={{ gridArea: 'avatar', justifySelf: 'end', alignSelf: 'center', width: 70, height: 70, m: 2 }}
+            src={`https://avatars.dicebear.com/api/identicon/${avatar}.svg?scale=85`} alt={`${username}avatar`} />
+
+          <Menu anchorEl={avatarAnchorEl} open={avatarMenuOpen} onClose={handleAvatarMenuClose}>
+            <MenuItem onClick={() => { newAvatar() }}>Change Avatar</MenuItem>
+          </Menu>
+        </>}
+
+        <Typography variant="h3" sx={{ gridArea: 'username', fontFamily: 'Jaapokki', mt: 1 }}>{username}</Typography>
+        <Container disableGutters sx={{ gridArea: 'links' }}>
+          {!isOwner &&
+            <Button onClick={handFollowClick} sx={{ width: 100 }} > {followed ? 'Unfollow' : 'Follow'} </Button> 
+          }
 
           <Button onClick={() => navigate(`/logs/${username}`)}>All Logs</Button>
         </Container>
       </Paper>
 
-      <Container sx={{pt:2}}>
+      <Container sx={{ pt: 2 }}>
         <Typography align="center" >Recent Logs</Typography>
-        {recentLogs.map( log => <SingleLog key={`userpage${log._id}`} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs} dataToShow='createdAt' />)}
+        {recentLogs.map(log => <SingleLog key={`userpage${log._id}`} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs} dataToShow='createdAt' />)}
       </Container>
 
 
