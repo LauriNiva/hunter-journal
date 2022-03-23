@@ -619,7 +619,7 @@ const animalsArray =
     difficulty: 5,
     trophytype: 'Horns',
     trophyscore: { silver: 50.7, gold: 148.1, diamond: 221.1 },
-    furtypes: ['Common', 'Common', 'Albino','Light Brown' ,'Leucistic', 'Melanistic'],
+    furtypes: ['Common', 'Albino', 'Brown', 'Dark', 'Light Brown', 'Light Grey' ,'Leucistic', 'Melanistic'],
     reserves: ['Yukon Valley', 'Silver Ridge Peaks']
   },
   Pronghorn: {
@@ -742,8 +742,8 @@ const animalsArray =
     furtypes: ['Common',
       'Albino',
       'Brown',
-      'Dark-Brown',
-      'Dark-Grey',
+      'Dark Brown',
+      'Dark Grey',
       'Melanistic',
       'Orange',
       'Piebald',
