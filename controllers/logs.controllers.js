@@ -159,6 +159,22 @@ logsRouter.delete('/:id', checkJwt, async (req, res) => {
   }
 });
 
+logsRouter.put('/:id', checkJwt, async (req, res) =>{
+  const logId = req.params.id;
+  const updates = req.body;
+
+  try {
+    console.log('logId', logId)
+    console.log('updates', updates)
+    const updatedLog = await Log.findByIdAndUpdate(logId, updates, {new: true});
+    res.json(updatedLog);
+  } catch (error) {
+    console.log('error with update', error)
+    res.status(500).json({ error: error })
+  }
+
+});
+
 logsRouter.put('/:id/likes', checkJwt, async (req, res) => {
   const logId = req.params.id;
   const userid = req.user.sub;

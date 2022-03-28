@@ -37,6 +37,7 @@ function Logs({ likedLogs, setLikedLogs, myUsername }) {
 
   useEffect(() => {
     (async () => {
+      console.log('fetching data')
       const token = await getAccessTokenSilently();
       setLogs(await logsService.getAllLogs(usernameForLogs, token));
     })()

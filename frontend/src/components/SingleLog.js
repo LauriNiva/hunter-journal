@@ -6,6 +6,8 @@ import React, { useState, useEffect } from 'react';
 import logsService from '../services/logs.js'
 import { useAuth0 } from '@auth0/auth0-react';
 import Image from 'mui-image';
+import EditLogForm from './EditLogForm';
+
 
 import FemaleIcon from '@mui/icons-material/Female';
 import MaleIcon from '@mui/icons-material/Male';
@@ -133,7 +135,7 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
     };
 
     const handleEditClick = () => {
-      console.log('edit')
+      console.log('edit click in singlelog')
     };
 
     return (
@@ -143,7 +145,7 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
         </IconButton>
         <Menu anchorEl={anchorEl} open={menuOpen} onClose={handleMenuClose}>
           <MenuItem onClick={handleDeleteClick}>Delete</MenuItem>
-          <MenuItem onClick={handleEditClick}>Edit</MenuItem>
+          <MenuItem ><EditLogForm log={log} setLogs={setLogs} /></MenuItem>
         </Menu>
       </>
     )
