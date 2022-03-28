@@ -49,7 +49,6 @@ const createUser = async (user, token) => {
 
 const getAvatar = async (username) => {
   const avatar = await axios.get(`${baseURL}/${username}/avatar`);
-  console.log('avatar.data', avatar.data)
   return avatar.data;
 };
 

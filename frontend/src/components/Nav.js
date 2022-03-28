@@ -52,8 +52,6 @@ const UserMenu = ({ myUsername, avatar }) => {
 
 
 function Nav({ myUsername, avatar }) {
-  console.log('avatar in nav', avatar)
-
 
   const { isAuthenticated } = useAuth0();
 
