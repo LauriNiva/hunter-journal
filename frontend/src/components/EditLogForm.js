@@ -3,7 +3,6 @@ import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Compress from 'compress.js';
-import jimp from 'jimp';
 
 import animalsList from '../data/animals.js';
 import weaponsList from '../data/weapons.js';
@@ -25,7 +24,7 @@ const EditLogForm = ({ setLogs, log }) => {
   const imageUrl = `https://res.cloudinary.com/devniva/image/upload/v1636547210/${log.images[0]}`;
 
 
-  const compress = new Compress();
+  //const compress = new Compress();
   const { getAccessTokenSilently } = useAuth0();
 
 
@@ -69,8 +68,8 @@ const EditLogForm = ({ setLogs, log }) => {
 
   const [open, setOpen] = useState(false);
 
-  const [previewSource, setPreviewSource] = useState('');
-  const [imageFile, setImageFile] = useState('');
+  //const [previewSource, setPreviewSource] = useState('');
+  //const [imageFile, setImageFile] = useState('');
 
 
   useEffect(() => {
@@ -144,19 +143,19 @@ const EditLogForm = ({ setLogs, log }) => {
 
 
 
-  const handleFileInputChange = async (e) => {
-    const file = e.target.files[0];
-    previewFile(file);
-    setImageFile(e.target.files[0])
-  };
+  // const handleFileInputChange = async (e) => {
+  //   const file = e.target.files[0];
+  //   previewFile(file);
+  //   setImageFile(e.target.files[0])
+  // };
 
-  const previewFile = (file) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setPreviewSource(reader.result);
-    }
-  }
+  // const previewFile = (file) => {
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(file);
+  //   reader.onloadend = () => {
+  //     setPreviewSource(reader.result);
+  //   }
+  // }
 
 
   const updateTheLog = async () => {
@@ -244,7 +243,7 @@ const EditLogForm = ({ setLogs, log }) => {
 
     <Box>
 
-      <Button color="primary" onClick={handleClickOpenDialog}>
+      <Button sx={{textTransform: 'none', fontSize: '16px', width: '100%'}} color="primary" onClick={handleClickOpenDialog}>
         Edit
       </Button>
 
@@ -255,9 +254,9 @@ const EditLogForm = ({ setLogs, log }) => {
 
           </DialogContentText>
           <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
-            {imageUrl ?
+            {/* {imageUrl ? */}
               <Image src={imageUrl} alt="chosen" sx={{}} />
-              :
+              {/* :
               <label htmlFor="imageuploadbutton">
                 <Input sx={{ display: "none" }} type='file' id="imageuploadbutton" name='image'
                   accept=".jpg,.jpeg,.png" onChange={handleFileInputChange} />
@@ -269,7 +268,7 @@ const EditLogForm = ({ setLogs, log }) => {
                   <AddPhotoAlternateIcon />
                 </Button>
               </label>
-            }
+            } */}
           </Box>
 
           <form id="newLogForm" onSubmit={handleSubmitDialog}>

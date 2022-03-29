@@ -145,7 +145,7 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
         </IconButton>
         <Menu anchorEl={anchorEl} open={menuOpen} onClose={handleMenuClose}>
           <MenuItem onClick={handleDeleteClick}>Delete</MenuItem>
-          <MenuItem ><EditLogForm log={log} setLogs={setLogs} /></MenuItem>
+          <EditLogForm log={log} setLogs={setLogs} />
         </Menu>
       </>
     )
