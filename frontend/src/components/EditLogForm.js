@@ -4,8 +4,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Compress from 'compress.js';
 import jimp from 'jimp';
-import { createWorker } from 'tesseract.js';
-import stringSimilarity from 'string-similarity';
 
 import animalsList from '../data/animals.js';
 import weaponsList from '../data/weapons.js';
@@ -150,61 +148,6 @@ const EditLogForm = ({ setLogs, log }) => {
     const file = e.target.files[0];
     previewFile(file);
     setImageFile(e.target.files[0])
-
-    // OCR for animal name
-    const startTime = Date.now();
-
-    const compressedImageArray = await compress.compress([file],
-      { size: 1, maxWidth: 1000, maxHeight: 1000, quality: 1 });
-    const compressedImageData = compressedImageArray[0];
-
-    console.log(`Compress took ${(Date.now() - startTime) / 1000} seconds`);
-
-    const fileStr = compressedImageData.data;
-    const imageBuffer = Buffer.from(fileStr, 'base64');
-
-    const image = await jimp.read(imageBuffer);
-
-    const preparedImage = await image.crop(0, 0, 300, 150).invert().threshold({ max: 10 }).getBase64Async("image/png")
-
-    console.log(`Complete preparation took ${(Date.now() - startTime) / 1000} seconds`);
-
-    const worker = createWorker();
-    await worker.load();
-    await worker.loadLanguage('eng');
-    await worker.initialize('eng');
-    await worker.setParameters({
-      tessedit_char_whitelist: 'ABCDEFGHIJKLMNOPQRSTUWVXYZ- '
-    });
-
-    const { data: { text } } = await worker.recognize(preparedImage);
-    const animal = text.split('\n')[0];
-    await worker.terminate();
-
-    console.log(`OCR before similarity check took ${(Date.now() - startTime) / 1000} seconds`);
-
-    const matchedAnimal = stringSimilarity.findBestMatch(animal.toLocaleLowerCase(), animalOptions)
-
-    const timeTakenForOCR = `${(Date.now() - startTime) / 1000} seconds`;
-    console.log(`Complete OCR took ${timeTakenForOCR}`);
-
-    setFormAnimal(matchedAnimal.bestMatch.target)
-
-    /* const token = await getAccessTokenSilently();
-
-    try {
-      const detectedAnimal = await axios.post('/api/logs/ocrimage', { imagedata: preparedImage }, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
-      });
-      const timeTakenForOCR = `${(Date.now() - startTime) / 1000} seconds`;
-      console.log(`OCR took ${timeTakenForOCR} (${detectedAnimal.data.time} on server)`);
-      
-      setFormAnimal(detectedAnimal.data.animal)
-    } catch (error) {
-      console.log(error);
-    } */
   };
 
   const previewFile = (file) => {
@@ -243,7 +186,6 @@ const EditLogForm = ({ setLogs, log }) => {
     if(log.reserve !== formReserve ) changesToTheLog.reserve = formReserve;
     if(log.notes !== formNotes ) changesToTheLog.notes = formNotes;
 
-    console.log(`changesToTheLog`, changesToTheLog)
 
     try {
       const updatedLog = await axios.put(`/api/logs/${log._id}`, changesToTheLog, {
@@ -251,8 +193,6 @@ const EditLogForm = ({ setLogs, log }) => {
           Authorization: `Bearer ${token}`
         },
       });
-      console.log(`uploadedLog`, updatedLog)
-      console.log(`uploadedLog.data`, updatedLog.data)
       setLogs(currentLogs => currentLogs.map(log => log._id === updatedLog.data._id ? updatedLog.data : log ));
     } catch (error) {
       console.log(error);
@@ -292,10 +232,8 @@ const EditLogForm = ({ setLogs, log }) => {
 
   const handleSubmitDialog = (e) => {
     e.preventDefault();
-    console.log('handleSubmit in editlogform')
-      //handleCloseDialog();
-      updateTheLog();
-    
+      handleCloseDialog();
+      updateTheLog(); 
   };
 
   const formInputWidth = () => {
