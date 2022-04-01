@@ -244,13 +244,14 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
             {setLogs && <EditMenu />}
 
           </Container>
+
           <Image src={imageUrl + log.images[chosenImage]} showLoading sx={{}} />
 
-          {log.images.map((img, index) =>
-            <Container onClick={()=> setChosenImage(index)}  disableGutters sx={{ m: 1 }}>
-              <Image key={img} src={imageUrl + img} width='150px' />
-            </Container>
-          )}
+          <Container disableGutters sx={{ m:1, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+            {log.images.map((img, index) =>
+              <Image key={img} onClick={() => setChosenImage(index)} src={imageUrl + img} width='150px' />
+            )}
+          </Container>
 
           <Container disableGutters sx={{ mt: 2, display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
 

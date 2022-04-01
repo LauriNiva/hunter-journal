@@ -45,19 +45,19 @@ logsRouter.get('/recent/followed', checkJwt, async (req, res) => {
   const userid = req.user.sub;
   const followedUserIds = await User.findById(userid).select('followed');
   const recentFollowedLogs = await Log.find().where('user').in(followedUserIds.followed)
-  .sort({ _id: -1 }).limit(30).populate('user').populate('likes', 'username -_id');
+    .sort({ _id: -1 }).limit(30).populate('user').populate('likes', 'username -_id');
   res.json(recentFollowedLogs);
 });
 
 logsRouter.get('/mostliked', async (req, res) => {
-  const listOfMostLikedLogs = await Log.aggregate([{$project: {numberOfLikes: {$cond: { if: { $isArray: "$likes" }, then: { $size: "$likes"}, else: 0 } } } } ])
-  .sort({ numberOfLikes: -1 }).limit(10)//.populate('user').populate('likes', 'username -_id');
+  const listOfMostLikedLogs = await Log.aggregate([{ $project: { numberOfLikes: { $cond: { if: { $isArray: "$likes" }, then: { $size: "$likes" }, else: 0 } } } }])
+    .sort({ numberOfLikes: -1 }).limit(10)//.populate('user').populate('likes', 'username -_id');
   //const mostLikedLogs = await Log.find({ 'likes': { $exists: true, $ne: [] } }).sort({ likes: 1 }).limit(10).populate('user').populate('likes', 'username -_id');
-  
-  const mostLikedLogs = await Log.find().where('_id').in(listOfMostLikedLogs.map(log => log._id))
-  .populate('user').populate('likes', 'username -_id');
 
-  mostLikedLogs.sort((a,b) => b.likes.length - a.likes.length)
+  const mostLikedLogs = await Log.find().where('_id').in(listOfMostLikedLogs.map(log => log._id))
+    .populate('user').populate('likes', 'username -_id');
+
+  mostLikedLogs.sort((a, b) => b.likes.length - a.likes.length)
 
   res.json(mostLikedLogs);
 });
@@ -67,10 +67,27 @@ logsRouter.post('/', checkJwt, async (req, res) => {
   console.log('inside logsrouter: ', req.body)
   const body = req.body;
   try {
-    const fileStr = body.imagedata;
-    const uploadResponse = await cloudinary.v2.uploader
-      .upload(fileStr, { upload_preset: 'hunter_setup', });
-    const imageid = uploadResponse.public_id;
+
+    let imageIdArray = [];
+
+    for (const imgdata of body.imagedata) {
+
+      const uploadResponse = await cloudinary.v2.uploader
+        .upload(imgdata, { upload_preset: 'hunter_setup', });
+
+      const imageid = uploadResponse.public_id;
+
+      imageIdArray.push(imageid)
+
+    }
+
+    // const fileStr = body.imagedata;
+
+    // const uploadResponse = await cloudinary.v2.uploader
+    //   .upload(fileStr, { upload_preset: 'hunter_setup', });
+
+    // const imageid = uploadResponse.public_id;
+
     const newLog = new Log({
       user: req.user.sub,
       animal: body.animal,
@@ -87,7 +104,7 @@ logsRouter.post('/', checkJwt, async (req, res) => {
       shotdistance: body.shotdistance,
       reserve: body.reserve,
       notes: body.notes,
-      images: [imageid]
+      images: imageIdArray
     });
 
     console.log(`newLog`, newLog);
@@ -104,49 +121,6 @@ logsRouter.post('/', checkJwt, async (req, res) => {
   }
 });
 
-logsRouter.post('/ocrimage', checkJwt, async (req, res) => {
-  //EI KÄYTÖSSÄ. OCR TEHDÄÄN SELAIMESSA
-  const body = req.body;
-  const startTime = Date.now();
-
-  try {
-/*     const fileStr = body.imagedata;
-
-    const imageBuffer = Buffer.from(fileStr, 'base64');
-
-    const image = await jimp.read(imageBuffer)
-
-    const preparedImage = await image.crop(0, 0, 600, 250).invert().threshold({ max: 10 }).getBase64Async("image/png") */
-
-    const { createWorker } = Tesseract;
-    const worker = createWorker();
-    await worker.load();
-    await worker.loadLanguage('eng');
-    await worker.initialize('eng');
-    await worker.setParameters({
-      tessedit_char_whitelist: 'ABCDEFGHIJKLMNOPQRSTUWVXYZ- '
-    });
-
-    const rectangle = { left: 0, top: 0, width: 600, height: 250 };
-    const { data: { text } } = await worker.recognize(body.imagedata, {  });
-    const animal = text.split('\n')[0];
-    await worker.terminate();
-
-    const animals = Object.keys(animalsArray);
-    const matchedAnimal = stringSimilarity.findBestMatch(animal.toLocaleLowerCase(), animals)
-
-    console.log('animal', animal)
-    console.log('matchedAnimal', matchedAnimal)
-
-    const timeTakenForOCR = `${(Date.now() - startTime)/1000}`
-    console.log('Server-side OCR took ', timeTakenForOCR);
-
-    res.json({ animal : matchedAnimal.bestMatch.target, time: timeTakenForOCR })
-  } catch (error) {
-    console.log('ocr error', error)
-    res.status(500).json('ocr error')
-  }
-});
 
 logsRouter.delete('/:id', checkJwt, async (req, res) => {
   const logId = req.params.id;
@@ -159,14 +133,14 @@ logsRouter.delete('/:id', checkJwt, async (req, res) => {
   }
 });
 
-logsRouter.put('/:id', checkJwt, async (req, res) =>{
+logsRouter.put('/:id', checkJwt, async (req, res) => {
   const logId = req.params.id;
   const updates = req.body;
 
   try {
     console.log('logId', logId)
     console.log('updates', updates)
-    const updatedLog = await Log.findByIdAndUpdate(logId, updates, {new: true});
+    const updatedLog = await Log.findByIdAndUpdate(logId, updates, { new: true });
     res.json(updatedLog);
   } catch (error) {
     console.log('error with update', error)
