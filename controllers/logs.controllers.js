@@ -137,6 +137,19 @@ logsRouter.put('/:id', checkJwt, async (req, res) => {
   const logId = req.params.id;
   const updates = req.body;
 
+  let imageIdArray = req.body.oldImageIds;
+
+  for (const imgdata of req.body.imagedata) {
+    const uploadResponse = await cloudinary.v2.uploader
+      .upload(imgdata, { upload_preset: 'hunter_setup', });
+    const imageid = uploadResponse.public_id;
+    imageIdArray.push(imageid)
+  }
+
+  delete updates.oldImageIds;
+  delete updates.imagedata;
+  updates.images = imageIdArray;
+
   try {
     console.log('logId', logId)
     console.log('updates', updates)
