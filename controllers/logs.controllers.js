@@ -110,6 +110,7 @@ logsRouter.post('/', checkJwt, async (req, res) => {
     console.log(`newLog`, newLog);
 
     const uploadedLog = await newLog.save();
+    await uploadedLog.populate('user').execPopulate();
 
     console.log(`uploadedLog`, uploadedLog)
 
@@ -154,6 +155,8 @@ logsRouter.put('/:id', checkJwt, async (req, res) => {
     console.log('logId', logId)
     console.log('updates', updates)
     const updatedLog = await Log.findByIdAndUpdate(logId, updates, { new: true });
+    await updatedLog.populate('user').execPopulate();
+
     res.json(updatedLog);
   } catch (error) {
     console.log('error with update', error)
