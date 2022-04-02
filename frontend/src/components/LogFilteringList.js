@@ -170,7 +170,7 @@ function LogFilteringList({ logs, setFilteredLogs }) {
     return (
       <Collapse in={animalOpen}>
         <List>
-          {Object.keys(availableAnimalsForFiltering).map((option) =>
+          {Object.keys(availableAnimalsForFiltering).sort().map((option) =>
             <ListItemButton key={option} dense onClick={() => toggleFilter(animalFilter, setAnimalFilter, option)} >
               <Checkbox checked={animalFilter.includes(option)} />
               <ListItemText primary={`${option} (${availableAnimalsForFiltering[option]})`} />
@@ -201,7 +201,7 @@ function LogFilteringList({ logs, setFilteredLogs }) {
       <Collapse in={furOpen}>
 
         <List>
-          {Object.keys(availableFursForFiltering).map((option) =>
+          {Object.keys(availableFursForFiltering).sort().map((option) =>
             <ListItemButton key={option} dense onClick={() => toggleFilter(furFilter, setFurFilter, option)}>
               <Checkbox checked={furFilter.includes(option)} />
               <ListItemText primary={`${option} (${availableFursForFiltering[option]})`} />
@@ -217,7 +217,7 @@ function LogFilteringList({ logs, setFilteredLogs }) {
       <Collapse in={weaponOpen}>
 
         <List>
-          {Object.keys(availableWeaponsForFiltering).map((option) =>
+          {Object.keys(availableWeaponsForFiltering).sort().map((option) =>
             <ListItemButton onClick={() => toggleFilter(weaponFilter, setWeaponFilter, option)} key={option} dense>
               <Checkbox checked={weaponFilter.includes(option)} />
               <ListItemText primary={`${option} (${availableWeaponsForFiltering[option]})`} />
@@ -233,7 +233,7 @@ function LogFilteringList({ logs, setFilteredLogs }) {
       <Collapse in={ammoOpen}>
 
         <List>
-          {Object.keys(availableAmmoForFiltering).map((option) =>
+          {Object.keys(availableAmmoForFiltering).sort().map((option) =>
             <ListItemButton key={option} dense onClick={() => toggleFilter(ammoFilter, setAmmoFilter, option)}>
               <Checkbox checked={ammoFilter.includes(option)} />
               <ListItemText primary={`${option} (${availableAmmoForFiltering[option]})`} />
@@ -248,7 +248,7 @@ function LogFilteringList({ logs, setFilteredLogs }) {
       <Collapse in={weapontypeOpen}>
 
         <List>
-          {Object.keys(availableWeapontypesForFiltering).map((option) =>
+          {Object.keys(availableWeapontypesForFiltering).sort().map((option) =>
             <ListItemButton key={option} dense onClick={() => toggleFilter(weapontypeFilter, setWeapontypeFilter, option)} >
               <Checkbox checked={weapontypeFilter.includes(option)} />
               <ListItemText primary={`${option} (${availableWeapontypesForFiltering[option]})`} />
