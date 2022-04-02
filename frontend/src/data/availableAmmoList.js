@@ -67,8 +67,8 @@ const availableAmmoList = {
     title: 'Eckers .30-06 Prestige',
     ammo: ['.30-06 Soft-Point', '.30-06 Polymer-Tip']
   },
-  'F.L. Sporter .303 Burnished': {
-    title: 'F.L. Sporter .303 Burnished',
+  'F.L. Sporter .303': {
+    title: 'F.L. Sporter .303',
     ammo: ['.303 British Soft-Point', '.303 British Polymer-Tip']
   },
   'Focoso 357': {

@@ -5,7 +5,7 @@ const weaponsList = [
 ["7mm Regent Magnum", "rifle"],
 ["Coachmate Lever .45-70", "rifle"],
 ["Eckers .30-06 Prestige", "rifle"],
-["F.L. Sporter .303 Burnished", "rifle"],
+["F.L. Sporter .303", "rifle"],
 ["Hudzik .50 Caplock Terra", "rifle"],
 ["King 470DB Zenith", "rifle"],
 ["Kullman .22H Wasp", "rifle"],
