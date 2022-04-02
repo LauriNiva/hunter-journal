@@ -7,14 +7,14 @@ import checkJwt from '../middleware/jwtCheck.js';
 
 const logsRouter = express.Router();
 
-//
+
 // const updateWeapons = async () => {
 
-//   const replaced = await Log.updateMany({weapon: "Kullman .22H Wasp"}, {weapon: "Kullman .22H"});
+//   const replaced = await Log.updateMany({weapon: ".300 Canning Magnum Frontier"}, {weapon: ".300 Canning Magnum"});
 //   console.log('replaced', replaced)
 // }
 
-//updateWeapons()
+// updateWeapons()
 
 logsRouter.get('/', checkJwt, async (req, res) => {
   const userid = req.user.sub;

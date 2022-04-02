@@ -6,7 +6,6 @@ import Compress from 'compress.js';
 
 import animalsList from '../data/animals.js';
 import weaponsList from '../data/weapons.js';
-import ammoArray from '../data/ammo.js';
 import availableAmmoList from '../data/availableAmmoList.js';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
@@ -91,8 +90,10 @@ const EditLogForm = ({ setLogs, log }) => {
   }, [formWeapon]);
 
   useEffect(() => {
-    setFormAmmo(availableAmmo[0]);
-  }, [availableAmmo]);
+    if(!availableAmmo.includes(formAmmo)){
+      setFormAmmo(availableAmmo[0]);
+    }
+  }, [availableAmmo,formAmmo]);
 
   useEffect(() => {
     const animalRatings = animalsList[formAnimal].trophyscore;
@@ -216,7 +217,7 @@ const EditLogForm = ({ setLogs, log }) => {
     setFormNotes(log.notes);
     //setPreviewSource('');
     setFormWeapon(weaponOptions.find(weapon => weapon.label === log.weapon));
-    setAvailableAmmo(ammoArray[log.weapontype]);
+    setAvailableAmmo(availableAmmoList[formWeapon.label].ammo.reverse());
     setFormAmmo(log.ammo);
     setFormShotDistance(log.shotdistance);
     setFormReserve(log.reserve)

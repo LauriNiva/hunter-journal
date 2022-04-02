@@ -7,8 +7,8 @@ const availableAmmoList = {
     title: '.270 Huntsman',
     ammo: ['.270 Soft-Point', '.270 Polymer-Tip']
   },
-  '.300 Canning Magnum Frontier': {
-    title: '.300 Canning Magnum Frontier',
+  '.300 Canning Magnum': {
+    title: '.300 Canning Magnum',
     ammo: ['.300 Magnum Soft-Point', '.300 Magnum Polymer-Tip']
   },
   '.44 Panther Magnum': {
