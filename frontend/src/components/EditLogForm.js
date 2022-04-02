@@ -12,6 +12,7 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
 import { useAuth0 } from '@auth0/auth0-react';
 import { Image } from 'mui-image';
+import { Container } from '@mui/material';
 
 const difficultyOptions = ["1 - Trivial", "2 - Minor", "3 - Very easy", "4 - Easy", "5 - Medium",
   "6 - Hard", "7 - Very hard", "8 - Mythical", "9 - Legendary", "10 - Fabled"];
@@ -21,10 +22,11 @@ const EditLogForm = ({ setLogs, log }) => {
 
   console.log('log', log)
 
-  const imageUrl = `https://res.cloudinary.com/devniva/image/upload/v1636547210/${log.images[0]}`;
+  const imageUrl = `https://res.cloudinary.com/devniva/image/upload/v1636547210/`;
 
 
-  //const compress = new Compress();
+
+  const compress = new Compress();
   const { getAccessTokenSilently } = useAuth0();
 
 
@@ -68,8 +70,8 @@ const EditLogForm = ({ setLogs, log }) => {
 
   const [open, setOpen] = useState(false);
 
-  //const [previewSource, setPreviewSource] = useState('');
-  //const [imageFile, setImageFile] = useState('');
+  const [previewSources, setPreviewSources] = useState([]);
+  const [imageFiles, setImageFiles] = useState([]);
 
 
   useEffect(() => {
@@ -143,30 +145,30 @@ const EditLogForm = ({ setLogs, log }) => {
 
 
 
-  // const handleFileInputChange = async (e) => {
-  //   const file = e.target.files[0];
-  //   previewFile(file);
-  //   setImageFile(e.target.files[0])
-  // };
+  const handleFileInputChange = async (e) => {
+    const file = e.target.files[0];
+    previewFile(file);
+    setImageFiles(imageFiles.concat(e.target.files[0]));
+  };
 
-  // const previewFile = (file) => {
-  //   const reader = new FileReader();
-  //   reader.readAsDataURL(file);
-  //   reader.onloadend = () => {
-  //     setPreviewSource(reader.result);
-  //   }
-  // }
+  const previewFile = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setPreviewSources(previewSources.concat(reader.result));
+    }
+  }
 
 
   const updateTheLog = async () => {
-    //const selectedAnimal = animalsList[formAnimal];
 
     const token = await getAccessTokenSilently();
 
-    // const compressedImageArray = await compress.compress([imageFile], 
-    //   { size: 0.4, quality: 0.8, maxWidth: 1400, maxHeight: 1000, });
-    // const compressedImageData = compressedImageArray[0];
-    // const compressedImage = `data:${compressedImageData.ext};base64,${compressedImageData.data}`
+    const compressedImageArray = await compress.compress(imageFiles,
+      { size: 0.4, quality: 0.8, maxWidth: 1400, maxHeight: 1000, });
+
+    const imageArray = compressedImageArray.map(img => `${img.prefix}${img.data}`);
+
 
     const changesToTheLog = {};
 
@@ -177,13 +179,15 @@ const EditLogForm = ({ setLogs, log }) => {
     if (log.distance !== formDistance) changesToTheLog.distance = formDistance;
     if (log.difficulty !== formDifficulty) changesToTheLog.difficulty = formDifficulty;
     if (log.rating !== formRating) changesToTheLog.rating = formRating;
-    if(log.badge !== formBadge) changesToTheLog.badge = formBadge;
-    if(log.weapon !== formWeapon.label) changesToTheLog.weapon = formWeapon.label;
-    if(log.weapontype !== formWeapon.type) changesToTheLog.weapontype = formWeapon.type;
-    if(log.ammo !== formAmmo) changesToTheLog.ammo = formAmmo;
-    if(log.shotdistance !== formShotDistance) changesToTheLog.shotdistance = formShotDistance;
-    if(log.reserve !== formReserve ) changesToTheLog.reserve = formReserve;
-    if(log.notes !== formNotes ) changesToTheLog.notes = formNotes;
+    if (log.badge !== formBadge) changesToTheLog.badge = formBadge;
+    if (log.weapon !== formWeapon.label) changesToTheLog.weapon = formWeapon.label;
+    if (log.weapontype !== formWeapon.type) changesToTheLog.weapontype = formWeapon.type;
+    if (log.ammo !== formAmmo) changesToTheLog.ammo = formAmmo;
+    if (log.shotdistance !== formShotDistance) changesToTheLog.shotdistance = formShotDistance;
+    if (log.reserve !== formReserve) changesToTheLog.reserve = formReserve;
+    if (log.notes !== formNotes) changesToTheLog.notes = formNotes;
+    changesToTheLog.oldImageIds = log.images;
+    changesToTheLog.imagedata = imageArray;
 
 
     try {
@@ -192,7 +196,7 @@ const EditLogForm = ({ setLogs, log }) => {
           Authorization: `Bearer ${token}`
         },
       });
-      setLogs(currentLogs => currentLogs.map(log => log._id === updatedLog.data._id ? updatedLog.data : log ));
+      setLogs(currentLogs => currentLogs.map(log => log._id === updatedLog.data._id ? updatedLog.data : log));
     } catch (error) {
       console.log(error);
     }
@@ -231,8 +235,8 @@ const EditLogForm = ({ setLogs, log }) => {
 
   const handleSubmitDialog = (e) => {
     e.preventDefault();
-      handleCloseDialog();
-      updateTheLog(); 
+    handleCloseDialog();
+    updateTheLog();
   };
 
   const formInputWidth = () => {
@@ -243,7 +247,7 @@ const EditLogForm = ({ setLogs, log }) => {
 
     <Box>
 
-      <Button sx={{textTransform: 'none', fontSize: '16px', width: '100%'}} color="primary" onClick={handleClickOpenDialog}>
+      <Button sx={{ textTransform: 'none', fontSize: '16px', width: '100%' }} color="primary" onClick={handleClickOpenDialog}>
         Edit
       </Button>
 
@@ -253,23 +257,41 @@ const EditLogForm = ({ setLogs, log }) => {
           <DialogContentText>
 
           </DialogContentText>
+
+
+
           <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
-            {/* {imageUrl ? */}
-              <Image src={imageUrl} alt="chosen" sx={{}} />
-              {/* :
+            <Image src={imageUrl + log.images[0]} showLoading sx={{}} />
+          </Box>
+
+          <Container disableGutters sx={{ m: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+            {log.images.map((img, index) =>
+              <Image key={img} src={imageUrl + img} width='150px' />
+            )}
+
+            {previewSources.map((img, index) =>
+              <Image key={img + index} src={img} width='150px' />
+
+            )}
+
+            {((previewSources.length + log.images.length) < 3) &&
+
               <label htmlFor="imageuploadbutton">
                 <Input sx={{ display: "none" }} type='file' id="imageuploadbutton" name='image'
                   accept=".jpg,.jpeg,.png" onChange={handleFileInputChange} />
                 <Button sx={{
                   m: 1,
-                  height: { xs: 200, sm: 250, md: 400, lg: 500, xl: 650 },
-                  width: { xs: 300, sm: 400, md: 600, lg: 800, xl: 1000 },
+                  height: 100,
+                  width: 150,
                 }} variant="outlined" component="span">
                   <AddPhotoAlternateIcon />
                 </Button>
               </label>
-            } */}
-          </Box>
+            }
+
+          </Container>
+
+
 
           <form id="newLogForm" onSubmit={handleSubmitDialog}>
             <Box sx={{

@@ -15,6 +15,7 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
 import { useAuth0 } from '@auth0/auth0-react';
 import { Image } from 'mui-image';
+import { Container } from '@mui/material';
 
 const difficultyOptions = ["1 - Trivial", "2 - Minor", "3 - Very easy", "4 - Easy", "5 - Medium",
   "6 - Hard", "7 - Very hard", "8 - Mythical", "9 - Legendary", "10 - Fabled"];
@@ -66,8 +67,8 @@ const NewLogForm = ({ setLogs }) => {
 
   const [open, setOpen] = useState(false);
 
-  const [previewSource, setPreviewSource] = useState('');
-  const [imageFile, setImageFile] = useState('');
+  const [previewSources, setPreviewSources] = useState([]);
+  const [imageFiles, setImageFiles] = useState([]);
 
 
   useEffect(() => {
@@ -144,82 +145,77 @@ const NewLogForm = ({ setLogs }) => {
   const handleFileInputChange = async (e) => {
     const file = e.target.files[0];
     previewFile(file);
-    setImageFile(e.target.files[0])
+    setImageFiles(imageFiles.concat(e.target.files[0]));
 
-    // OCR for animal name
-    const startTime = Date.now();
+    if (imageFiles.length === 0) {
 
-    const compressedImageArray = await compress.compress([file],
-      { size: 1, maxWidth: 1000, maxHeight: 1000, quality: 1 });
-    const compressedImageData = compressedImageArray[0];
+      // OCR for animal name
+      const startTime = Date.now();
 
-    console.log(`Compress took ${(Date.now() - startTime) / 1000} seconds`);
+      const compressedImageArray = await compress.compress([file],
+        { size: 1, maxWidth: 1000, maxHeight: 1000, quality: 1 });
+      const compressedImageData = compressedImageArray[0];
 
-    const fileStr = compressedImageData.data;
-    const imageBuffer = Buffer.from(fileStr, 'base64');
+      console.log(`Compress took ${(Date.now() - startTime) / 1000} seconds`);
 
-    const image = await jimp.read(imageBuffer);
+      const fileStr = compressedImageData.data;
+      const imageBuffer = Buffer.from(fileStr, 'base64');
 
-    const preparedImage = await image.crop(0, 0, 300, 150).invert().threshold({ max: 10 }).getBase64Async("image/png")
+      const image = await jimp.read(imageBuffer);
 
-    console.log(`Complete preparation took ${(Date.now() - startTime) / 1000} seconds`);
+      const preparedImage = await image.crop(0, 0, 300, 150).invert().threshold({ max: 10 }).getBase64Async("image/png")
 
-    const worker = createWorker();
-    await worker.load();
-    await worker.loadLanguage('eng');
-    await worker.initialize('eng');
-    await worker.setParameters({
-      tessedit_char_whitelist: 'ABCDEFGHIJKLMNOPQRSTUWVXYZ- '
-    });
+      console.log(`Complete preparation took ${(Date.now() - startTime) / 1000} seconds`);
 
-    const { data: { text } } = await worker.recognize(preparedImage);
-    const animal = text.split('\n')[0];
-    await worker.terminate();
-
-    console.log(`OCR before similarity check took ${(Date.now() - startTime) / 1000} seconds`);
-
-    const matchedAnimal = stringSimilarity.findBestMatch(animal.toLocaleLowerCase(), animalOptions)
-
-    const timeTakenForOCR = `${(Date.now() - startTime) / 1000} seconds`;
-    console.log(`Complete OCR took ${timeTakenForOCR}`);
-
-    setFormAnimal(matchedAnimal.bestMatch.target)
-
-    /* const token = await getAccessTokenSilently();
-
-    try {
-      const detectedAnimal = await axios.post('/api/logs/ocrimage', { imagedata: preparedImage }, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
+      const worker = createWorker();
+      await worker.load();
+      await worker.loadLanguage('eng');
+      await worker.initialize('eng');
+      await worker.setParameters({
+        tessedit_char_whitelist: 'ABCDEFGHIJKLMNOPQRSTUWVXYZ- '
       });
+
+      const { data: { text } } = await worker.recognize(preparedImage);
+      const animal = text.split('\n')[0];
+      await worker.terminate();
+
+      console.log(`OCR before similarity check took ${(Date.now() - startTime) / 1000} seconds`);
+
+      const matchedAnimal = stringSimilarity.findBestMatch(animal.toLocaleLowerCase(), animalOptions)
+
       const timeTakenForOCR = `${(Date.now() - startTime) / 1000} seconds`;
-      console.log(`OCR took ${timeTakenForOCR} (${detectedAnimal.data.time} on server)`);
-      
-      setFormAnimal(detectedAnimal.data.animal)
-    } catch (error) {
-      console.log(error);
-    } */
+      console.log(`Complete OCR took ${timeTakenForOCR}`);
+
+      setFormAnimal(matchedAnimal.bestMatch.target)
+    };
+
+
   };
 
   const previewFile = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      setPreviewSource(reader.result);
+      setPreviewSources(previewSources.concat(reader.result));
     }
   }
 
 
   const submitNewLog = async () => {
-    //const selectedAnimal = animalsList[formAnimal];
 
     const token = await getAccessTokenSilently();
 
-    const compressedImageArray = await compress.compress([imageFile], 
+    const compressedImageArray = await compress.compress(imageFiles,
       { size: 0.4, quality: 0.8, maxWidth: 1400, maxHeight: 1000, });
-    const compressedImageData = compressedImageArray[0];
-    const compressedImage = `data:${compressedImageData.ext};base64,${compressedImageData.data}`
+    
+    console.log('compressedImageArray', compressedImageArray)
+
+    const imageArray = compressedImageArray.map( img => `${img.prefix}${img.data}`);
+
+    //console.log('imageArray', imageArray)
+
+    // const compressedImageData = compressedImageArray[0];
+    // const compressedImage = `${compressedImageData.prefix}${compressedImageData.data}`
 
     const newLog = {
       animal: formAnimal,
@@ -236,7 +232,7 @@ const NewLogForm = ({ setLogs }) => {
       shotdistance: formShotDistance,
       reserve: formReserve,
       notes: formNotes,
-      imagedata: compressedImage,
+      imagedata: imageArray,
     };
 
     console.log(`newLog`, newLog)
@@ -267,7 +263,8 @@ const NewLogForm = ({ setLogs }) => {
     setFormRating('');
     setFormBadge('None');
     setFormNotes('');
-    setPreviewSource('');
+    setPreviewSources([]);
+    setImageFiles([]);
     //setFormWeapon(weaponOptions[0]);
     //setAvailableAmmo(ammoArray[formWeapon.type]);
     //setFormAmmo(ammoArray[formWeapon.type][0]);
@@ -288,7 +285,7 @@ const NewLogForm = ({ setLogs }) => {
 
   const handleSubmitDialog = (e) => {
     e.preventDefault();
-    if (previewSource) {
+    if (imageFiles) {
       handleCloseDialog();
       submitNewLog();
     };
@@ -313,8 +310,8 @@ const NewLogForm = ({ setLogs }) => {
 
           </DialogContentText>
           <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
-            {previewSource ?
-              <Image src={previewSource} alt="chosen" sx={{}} />
+            {previewSources[0] ?
+              <Image src={previewSources[0]} alt="chosen" sx={{}} />
               :
               <label htmlFor="imageuploadbutton">
                 <Input sx={{ display: "none" }} type='file' id="imageuploadbutton" name='image'
@@ -329,6 +326,29 @@ const NewLogForm = ({ setLogs }) => {
               </label>
             }
           </Box>
+
+            <Container disableGutters sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px'}}>
+
+          {previewSources.map((img, index) =>
+              <Image key={img + index} src={img} width='150px' />
+            
+            )}
+
+            {(previewSources.length < 3 && previewSources.length > 0 ) &&
+              
+              <label htmlFor="imageuploadbutton">
+                <Input sx={{ display: "none" }} type='file' id="imageuploadbutton" name='image'
+                  accept=".jpg,.jpeg,.png" onChange={handleFileInputChange} />
+                <Button sx={{
+                  m: 1,
+                  height: 100,
+                  width: 150,
+                }} variant="outlined" component="span">
+                  <AddPhotoAlternateIcon />
+                </Button>
+              </label>
+            }
+            </Container>
 
           <form id="newLogForm" onSubmit={handleSubmitDialog}>
             <Box sx={{

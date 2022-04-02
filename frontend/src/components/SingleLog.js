@@ -37,6 +37,8 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState();
 
+  const [chosenImage, setChosenImage] = useState(0)
+
   const date = new Date(log.createdAt).toLocaleDateString();
 
   useEffect(() => {
@@ -62,11 +64,11 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
     if (!liked) {
       try {
         const updatedlog = await logsService.likeALog(log._id, token);
-         if (!likedLogs.includes(updatedlog.id)) {
+        if (!likedLogs.includes(updatedlog.id)) {
           setLikedLogs(likedLogs.concat(updatedlog.id))
           setLiked(true)
           setLikes(updatedlog.numberOfLikes)
-        } 
+        }
       } catch (error) {
         console.log(error)
       }
@@ -77,7 +79,7 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
           setLikedLogs(likedLogs.filter(log => log !== updatedlog.id))
           setLiked(false)
           setLikes(updatedlog.numberOfLikes)
-        } 
+        }
       } catch (error) {
         console.log(error)
       }
@@ -86,7 +88,7 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
 
 
 
-  const imageUrl = `https://res.cloudinary.com/devniva/image/upload/v1636547210/${log.images[0]}`;
+  const imageUrl = `https://res.cloudinary.com/devniva/image/upload/v1636547210/`;
 
   const badgeColors = {
     'None': '#000000',
@@ -180,15 +182,17 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
       {/* ----Yksittäinen logi listalla---- */}
       <Card sx={{
         m: 1, p: 2, alignItems: 'center',
-        display: 'grid', gridTemplateColumns: {xs: '40px 5fr 25px 2fr 40px'},
-        gridTemplateRows: { xs: '1fr'}
+        display: 'grid', gridTemplateColumns: { xs: '40px 5fr 25px 2fr 40px' },
+        gridTemplateRows: { xs: '1fr' }
       }} elevation={6} >
         <Tooltip title={log.badge}>
           <MilitaryTechIcon fontSize="large" sx={{ color: logBadgeColor }} />
         </Tooltip>
-        <Typography onClick={handleOpen} variant="h5" 
-        sx={{overflow: 'hidden',whiteSpace: 'nowrap',
-        fontSize: { xs: '1.2rem', sm:'1.2rem',md:'1.4rem', lg: '1.6rem' }}}>
+        <Typography onClick={handleOpen} variant="h5"
+          sx={{
+            overflow: 'hidden', whiteSpace: 'nowrap',
+            fontSize: { xs: '1.2rem', sm: '1.2rem', md: '1.4rem', lg: '1.6rem' }
+          }}>
           {log.animal}
         </Typography>
         <Box onClick={handleOpen}>
@@ -240,7 +244,15 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
             {setLogs && <EditMenu />}
 
           </Container>
-          <Image src={imageUrl} showLoading sx={{}} />
+
+          <Image src={imageUrl + log.images[chosenImage]} showLoading sx={{}} />
+
+          <Container disableGutters sx={{ m:1, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+            {log.images.map((img, index) =>
+              <Image key={img} onClick={() => setChosenImage(index)} src={imageUrl + img} width='150px' />
+            )}
+          </Container>
+
           <Container disableGutters sx={{ mt: 2, display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
 
             <Tooltip title="Weight">
