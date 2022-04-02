@@ -4,18 +4,24 @@ import express from 'express';
 import cloudinary from '../utils/cloudinary.js';
 import checkJwt from '../middleware/jwtCheck.js';
 
-import Tesseract from 'tesseract.js';
-import jimp from 'jimp';
-import stringSimilarity from 'string-similarity';
-import animalsArray from '../data/animals.js'
 
 const logsRouter = express.Router();
+
+//
+// const updateWeapons = async () => {
+
+//   const replaced = await Log.updateMany({weapon: "Kullman .22H Wasp"}, {weapon: "Kullman .22H"});
+//   console.log('replaced', replaced)
+// }
+
+//updateWeapons()
 
 logsRouter.get('/', checkJwt, async (req, res) => {
   const userid = req.user.sub;
   const logs = await Log.find({ user: userid }).populate('user').populate('likes', 'username -_id');
   res.json(logs);
 });
+
 
 logsRouter.get('/user/:username', checkJwt, async (req, res) => {
   const username = req.params.username;
@@ -81,12 +87,6 @@ logsRouter.post('/', checkJwt, async (req, res) => {
 
     }
 
-    // const fileStr = body.imagedata;
-
-    // const uploadResponse = await cloudinary.v2.uploader
-    //   .upload(fileStr, { upload_preset: 'hunter_setup', });
-
-    // const imageid = uploadResponse.public_id;
 
     const newLog = new Log({
       user: req.user.sub,

@@ -120,8 +120,8 @@ const availableAmmoList = {
       '600 gr. Broadhead'
     ]
   },
-  'Kullman .22H Wasp': {
-    title: 'Kullman .22H Wasp',
+  'Kullman .22H': {
+    title: 'Kullman .22H',
     ammo: ['.22H Soft-Point', '.22H Polymer-Tip']
   },
   'M1 Iwaniec Veteran': {
@@ -194,8 +194,8 @@ const availableAmmoList = {
     title: 'Vasquez Cyclone .45',
     ammo: ['.45 Hollow-Point', '.45 Round Nose']
   },
-  'Virant .22LR Express': {
-    title: 'Virant .22LR Express',
+  'Virant .22LR': {
+    title: 'Virant .22LR',
     ammo: ['.22LR Jacketed Hollow-Point']
   },
   'Whitlock Model 86': {
