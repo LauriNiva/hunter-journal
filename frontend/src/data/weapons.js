@@ -1,7 +1,7 @@
 const weaponsList = [
 [".223 Docent", "rifle"],
 [".270 Huntsman", "rifle"],
-[".300 Canning Magnum Frontier", "rifle"],
+[".300 Canning Magnum", "rifle"],
 ["7mm Regent Magnum", "rifle"],
 ["Coachmate Lever .45-70", "rifle"],
 ["Eckers .30-06 Prestige", "rifle"],
