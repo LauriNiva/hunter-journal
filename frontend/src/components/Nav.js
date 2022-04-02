@@ -35,6 +35,7 @@ const UserMenu = ({ myUsername, avatar }) => {
        {avatar &&  <Avatar sx={{ gridArea: 'avatar', justifySelf: 'end', alignSelf: 'center', width: 40, height: 40}} 
         src={`https://avatars.dicebear.com/api/identicon/${avatar}.svg?scale=85`} alt={`${myUsername}avatar`} /> }
       </Button>
+  
       <Menu anchorEl={anchorEl} open={menuOpen} onClose={handleMenuClose}>
         <Typography align="center" sx={{ fontFamily: 'Jaapokki' }} >{myUsername}</Typography>
         <Divider />
@@ -67,6 +68,7 @@ function Nav({ myUsername, avatar }) {
           isAuthenticated ?
             <>
               <Typography sx={{ fontFamily: 'Jaapokki', mr: 2 }} ><Link to={`/lodge`} >THE LODGE</Link></Typography>
+              <Typography sx={{ fontFamily: 'Jaapokki', mr: 2 }} ><Link to={`/logs/${myUsername}`} >MY LOGS</Link></Typography>
               <UserMenu myUsername={myUsername} avatar={avatar} />
             </>
             : <LoginButton />
