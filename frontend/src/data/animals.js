@@ -178,7 +178,7 @@ const animalsArray =
   'Collared Peccary': {
     title: 'Collared Peccary',
     animalclass: 4,
-    difficulty: 3,
+    difficulty: 5,
     trophytype: 'Tusks',
     trophyscore: { silver: 37.5, gold: 98.5, diamond: 144.2 },
     furtypes: ['Common',
@@ -786,8 +786,8 @@ const animalsArray =
     furtypes: ['Common', 'Grey', 'Light Grey', 'Chestnut', 'Brown'],
     reserves: ['Vurhonga Savanna']
   },
-  'Musk Deer': {
-    title: 'Musk Deer',
+  'Siberian Musk Deer': {
+    title: 'Siberian Musk Deer',
     animalclass: 2,
     difficulty: 3,
     trophytype: 'Tusks',
