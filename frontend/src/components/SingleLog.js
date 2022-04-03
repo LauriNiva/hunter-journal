@@ -34,6 +34,8 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
 
 
   const [singleLogDialogOpen, setSingleLogDialogOpen] = useState(false);
+  const [fullScreenDialogOpen, setFullScreenDialogOpen] = useState(false);
+
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState();
 
@@ -245,7 +247,12 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
 
           </Container>
 
-          <Image src={imageUrl + log.images[chosenImage]} showLoading sx={{}} />
+          <Image onClick={()=> setFullScreenDialogOpen(true) } src={imageUrl + log.images[chosenImage]} showLoading sx={{}} />
+
+          <Dialog fullWidth maxWidth={'xl'} open={fullScreenDialogOpen} onClose={()=> setFullScreenDialogOpen(false)} >
+            <Image onClick={()=> setFullScreenDialogOpen(false)} 
+            src={imageUrl + log.images[chosenImage]} duration={0} />
+          </Dialog>
 
           <Container disableGutters sx={{ m:1, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
             {log.images.map((img, index) =>
