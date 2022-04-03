@@ -41,6 +41,22 @@ logsRouter.get('/user/:username/recent', checkJwt, async (req, res) => {
   res.json(logs);
 });
 
+logsRouter.get('/user/:username/top', checkJwt, async (req, res) => {
+  const username = req.params.username;
+
+  const user = await User.findOne({ username: username });
+
+  const topWeapons = await Log.aggregate([{ '$match': { 'user': user._id } },
+  { '$group': { '_id': '$weapon', 'count': { '$sum': 1 } } }])
+    .sort({ count: -1 }).limit(3);
+
+    const topAnimals = await Log.aggregate([{ '$match': { 'user': user._id } },
+  { '$group': { '_id': '$animal', 'count': { '$sum': 1 } } }])
+    .sort({ count: -1 }).limit(3);
+
+
+  res.json({topWeapons, topAnimals});
+});
 
 logsRouter.get('/recent', async (req, res) => {
   const recentLogs = await Log.find().sort({ _id: -1 }).limit(10).populate('user').populate('likes', 'username -_id');

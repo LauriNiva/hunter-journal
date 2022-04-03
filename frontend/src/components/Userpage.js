@@ -18,6 +18,7 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setL
   const [avatar, setAvatar] = useState('');
   const [followed, setFollowed] = useState(false);
   const [recentLogs, setRecentLogs] = useState([]);
+  const [usersTop, setUsersTop] = useState([]);
 
   useEffect(() => {
     setFollowed(followedUsers.includes(username))
@@ -30,6 +31,16 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setL
     }
     getRecent();
   }, [username, getAccessTokenSilently]);
+
+  useEffect(() => {
+    const getTop = async () => {
+      const token = await getAccessTokenSilently();
+      setUsersTop(await logsService.getUsersTop(username, token))
+    }
+    getTop();
+  }, [username, getAccessTokenSilently]);
+
+  console.log('topWeapons', usersTop)
 
   useEffect(() => {
     const getAvatar = async () => {
@@ -103,7 +114,7 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setL
 
           maxHeight: '120px'
         }}>
-          
+
         {avatar && <>
           <Avatar onClick={handleAvatarClick} sx={{ gridArea: 'avatar', justifySelf: 'end', alignSelf: 'center', width: 70, height: 70, m: 2 }}
             src={`https://avatars.dicebear.com/api/identicon/${avatar}.svg?scale=85`} alt={`${username}avatar`} />
@@ -116,7 +127,7 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setL
         <Typography variant="h3" sx={{ gridArea: 'username', fontFamily: 'Jaapokki', mt: 1 }}>{username}</Typography>
         <Container disableGutters sx={{ gridArea: 'links' }}>
           {!isOwner &&
-            <Button onClick={handFollowClick} sx={{ width: 100 }} > {followed ? 'Unfollow' : 'Follow'} </Button> 
+            <Button onClick={handFollowClick} sx={{ width: 100 }} > {followed ? 'Unfollow' : 'Follow'} </Button>
           }
 
           <Button onClick={() => navigate(`/logs/${username}`)}>All Logs</Button>
@@ -124,8 +135,24 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setL
       </Paper>
 
       <Container sx={{ pt: 2 }}>
-        <Typography align="center" >Recent Logs</Typography>
-        {recentLogs.map(log => <SingleLog key={`userpage${log._id}`} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs} dataToShow='createdAt' />)}
+
+        <Paper elevation={5} sx={{ display: 'flex', p: 3 }}>
+          <Container>
+            <Typography variant="h6">Most Used Weapons</Typography>
+            {usersTop.topWeapons?.map((weapon, i) =>
+              <Typography key={weapon._id}>{i + 1}. {weapon._id} ({weapon.count})</Typography>)}
+          </Container>
+          <Container>
+            <Typography variant="h6">Most Hunted Animals</Typography>
+            {usersTop.topAnimals?.map((animal, i) =>
+              <Typography key={animal._id}>{i + 1}. {animal._id} ({animal.count})</Typography>)}
+          </Container>
+        </Paper>
+
+        <Paper elevation={5} sx={{p: 3, mt:4}}>
+          <Typography variant="h6" align="center" >Recent Logs</Typography>
+          {recentLogs.map(log => <SingleLog key={`userpage${log._id}`} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs} dataToShow='createdAt' />)}
+        </Paper>
       </Container>
 
 
