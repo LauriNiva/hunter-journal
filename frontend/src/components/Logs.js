@@ -55,7 +55,8 @@ function Logs({ likedLogs, setLikedLogs, myUsername }) {
     rating: createSort("Lowest Rating", "Highest Rating", "rating"),
     badge: createSort("Worst Badge", "Best Badge", "badge"),
     distance: createSort("Shortest tracking", "Longest Tracking", "distance"),
-    weight: createSort("Lightest animal", "Heaviest animal", "weight")
+    weight: createSort("Lightest animal", "Heaviest animal", "weight"),
+    shotdistance: createSort("Shortest Shot", "Longest Shot", "shotdistance"),
 
   };
 
