@@ -104,11 +104,11 @@ function Logs({ likedLogs, setLikedLogs, myUsername }) {
 
   const SortDropdown = () => {
     return (
-      <FormControl>
+      <FormControl sx={{ mr: 1 }}>
         <InputLabel id="sort-dropdown-label">
-          {(sort==="asc") ? <SortIcon sx={{transform: "scaleY(-1)"}} />
-          : <SortIcon />}
-          </InputLabel>
+          {(sort === "asc") ? <SortIcon sx={{ transform: "scaleY(-1)" }} />
+            : <SortIcon />}
+        </InputLabel>
         <Select labelId="sort-dropdown-label" id="sort-dropdown" label="Sort"
           value={selectedSortForLogs} onChange={(e) => setSelectedSortForLogs(e.target.value)} >
           {
@@ -130,23 +130,23 @@ function Logs({ likedLogs, setLikedLogs, myUsername }) {
 
   return (
 
-    <>
-      <Container disableGutters id="logs-container"
-        sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "2fr 5fr" } }}>
+    <Container disableGutters id="logs-container"
+      sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "2fr 5fr" } }}>
 
-        <LogFilteringList logs={logs} setFilteredLogs={setFilteredLogs} />
+      <LogFilteringList logs={logs} setFilteredLogs={setFilteredLogs} />
 
-        <Container id="logs-list-container" disableGutters sx={{ overflow: 'scroll', maxHeight: '85vh' }} >
-          <Toolbar sx={{ justifyContent: 'space-between' }}>
+      <Container disableGutters sx={{ maxHeight: '85vh' }} >
+        <Toolbar disableGutters sx={{ ml: 2, mr: 1}}>
 
-            <Typography variant="h4" sx={{ fontFamily: 'Jaapokki' }} onClick={() => navigate(`/hunters/${usernameForLogs}`)}>
-              {usernameForLogs} 's logs
-            </Typography>
+          <Typography variant="h4" sx={{ mr: 'auto', fontFamily: 'Jaapokki' }} onClick={() => navigate(`/hunters/${usernameForLogs}`)}>
+            {usernameForLogs} 's logs
+          </Typography>
 
+          <SortDropdown />
+          {isOwner && <NewLogForm setLogs={setLogs} />}
+        </Toolbar>
 
-            <SortDropdown />
-            {isOwner && <NewLogForm setLogs={setLogs} />}
-          </Toolbar>
+        <Container id="logs-list-container" disableGutters sx={{ overflow: 'scroll', maxHeight: '81vh' }} >
           {
             logsToDisplay.map(log => (
               <SingleLog key={log._id} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs}
@@ -155,7 +155,7 @@ function Logs({ likedLogs, setLikedLogs, myUsername }) {
           }
         </Container>
       </Container>
-    </>
+    </Container>
 
   );
 }
