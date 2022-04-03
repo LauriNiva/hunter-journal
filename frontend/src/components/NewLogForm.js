@@ -12,10 +12,12 @@ import weaponsList from '../data/weapons.js';
 import ammoArray from '../data/ammo.js';
 import availableAmmoList from '../data/availableAmmoList.js';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import AddIcon from '@mui/icons-material/Add';
 
 import { useAuth0 } from '@auth0/auth0-react';
 import { Image } from 'mui-image';
 import { Container } from '@mui/material';
+import { IconButton } from '@mui/material';
 
 const difficultyOptions = ["1 - Trivial", "2 - Minor", "3 - Very easy", "4 - Easy", "5 - Medium",
   "6 - Hard", "7 - Very hard", "8 - Mythical", "9 - Legendary", "10 - Fabled"];
@@ -299,9 +301,9 @@ const NewLogForm = ({ setLogs }) => {
 
     <Box>
 
-      <Button variant="outlined" color="success" onClick={handleClickOpenDialog}>
-        +
-      </Button>
+      <IconButton sx={{ }}  onClick={handleClickOpenDialog}>
+        <AddIcon />
+      </IconButton>
 
       <Dialog open={open} onClose={handleCloseDialog} fullWidth maxWidth="lg" >
         <DialogTitle id="form-dialog-title">New log</DialogTitle>
