@@ -20,6 +20,17 @@ body {
   margin-bottom: 0;
 }
 
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hidden-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hidden-scroll {
+-ms-overflow-style: none;  /* IE and Edge */
+scrollbar-width: none;  /* Firefox */
+}
+
 #newLogForm {
   display: flex;
   gap: 10px 10px;
