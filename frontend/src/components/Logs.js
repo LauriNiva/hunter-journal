@@ -147,7 +147,7 @@ function Logs({ likedLogs, setLikedLogs, myUsername }) {
           {isOwner && <NewLogForm setLogs={setLogs} />}
         </Toolbar>
 
-        <Container id="logs-list-container" disableGutters sx={{ overflow: 'scroll', maxHeight: '81vh' }} >
+        <Container id="logs-list-container" className="hidden-scroll" disableGutters sx={{ overflow: 'scroll', maxHeight: '80vh' }} >
           {
             logsToDisplay.map(log => (
               <SingleLog key={log._id} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs}

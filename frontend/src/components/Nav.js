@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import LoginButton from './LoginButton';
 import { Button } from '@mui/material';
 
+import CabinIcon from '@mui/icons-material/Cabin';
+
 const UserMenu = ({ myUsername, avatar }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const menuOpen = Boolean(anchorEl);
@@ -39,6 +41,7 @@ const UserMenu = ({ myUsername, avatar }) => {
       <Menu anchorEl={anchorEl} open={menuOpen} onClose={handleMenuClose}>
         <Typography align="center" sx={{ fontFamily: 'Jaapokki' }} >{myUsername}</Typography>
         <Divider />
+        <MenuItem onClick={()=>{ handleMenuClose(); navigate(`/lodge`) } }>Lodge</MenuItem>
         <MenuItem onClick={()=>{ handleMenuClose(); navigate(`/logs/${myUsername}`) } }>My Logs</MenuItem>
         <MenuItem onClick={()=>{ handleMenuClose(); navigate(`/hunters/${myUsername}`) } }>My Profile</MenuItem>
         <MenuItem onClick={handleLogoutClick}>
@@ -61,14 +64,16 @@ function Nav({ myUsername, avatar }) {
     <AppBar position="sticky" >
       <Toolbar id="navbar">
         <Typography variant='h4' sx={{ flexGrow: 1, fontFamily: 'Jaapokki', fontSize: { xs: 30, sm: 40 } }}>
-          <Link to='/'>Hunter's Log 0.1.5</Link>
+          <Link to='/'>Hunter's Log</Link>
         </Typography>
-        <Typography sx={{ fontFamily: 'Jaapokki', mr: 2 }} > <Link to='/'>HOME</Link></Typography>
+        <Typography sx={{ display: { xs: 'none', sm: 'inline'}, fontFamily: 'Jaapokki', mr: 2 }} > <Link to='/'>HOME</Link></Typography>
         {
           isAuthenticated ?
             <>
-              <Typography sx={{ fontFamily: 'Jaapokki', mr: 2 }} ><Link to={`/lodge`} >THE LODGE</Link></Typography>
-              <Typography sx={{ fontFamily: 'Jaapokki', mr: 2 }} ><Link to={`/logs/${myUsername}`} >MY LOGS</Link></Typography>
+              <Typography sx={{ display: { xs: 'none', sm: 'inline'}, fontFamily: 'Jaapokki', mr: 2 }} ><Link to={`/lodge`} >THE LODGE</Link></Typography>
+              <Typography sx={{ display: { xs: 'inline', sm: 'none'},  mr: 2 }} ><Link to={`/lodge`} ><CabinIcon /></Link></Typography>
+              <Typography sx={{ display: { xs: 'none', sm: 'inline'}, fontFamily: 'Jaapokki', mr: 2 }} ><Link to={`/logs/${myUsername}`} >MY LOGS</Link></Typography>
+              <Typography sx={{ display: { xs: 'inline', sm: 'none'},  mr: 2 }} ><Link to={`/logs/${myUsername}`} ><CabinIcon /></Link></Typography>
               <UserMenu myUsername={myUsername} avatar={avatar} />
             </>
             : <LoginButton />

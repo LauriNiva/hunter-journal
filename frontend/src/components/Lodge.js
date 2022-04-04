@@ -66,7 +66,7 @@ function Lodge({ followedUsers, likedLogs, setLikedLogs, followedUseravatars }) 
 
       <Paper sx={{ gridArea: 'recent', width: '100%', }}>
         <Typography variant="h5" align="center" sx={{ fontFamily: 'Jaapokki' }} >Recent Logs</Typography>
-        <Container disableGutters sx={{ overflow: 'scroll', height: '75vh', }} >
+        <Container className="hidden-scroll" disableGutters sx={{ overflow: 'scroll', height: '75vh', }} >
           {
             recentFollowedLogs.map(log =>
               <SingleLog key={`recentlodge${log._id}`} log={log} dataToShow={'user'} likedLogs={likedLogs} setLikedLogs={setLikedLogs} />

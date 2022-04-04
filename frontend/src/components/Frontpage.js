@@ -44,12 +44,12 @@ function Frontpage({ likedLogs, setLikedLogs }) {
 
         </Box>
 
-        <Box sx={{ gridArea: 'new', maxHeight: '74vh', overflow: 'scroll',}}>
+        <Box className="hidden-scroll" sx={{ gridArea: 'new', maxHeight: '74vh', overflow: 'scroll',}}>
           <Typography variant="h6" sx={{ ml: 3 }} >Recently added logs</Typography>
           {mostRecentLogs.map(log => <SingleLog key={`recentfp${log._id}`} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs} dataToShow='user' />)}
         </Box>
 
-        <Box sx={{ gridArea: 'liked', maxHeight: '74vh', overflow: 'scroll', }}>
+        <Box className="hidden-scroll" sx={{ gridArea: 'liked', maxHeight: '74vh', overflow: 'scroll', }}>
           <Typography variant="h6" sx={{ ml: 3 }} >Most liked logs</Typography>
           {mostLikedLogs.map(log => <SingleLog key={`likedfp${log._id}`} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs} dataToShow='likes' />)}
         </Box>
