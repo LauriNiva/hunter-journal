@@ -12,6 +12,9 @@ import { withAuthenticationRequired, useAuth0 } from '@auth0/auth0-react';
 
 import logsService from '../services/logs';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Dialog } from '@mui/material';
+import { Button } from '@mui/material';
+import { DialogTitle } from '@mui/material';
 
 
 
@@ -23,6 +26,8 @@ function Logs({ likedLogs, setLikedLogs, myUsername }) {
 
 
   const isOwner = (myUsername === usernameForLogs);
+
+  const [filterDialogOpen, setFilterDialogOpen] = useState(false);
 
   const [logs, setLogs] = useState([]);
   const [filteredLogs, setFilteredLogs] = useState(logs);
@@ -111,6 +116,7 @@ function Logs({ likedLogs, setLikedLogs, myUsername }) {
             : <SortIcon />}
         </InputLabel>
         <Select labelId="sort-dropdown-label" id="sort-dropdown" label="Sort"
+          sx={{ fontSize: { xs: 12, sm: 15 }, padding: '0px' }}
           value={selectedSortForLogs} onChange={(e) => setSelectedSortForLogs(e.target.value)} >
           {
             Object.keys(sortObjects).map(item =>
@@ -134,20 +140,34 @@ function Logs({ likedLogs, setLikedLogs, myUsername }) {
     <Container disableGutters id="logs-container"
       sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "2fr 5fr" } }}>
 
-      <LogFilteringList logs={logs} setFilteredLogs={setFilteredLogs} />
+      <Container disableGutters sx={{ display: { xs: 'none', md: 'inline' } }} >
+        <LogFilteringList logs={logs} setFilteredLogs={setFilteredLogs} />
+      </Container>
+      
+{/* LoginFilteringList komponentit ei jaa samaa tilaa, joten ei tiedä toistensa filtereistä */}
+            <Dialog keepMounted fullWidth maxWidth="xl" open={filterDialogOpen} onClose={() => setFilterDialogOpen(false)} >
 
-      <Container disableGutters sx={{ maxHeight: '85vh' }} >
-        <Toolbar disableGutters sx={{ ml: 2, mr: 1}}>
+              <LogFilteringList logs={logs} setFilteredLogs={setFilteredLogs} asDialog={true}
+                closeDialog={() => setFilterDialogOpen(false)} />
+            </Dialog>
+         
 
-          <Typography variant="h4" sx={{ mr: 'auto', fontFamily: 'Jaapokki' }} onClick={() => navigate(`/hunters/${usernameForLogs}`)}>
+      <Container disableGutters sx={{}} >
+
+        <Toolbar disableGutters sx={{ ml: 2, mr: 1 }}>
+
+          <Typography variant="h4" sx={{ mr: 'auto', fontFamily: 'Jaapokki', fontSize: { xs: 20, sm: 34 } }} onClick={() => navigate(`/hunters/${usernameForLogs}`)}>
             {usernameForLogs} 's logs
           </Typography>
+          
+          <Button sx={{ display: { xs: 'inline', md: 'none' } }} onClick={() => setFilterDialogOpen(true)}>Filters</Button>
 
           <SortDropdown />
           {isOwner && <NewLogForm setLogs={setLogs} />}
         </Toolbar>
 
-        <Container id="logs-list-container" className="hidden-scroll" disableGutters sx={{ overflow: 'scroll', maxHeight: '80vh' }} >
+        <Container id="logs-list-container" className="hidden-scroll" disableGutters
+          sx={{ height: { xs: '79vh', sm: '81vh' }, overflow: { xs: 'scroll', sm: 'scroll' } }} >
           {
             logsToDisplay.map(log => (
               <SingleLog key={log._id} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs}
