@@ -1,3 +1,4 @@
+import { Paper } from '@mui/material';
 import { Box, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import logsService from '../services/logs'
@@ -49,15 +50,15 @@ function Frontpage({ likedLogs, setLikedLogs }) {
 
       </Box>
 
-      <Box className="hidden-scroll" sx={{ gridArea: 'new', maxHeight: '74vh', overflow: { sm: 'scroll' }, }}>
-        <Typography variant="h6" sx={{ ml: 3 }} >Recent logs</Typography>
+      <Paper elevation={5} className="hidden-scroll" sx={{ gridArea: 'new', mt: 2, pt:1,  overflow: { sm: 'scroll' }, }}>
+        <Typography align="center" variant="h6" sx={{  }} >Recent logs</Typography>
         {mostRecentLogs.map(log => <SingleLog key={`recentfp${log._id}`} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs} dataToShow='user' />)}
-      </Box>
+      </Paper>
 
-      <Box className="hidden-scroll" sx={{ gridArea: 'liked', maxHeight: '74vh', overflow: { sm: 'scroll' }, }}>
-        <Typography variant="h6" sx={{ ml: 3 }} >Most liked logs</Typography>
+      <Paper elevation={5} className="hidden-scroll" sx={{ gridArea: 'liked', mt: 2, pt:1, overflow: { sm: 'scroll' }, }}>
+        <Typography align="center" variant="h6" sx={{  }} >Most liked logs</Typography>
         {mostLikedLogs.map(log => <SingleLog key={`likedfp${log._id}`} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs} dataToShow='likes' />)}
-      </Box>
+      </Paper>
     </Box>
   )
 }
