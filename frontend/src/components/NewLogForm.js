@@ -343,8 +343,8 @@ const NewLogForm = ({ setLogs }) => {
                   accept=".jpg,.jpeg,.png" onChange={handleFileInputChange} />
                 <Button sx={{
                   m: 1,
-                  height: 100,
-                  width: 150,
+                  height: { xs: 50, sm: 100 },
+                  width: { xs:75, sm: 150 },
                 }} variant="outlined" component="span">
                   <AddPhotoAlternateIcon />
                 </Button>

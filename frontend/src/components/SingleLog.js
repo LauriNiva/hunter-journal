@@ -193,17 +193,17 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
         <Typography onClick={handleOpen} variant="h5"
           sx={{
             overflow: 'hidden', whiteSpace: 'nowrap',
-            fontSize: { xs: '1.2rem', sm: '1.2rem', md: '1.4rem', lg: '1.6rem' }
+            fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.4rem', lg: '1.6rem' }
           }}>
           {log.animal}
         </Typography>
         <Box onClick={handleOpen}>
-          {log.notes && <HistoryEduIcon sx={{ fontSize: "20px", opacity: "50%" }} />}
+          {log.notes && <HistoryEduIcon sx={{ fontSize: {xs: "15px", sm: "20px"}, opacity: "50%" }} />}
 
         </Box>
 
         <Typography onClick={handleOpen} variant="h6"
-          sx={{ justifySelf: (dataToShow === 'likes') ? 'end' : 'center', fontSize: { xs: '1rem', lg: '1.5rem' } }}>
+          sx={{ justifySelf: (dataToShow === 'likes') ? 'end' : 'center', fontSize: { xs: '0.9rem',sm: '1.2rem', lg: '1.5rem' } }}>
           {showData()}
         </Typography>
         <LikeButton />

@@ -282,13 +282,13 @@ function LogFilteringList({ logs, setFilteredLogs, asDialog, closeDialog }) {
 
 
   return (
-    <Paper  sx={{  }} elevation={6}>
-        <Container >
-
-        <Button  onClick={() => resetFilters()}>Clear filters</Button>
-        {asDialog && <Button onClick={() => closeDialog() }sx={{ ml:2 }} >Close</Button>}
-        </Container>
-      <List className="hidden-scroll" sx={{overflow: 'scroll', maxHeight:'82.5vh'}}>
+    <Paper sx={{}} elevation={6}>
+      <Container sx={{ pt: 2, display: 'flex', justifyContent: 'space-between' }} >
+        <Button variant='outlined' sx={{ fontFamily: 'Jaapokki' }} onClick={() => resetFilters()}>Clear filters</Button>
+        
+        {asDialog && <Button variant='outlined' sx={{ fontFamily: 'Jaapokki' }} onClick={() => closeDialog()}>Close</Button>}
+      </Container>
+      <List className="hidden-scroll" sx={{ overflow: 'scroll', maxHeight: '82.5vh' }}>
 
 
         <ListItemButton onClick={() => setBadgeOpen(!badgeOpen)}>

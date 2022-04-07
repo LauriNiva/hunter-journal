@@ -110,13 +110,14 @@ function Logs({ likedLogs, setLikedLogs, myUsername }) {
 
   const SortDropdown = () => {
     return (
-      <FormControl sx={{ mr: 1 }}>
-        <InputLabel id="sort-dropdown-label">
-          {(sort === "asc") ? <SortIcon sx={{ transform: "scaleY(-1)" }} />
-            : <SortIcon />}
-        </InputLabel>
-        <Select labelId="sort-dropdown-label" id="sort-dropdown" label="Sort"
-          sx={{ fontSize: { xs: 12, sm: 15 }, padding: '0px' }}
+      // <FormControl sx={{ mr: 1,}}>
+      //   <InputLabel id="sort-dropdown-label">
+      //     {(sort === "asc") ? <SortIcon sx={{ transform: "scaleY(-1)" }} />
+      //       : <SortIcon />}
+      //   </InputLabel>
+        // <Select labelId="sort-dropdown-label" id="sort-dropdown" label="Sort"
+        <Select id="sort-dropdown"
+          sx={{ fontSize: { xs: 12, sm: 15 }, width: { xs: 120, sm: 170}}}
           value={selectedSortForLogs} onChange={(e) => setSelectedSortForLogs(e.target.value)} >
           {
             Object.keys(sortObjects).map(item =>
@@ -125,12 +126,8 @@ function Logs({ likedLogs, setLikedLogs, myUsername }) {
                 <MenuItem key={sortObjects[item].desc} value={`${item}-desc`}>{sortObjects[item].desc}</MenuItem>
               ])}
         </Select>
-        {/*  <Select labelId="sort-dropdown-label" id="sort-dropdown" label="Sort"
-          value={selectedSortForLogs} onChange={(e) => setSelectedSortForLogs(e.target.value)} >
-          {sortsForLogs.map(sort =>
-            <MenuItem key={sort} value={sort}>{sort}</MenuItem>)}
-        </Select> */}
-      </FormControl>
+        
+      // </FormControl>
     )
   };
 
@@ -152,7 +149,7 @@ function Logs({ likedLogs, setLikedLogs, myUsername }) {
             </Dialog>
          
 
-      <Container disableGutters sx={{}} >
+      <Container disableGutters sx={{ display: 'grid', height:{xs: '90vh', md: '85vh' } }} >
 
         <Toolbar disableGutters sx={{ ml: 2, mr: 1 }}>
 
@@ -160,14 +157,14 @@ function Logs({ likedLogs, setLikedLogs, myUsername }) {
             {usernameForLogs} 's logs
           </Typography>
           
-          <Button sx={{ display: { xs: 'inline', md: 'none' } }} onClick={() => setFilterDialogOpen(true)}>Filters</Button>
-
+          <Button sx={{fontFamily: 'Jaapokki', display: { xs: 'inline', md: 'none' } }} onClick={() => setFilterDialogOpen(true)}>Filters</Button>
           <SortDropdown />
+          
           {isOwner && <NewLogForm setLogs={setLogs} />}
         </Toolbar>
 
         <Container id="logs-list-container" className="hidden-scroll" disableGutters
-          sx={{ height: { xs: '79vh', sm: '81vh' }, overflow: { xs: 'scroll', sm: 'scroll' } }} >
+          sx={{  overflow: { xs: 'scroll', sm: 'scroll' } }} >
           {
             logsToDisplay.map(log => (
               <SingleLog key={log._id} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs}
