@@ -211,10 +211,10 @@ const NewLogForm = ({ setLogs }) => {
 
     const compressedImageArray = await compress.compress(imageFiles,
       { size: 0.4, quality: 0.8, maxWidth: 1400, maxHeight: 1000, });
-    
+
     console.log('compressedImageArray', compressedImageArray)
 
-    const imageArray = compressedImageArray.map( img => `${img.prefix}${img.data}`);
+    const imageArray = compressedImageArray.map(img => `${img.prefix}${img.data}`);
 
     //console.log('imageArray', imageArray)
 
@@ -283,9 +283,9 @@ const NewLogForm = ({ setLogs }) => {
 
 
   const handleCloseDialog = (event, reason) => {
-    if (reason && reason === "backdropClick"){
+    if (reason && reason === "backdropClick") {
       setCloseButtonColor('error');
-      setTimeout(()=>setCloseButtonColor('secondary'), 300);
+      setTimeout(() => setCloseButtonColor('secondary'), 300);
       return;
     }
     setOpen(false);
@@ -307,7 +307,7 @@ const NewLogForm = ({ setLogs }) => {
 
     <Box>
 
-      <IconButton sx={{ }}  onClick={handleClickOpenDialog}>
+      <IconButton sx={{}} onClick={handleClickOpenDialog}>
         <AddIcon />
       </IconButton>
 
@@ -317,54 +317,55 @@ const NewLogForm = ({ setLogs }) => {
           <DialogContentText>
 
           </DialogContentText>
-          <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+          <Container disableGutters sx={{ display: "flex", flexDirection: { xs: 'column', md: 'row' }, mb: 2 }}>
             {previewSources[0] ?
-              <Image src={previewSources[0]} alt="chosen" sx={{}} />
+            <Container disableGutters sx={{ maxHeight:'55vh' }}>
+              <Image src={previewSources[0]} alt="chosen"  />
+            </Container>
               :
               <label htmlFor="imageuploadbutton">
                 <Input sx={{ display: "none" }} type='file' id="imageuploadbutton" name='image'
                   accept=".jpg,.jpeg,.png" onChange={handleFileInputChange} />
                 <Button sx={{
                   m: 1,
-                  height: { xs: 200, sm: 250, md: 400, lg: 500, xl: 650 },
-                  width: { xs: 290, sm: 400, md: 600, lg: 800, xl: 1000 },
+                  height: { xs: 180, sm: 250, md: 400, lg: 450 },
+                  width: { xs: 260, sm: 400, md: 600, lg: 700 },
                 }} variant="outlined" component="span">
                   <AddPhotoAlternateIcon />
                 </Button>
               </label>
             }
-          </Box>
 
-            <Container disableGutters sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px'}}>
+            <Container disableGutters sx={{ width: {md:160},  ml: { sm: 1 }, mt: { xs: 1, sm: 0 }, display: 'flex', flexDirection: { md: 'column' }, justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
 
-          {previewSources.map((img, index) =>
-              <Image key={img + index} src={img} width='150px' />
-            
-            )}
+              {previewSources.map((img, index) =>
+                <Image key={img + index} src={img} width='150px' height='100px' />
 
-            {(previewSources.length < 3 && previewSources.length > 0 ) &&
-              
-              <label htmlFor="imageuploadbutton">
-                <Input sx={{ display: "none" }} type='file' id="imageuploadbutton" name='image'
-                  accept=".jpg,.jpeg,.png" onChange={handleFileInputChange} />
-                <Button sx={{
-                  m: 1,
-                  height: { xs: 50, sm: 100 },
-                  width: { xs:75, sm: 150 },
-                }} variant="outlined" component="span">
-                  <AddPhotoAlternateIcon />
-                </Button>
-              </label>
-            }
+              )}
+
+              {(previewSources.length < 3 && previewSources.length > 0) &&
+
+                <label htmlFor="imageuploadbutton">
+                  <Input sx={{ display: "none" }} type='file' id="imageuploadbutton" name='image'
+                    accept=".jpg,.jpeg,.png" onChange={handleFileInputChange} />
+                  <Button sx={{
+                    height: { xs: 50, sm: 100 },
+                    width: { xs: 75, sm: 150 },
+                  }} variant="outlined" component="span">
+                    <AddPhotoAlternateIcon />
+                  </Button>
+                </label>
+              }
             </Container>
+          </Container>
 
           <form id="newLogForm" onSubmit={handleSubmitDialog}>
             <Box sx={{
               mt: 3,
               display: 'grid',
               gap: 1,
-              gridTemplateColumns: { xs: "1fr 1fr", md: "1fr 1fr 1fr 1fr" },
-              gridTemplateRows: { xs: "1fr 1fr 1fr 1fr 1fr 1fr 1fr", md: "1fr 1fr 1fr 1fr" },
+              gridTemplateColumns: { xs: "1fr 1fr", md: "1fr 1fr 1fr 1fr", lg: "1fr 1fr 1fr 1fr 1fr" },
+              gridTemplateRows: { xs: "1fr 1fr 1fr 1fr 1fr 1fr 1fr", md: "1fr 1fr 1fr 1fr", lg: "1fr 1fr 1fr" },
               gridTemplateAreas: {
                 xs:
                   `"animal reserve"
@@ -378,7 +379,11 @@ const NewLogForm = ({ setLogs }) => {
                   `"animal distance reserve notes"
                   "gender difficulty weapon notes"
                   "weight rating ammo notes"
-                  "fur badge shotdistance notes"`
+                  "fur badge shotdistance notes"`,
+                  lg:
+                  `"animal reserve difficulty weapon notes"
+                  "gender fur rating ammo notes"
+                  "weight distance badge shotdistance notes"`        
               }
             }}>
 
