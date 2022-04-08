@@ -105,9 +105,9 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
 
   const genderIcon = () => {
     if (log.gender === "Male") {
-      return <MaleIcon fontSize="large" />;
+      return <MaleIcon  sx={{ fontSize: { xs: 25 , sm: 40} }} />;
     } else {
-      return <FemaleIcon fontSize="large" />;
+      return <FemaleIcon sx={{ fontSize: { xs: 25 , sm: 40} }} />;
     }
   };
 
@@ -138,9 +138,7 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
 
     };
 
-    const handleEditClick = () => {
-      console.log('edit click in singlelog')
-    };
+
 
     return (
       <>
@@ -157,7 +155,7 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
 
   const LikeButton = () => {
     return (
-      <IconButton sx={{ p: 0, "&.MuiButtonBase-root:hover": { bgcolor: "transparent" } }}
+      <IconButton sx={{ p: { xs: 1, sm: 1 }, "&.MuiButtonBase-root:hover": { bgcolor: "transparent" } }}
         id="likeButton" onClick={handleLikeClick} disabled={!isAuthenticated} >
         {liked ? <ThumbUpAltIcon id="likeButton" /> : <ThumbUpOffAltIcon id="likeButton" />}
       </IconButton>
@@ -193,17 +191,17 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
         <Typography onClick={handleOpen} variant="h5"
           sx={{
             overflow: 'hidden', whiteSpace: 'nowrap',
-            fontSize: { xs: '1.2rem', sm: '1.2rem', md: '1.4rem', lg: '1.6rem' }
+            fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.4rem', lg: '1.6rem' }
           }}>
           {log.animal}
         </Typography>
         <Box onClick={handleOpen}>
-          {log.notes && <HistoryEduIcon sx={{ fontSize: "20px", opacity: "50%" }} />}
+          {log.notes && <HistoryEduIcon sx={{ fontSize: { xs: "15px", sm: "20px" }, opacity: "50%" }} />}
 
         </Box>
 
         <Typography onClick={handleOpen} variant="h6"
-          sx={{ justifySelf: (dataToShow === 'likes') ? 'end' : 'center', fontSize: { xs: '1rem', lg: '1.5rem' } }}>
+          sx={{ justifySelf: (dataToShow === 'likes') ? 'end' : 'center', fontSize: { xs: '0.9rem', sm: '1.2rem', lg: '1.5rem' } }}>
           {showData()}
         </Typography>
         <LikeButton />
@@ -214,104 +212,124 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
         <Card sx={{ padding: 3 }} >
           <Container disableGutters sx={{
             mb: 2, alignItems: 'center',
-            display: 'grid', gridTemplateColumns: '1fr 40px 50px 100px 20px'
+            display: 'grid',
+            gridTemplateColumns: { xs: "1fr max-content max-content", md: "6fr 1fr 80px max-content" },
+            gridTemplateRows: { xs: "1fr 1fr", md: "1fr 1fr" },
+            gridTemplateAreas: {
+              xs:
+                `"user  likes settings"
+                "animal  rating settings"
+                    `,
+              md:
+                `"user rating likes settings"
+                "animal rating likes settings"
+                `
+            }
           }}>
-            <Box>
+            <Box sx={{ gridArea: 'user' }} >
               {isAuthenticated ? <Typography onClick={() => window.open(`${window.location.origin}/logs/${log.user}`, '_blank')}
-                variant="h7">{log.user}<OpenInNewIcon sx={{ fontSize: 15 }} /> - {date} </Typography>
+                variant="h7">{log.user}<OpenInNewIcon sx={{ fontSize: 12 }} /> - {date} </Typography>
                 : <Typography variant="h7">{log.user} - {date}</Typography>}
-              <Typography variant="h4">
+            </Box>
+
+            <Box sx={{ gridArea: 'animal', display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+              <Typography variant="h3" sx={{fontSize: { xs: 20, sm: 35 }}}>
                 {log.animal}
+              </Typography>
                 <Tooltip title={log.gender}>
                   {genderIcon()}
                 </Tooltip>
-              </Typography>
             </Box>
 
-            <Tooltip title={log.badge}>
-              <MilitaryTechIcon fontSize="large" sx={{ color: logBadgeColor }} />
-            </Tooltip>
+            <Box sx={{ gridArea: 'rating', display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
+              <Tooltip title={log.badge}>
+                <MilitaryTechIcon fontSize="large" sx={{ color: logBadgeColor }} />
+              </Tooltip>
+              <Tooltip title="Trophy rating">
+                <Typography variant="h6">
+                  {log.rating}
+                </Typography>
+              </Tooltip>
+            </Box>
 
-            <Tooltip title="Trophy rating">
-              <Typography variant="h6">
-                {log.rating}
-              </Typography>
-            </Tooltip>
-            <Box sx={{
-              display: 'flex', flexDirection: 'column', justifyContent: 'end', alignItems: 'center'
+            <Box sx={{ gridArea: 'likes', display: 'flex', flexDirection: { xs: 'row', sm: 'row' },
+            justifyContent: {xs:'start', sm: 'center'}, alignItems: 'center'
             }}>
               <LikeButton />
-              <Typography>{likes}</Typography>
+              <Typography variant="h6">{likes}</Typography>
             </Box>
-            {setLogs && <EditMenu />}
+            <Box sx={{ gridArea: 'settings' }}>
+              {setLogs && <EditMenu />}
+            </Box>
 
           </Container>
 
-          <Image onClick={()=> setFullScreenDialogOpen(true) } src={imageUrl + log.images[chosenImage]} showLoading sx={{}} />
+          <Image onClick={() => setFullScreenDialogOpen(true)} src={imageUrl + log.images[chosenImage]} showLoading sx={{}} />
 
-          <Dialog fullWidth maxWidth={'xl'} open={fullScreenDialogOpen} onClose={()=> setFullScreenDialogOpen(false)} >
-            <Image onClick={()=> setFullScreenDialogOpen(false)} 
-            src={imageUrl + log.images[chosenImage]} duration={0} />
+          <Dialog fullWidth maxWidth={'xl'} open={fullScreenDialogOpen} onClose={() => setFullScreenDialogOpen(false)} >
+            <Image onClick={() => setFullScreenDialogOpen(false)}
+              src={imageUrl + log.images[chosenImage]} duration={0} />
           </Dialog>
 
-          <Container disableGutters sx={{ m:1, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+          <Container disableGutters sx={{ mt: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
             {log.images.map((img, index) =>
               <Image key={img} onClick={() => setChosenImage(index)} src={imageUrl + img} width='150px' />
             )}
           </Container>
 
-          <Container disableGutters sx={{ mt: 2, display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+          <Container disableGutters sx={{ mt: 2, display: 'grid', gridTemplateColumns: {xs: '1fr', sm: '1fr 1fr'},
+          gap: '10px' }}>
 
             <Tooltip title="Weight">
-              <Typography variant="h6">
+              <Typography sx={{ fontSize:{ xs: 15, sm: 20 } }}>
                 <ScaleIcon /> {log.weight}kg
               </Typography>
             </Tooltip>
 
             <Tooltip title="Weapon">
-              <Typography variant="h6">
+              <Typography sx={{ fontSize:{ xs: 15, sm: 20 } }}>
                 <RadarIcon /> {log.weapon} ({log.weapontype})
               </Typography>
             </Tooltip>
 
             <Tooltip title="Fur type">
-              <Typography variant="h6">
+              <Typography sx={{ fontSize:{ xs: 15, sm: 20 } }}>
                 <CategoryIcon /> {log.furtype}
               </Typography>
             </Tooltip>
 
             <Tooltip title="Ammo">
-              <Typography variant="h6">
+              <Typography sx={{ fontSize:{ xs: 15, sm: 20 } }}>
                 <RadarIcon /> {log.ammo}
               </Typography>
             </Tooltip>
 
             <Tooltip title="Distance tracked">
-              <Typography variant="h6">
+              <Typography sx={{ fontSize:{ xs: 15, sm: 20 } }}>
                 <PetsIcon /> {log.distance}m tracked
               </Typography>
             </Tooltip>
 
             <Tooltip title="Shot distance">
-              <Typography variant="h6">
+              <Typography sx={{ fontSize:{ xs: 15, sm: 20 } }}>
                 <RadarIcon /> {log.shotdistance}m
               </Typography>
             </Tooltip>
 
             <Tooltip title="Difficulty">
-              <Typography variant="h6">
+              <Typography sx={{ fontSize:{ xs: 15, sm: 20 } }}>
                 <StarHalfIcon /> {log.difficulty}
               </Typography>
             </Tooltip>
 
             <Tooltip title="Reserve">
-              <Typography variant="h6">
+              <Typography vsx={{ fontSize:{ xs: 15, sm: 20 } }}>
                 <ForestIcon /> {log.reserve}
               </Typography>
             </Tooltip>
 
             <Tooltip title="Notes">
-              <Typography sx={{ gridColumn: 'span 2' }}>
+              <Typography sx={{ gridColumn: {sm: 'span 2'}, fontSize:{ xs: 15, sm: 20 } }}>
                 <ArticleIcon /> {log.notes}
               </Typography>
             </Tooltip>

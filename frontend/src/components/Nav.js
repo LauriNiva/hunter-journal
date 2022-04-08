@@ -6,6 +6,7 @@ import LoginButton from './LoginButton';
 import { Button } from '@mui/material';
 
 import CabinIcon from '@mui/icons-material/Cabin';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 
 const UserMenu = ({ myUsername, avatar }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -73,7 +74,7 @@ function Nav({ myUsername, avatar }) {
               <Typography sx={{ display: { xs: 'none', sm: 'inline'}, fontFamily: 'Jaapokki', mr: 2 }} ><Link to={`/lodge`} >THE LODGE</Link></Typography>
               <Typography sx={{ display: { xs: 'inline', sm: 'none'},  mr: 2 }} ><Link to={`/lodge`} ><CabinIcon /></Link></Typography>
               <Typography sx={{ display: { xs: 'none', sm: 'inline'}, fontFamily: 'Jaapokki', mr: 2 }} ><Link to={`/logs/${myUsername}`} >MY LOGS</Link></Typography>
-              <Typography sx={{ display: { xs: 'inline', sm: 'none'},  mr: 2 }} ><Link to={`/logs/${myUsername}`} ><CabinIcon /></Link></Typography>
+              <Typography sx={{ display: { xs: 'inline', sm: 'none'},  mr: 2 }} ><Link to={`/logs/${myUsername}`} ><LibraryBooksIcon /></Link></Typography>
               <UserMenu myUsername={myUsername} avatar={avatar} />
             </>
             : <LoginButton />

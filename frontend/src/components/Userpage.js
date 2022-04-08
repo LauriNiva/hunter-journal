@@ -91,32 +91,28 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setL
     setAvatarAnchorEl(null);
   };
 
-  /* const UserAvatar = () => {
-    return (
-      <>
-
-
-      </>
-    )
-  } */
 
 
   return (
-    <Container>
+    <Container disableGutters>
       <Paper elevation={3}
         sx={{
+          width: '100%',
           display: 'grid',
-          gridTemplateColumns: "4fr 5fr",
-          gridTemplateRows: "1fr 1fr",
+          gridTemplateColumns: { sm: "4fr 5fr" },
+          gridTemplateRows: {xs:"2fr 1fr" ,sm: "2fr 1fr"},
           gridTemplateAreas: `"avatar username"
         "avatar links"
         `,
 
-          maxHeight: '120px'
+         
         }}>
 
         {avatar && <>
-          <Avatar onClick={handleAvatarClick} sx={{ gridArea: 'avatar', justifySelf: 'end', alignSelf: 'center', width: 70, height: 70, m: 2 }}
+          <Avatar onClick={handleAvatarClick} sx={{
+            gridArea: 'avatar', justifySelf: { xs: 'center', sm: 'end' }, alignSelf: 'center',
+            width: 70, height: 70, m: { xs: 0, sm: 2 }
+          }}
             src={`https://avatars.dicebear.com/api/identicon/${avatar}.svg?scale=85`} alt={`${username}avatar`} />
 
           <Menu anchorEl={avatarAnchorEl} open={avatarMenuOpen} onClose={handleAvatarMenuClose}>
@@ -124,7 +120,7 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setL
           </Menu>
         </>}
 
-        <Typography variant="h3" sx={{ gridArea: 'username', fontFamily: 'Jaapokki', mt: 1 }}>{username}</Typography>
+        <Typography variant="h3" sx={{ gridArea: 'username', alignSelf: 'end', fontFamily: 'Jaapokki', mt: 1 }}>{username}</Typography>
         <Container disableGutters sx={{ gridArea: 'links' }}>
           {!isOwner &&
             <Button onClick={handFollowClick} sx={{ width: 100 }} > {followed ? 'Unfollow' : 'Follow'} </Button>
@@ -134,23 +130,23 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setL
         </Container>
       </Paper>
 
-      <Container sx={{ pt: 2 }}>
+      <Container disableGutters sx={{ pt: 2 }}>
 
-        <Paper elevation={5} sx={{ display: 'flex', p: 3 }}>
+        <Paper elevation={5} sx={{ display: 'flex', flexDirection:{ xs: 'column', sm: 'row'}, p: 3 }}>
           <Container>
-            <Typography variant="h6">Most Used Weapons</Typography>
+            <Typography align="center" variant="h6">Most Used Weapons</Typography>
             {usersTop.topWeapons?.map((weapon, i) =>
-              <Typography key={weapon._id}>{i + 1}. {weapon._id} ({weapon.count})</Typography>)}
+              <Typography sx={{ mt: 1}} key={weapon._id}>{i + 1}. {weapon._id} ({weapon.count})</Typography>)}
           </Container>
-          <Container>
-            <Typography variant="h6">Most Hunted Animals</Typography>
+          <Container sx={{mt:{xs: 2, sm: 0}}}>
+            <Typography align="center" variant="h6">Most Hunted Animals</Typography>
             {usersTop.topAnimals?.map((animal, i) =>
-              <Typography key={animal._id}>{i + 1}. {animal._id} ({animal.count})</Typography>)}
+              <Typography sx={{ mt: 1}} key={animal._id}>{i + 1}. {animal._id} ({animal.count})</Typography>)}
           </Container>
         </Paper>
 
-        <Paper elevation={5} sx={{p: 3, mt:4}}>
-          <Typography variant="h6" align="center" >Recent Logs</Typography>
+        <Paper elevation={5} sx={{ p:{ sm: 3 }, pt:{ xs: 2 }, pb:{ xs: 1 }, mt: 2 }}>
+          <Typography variant="h6" align="center" sx={{mb:2}} >Recent Logs</Typography>
           {recentLogs.map(log => <SingleLog key={`userpage${log._id}`} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs} dataToShow='createdAt' />)}
         </Paper>
       </Container>

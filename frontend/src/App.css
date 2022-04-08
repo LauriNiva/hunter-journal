@@ -11,9 +11,7 @@ body {
 }
 
 .container {
-  margin: 10px auto;
   opacity: 0.9;
-  /* overflow:scroll; */
 }
 
 #logs-list-container :last-child {

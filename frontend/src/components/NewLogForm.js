@@ -68,6 +68,8 @@ const NewLogForm = ({ setLogs }) => {
   const [shotDistanceInvalid, setShotDistanceInvalid] = useState(false);
 
   const [open, setOpen] = useState(false);
+  const [closeButtonColor, setCloseButtonColor] = useState('secondary')
+
 
   const [previewSources, setPreviewSources] = useState([]);
   const [imageFiles, setImageFiles] = useState([]);
@@ -279,9 +281,13 @@ const NewLogForm = ({ setLogs }) => {
     clearForm();
   };
 
+
   const handleCloseDialog = (event, reason) => {
-    if (reason && reason === "backdropClick")
+    if (reason && reason === "backdropClick"){
+      setCloseButtonColor('error');
+      setTimeout(()=>setCloseButtonColor('secondary'), 300);
       return;
+    }
     setOpen(false);
   };
 
@@ -294,7 +300,7 @@ const NewLogForm = ({ setLogs }) => {
   };
 
   const formInputWidth = () => {
-    return { xs: 150, sm: 200 };
+    return { xs: 140, sm: 200 };
   }
 
   return (
@@ -321,7 +327,7 @@ const NewLogForm = ({ setLogs }) => {
                 <Button sx={{
                   m: 1,
                   height: { xs: 200, sm: 250, md: 400, lg: 500, xl: 650 },
-                  width: { xs: 300, sm: 400, md: 600, lg: 800, xl: 1000 },
+                  width: { xs: 290, sm: 400, md: 600, lg: 800, xl: 1000 },
                 }} variant="outlined" component="span">
                   <AddPhotoAlternateIcon />
                 </Button>
@@ -343,8 +349,8 @@ const NewLogForm = ({ setLogs }) => {
                   accept=".jpg,.jpeg,.png" onChange={handleFileInputChange} />
                 <Button sx={{
                   m: 1,
-                  height: 100,
-                  width: 150,
+                  height: { xs: 50, sm: 100 },
+                  width: { xs:75, sm: 150 },
                 }} variant="outlined" component="span">
                   <AddPhotoAlternateIcon />
                 </Button>
@@ -556,7 +562,7 @@ const NewLogForm = ({ setLogs }) => {
           </form>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialog} color="secondary">
+          <Button onClick={handleCloseDialog} color={closeButtonColor} >
             Cancel
           </Button>
           <Button type="submit" form="newLogForm" color="primary">

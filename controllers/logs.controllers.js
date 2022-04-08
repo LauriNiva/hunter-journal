@@ -67,7 +67,7 @@ logsRouter.get('/recent/followed', checkJwt, async (req, res) => {
   const userid = req.user.sub;
   const followedUserIds = await User.findById(userid).select('followed');
   const recentFollowedLogs = await Log.find().where('user').in(followedUserIds.followed)
-    .sort({ _id: -1 }).limit(30).populate('user').populate('likes', 'username -_id');
+    .sort({ _id: -1 }).limit(20).populate('user').populate('likes', 'username -_id');
   res.json(recentFollowedLogs);
 });
 

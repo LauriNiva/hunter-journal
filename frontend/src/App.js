@@ -72,9 +72,10 @@ const App = () => {
         <Nav myUsername={myUsername} avatar={avatar} />
         <Paper className="container"
           sx={{
-            width: { sm: "100%", md: "95%" }, maxWidth: "1220px", minHeight: '80vh', maxHeight: '89vh',
-            p: 1
+            width: { sm: "100%", md: "95%" }, maxWidth: "1220px", minHeight: '80vh',
+            p: 1, margin:{ xs:"5px auto", sm: "10px auto" }
           }}>
+
           {isAuthenticated &&
             <UserDataForm myUsername={myUsername} setUsername={setUsername} dialogOpen={firstTimeSetupDialogOpen} setDialogOpen={setFirstTimeSetupDialogOpen} />
           }

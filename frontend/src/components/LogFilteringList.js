@@ -7,8 +7,9 @@ import PetsIcon from '@mui/icons-material/Pets';
 import CategoryIcon from '@mui/icons-material/Category';
 import PestControlRodentIcon from '@mui/icons-material/PestControlRodent';
 import RadarIcon from '@mui/icons-material/Radar';
+import { Container } from '@mui/material';
 
-function LogFilteringList({ logs, setFilteredLogs }) {
+function LogFilteringList({ logs, setFilteredLogs, asDialog, closeDialog }) {
 
   //console.log('logs to filter', logs)
 
@@ -281,9 +282,13 @@ function LogFilteringList({ logs, setFilteredLogs }) {
 
 
   return (
-    <Paper className="hidden-scroll" sx={{ maxHeight: '85vh', overflow: 'scroll', }} elevation={6}>
-      <List>
-        <Button onClick={() => resetFilters()}>Clear filters</Button>
+    <Paper sx={{}} elevation={6}>
+      <Container sx={{ pt: 2, display: 'flex', justifyContent: 'space-between' }} >
+        <Button variant='outlined' sx={{ fontFamily: 'Jaapokki' }} onClick={() => resetFilters()}>Clear filters</Button>
+        
+        {asDialog && <Button variant='outlined' sx={{ fontFamily: 'Jaapokki' }} onClick={() => closeDialog()}>Close</Button>}
+      </Container>
+      <List className="hidden-scroll" sx={{ overflow: 'scroll', maxHeight: '82.5vh' }}>
 
 
         <ListItemButton onClick={() => setBadgeOpen(!badgeOpen)}>

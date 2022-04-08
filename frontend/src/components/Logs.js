@@ -5,13 +5,14 @@
 import React, { useEffect, useState } from 'react';
 import SingleLog from './SingleLog';
 import NewLogForm from './NewLogForm.js';
-import { Container, FormControl, InputLabel, MenuItem, Select, Toolbar, Typography } from '@mui/material';
-import SortIcon from '@mui/icons-material/Sort';
+import { Container, MenuItem, Select, Toolbar, Typography } from '@mui/material';
 import LogFilteringList from './LogFilteringList';
 import { withAuthenticationRequired, useAuth0 } from '@auth0/auth0-react';
 
 import logsService from '../services/logs';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Dialog } from '@mui/material';
+import { Button } from '@mui/material';
 
 
 
@@ -23,6 +24,8 @@ function Logs({ likedLogs, setLikedLogs, myUsername }) {
 
 
   const isOwner = (myUsername === usernameForLogs);
+
+  const [filterDialogOpen, setFilterDialogOpen] = useState(false);
 
   const [logs, setLogs] = useState([]);
   const [filteredLogs, setFilteredLogs] = useState(logs);
@@ -105,12 +108,14 @@ function Logs({ likedLogs, setLikedLogs, myUsername }) {
 
   const SortDropdown = () => {
     return (
-      <FormControl sx={{ mr: 1 }}>
-        <InputLabel id="sort-dropdown-label">
-          {(sort === "asc") ? <SortIcon sx={{ transform: "scaleY(-1)" }} />
-            : <SortIcon />}
-        </InputLabel>
-        <Select labelId="sort-dropdown-label" id="sort-dropdown" label="Sort"
+      // <FormControl sx={{ mr: 1,}}>
+      //   <InputLabel id="sort-dropdown-label">
+      //     {(sort === "asc") ? <SortIcon sx={{ transform: "scaleY(-1)" }} />
+      //       : <SortIcon />}
+      //   </InputLabel>
+        // <Select labelId="sort-dropdown-label" id="sort-dropdown" label="Sort"
+        <Select id="sort-dropdown"
+          sx={{ fontSize: { xs: 12, sm: 15 }, width: { xs: 120, sm: 170}}}
           value={selectedSortForLogs} onChange={(e) => setSelectedSortForLogs(e.target.value)} >
           {
             Object.keys(sortObjects).map(item =>
@@ -119,12 +124,8 @@ function Logs({ likedLogs, setLikedLogs, myUsername }) {
                 <MenuItem key={sortObjects[item].desc} value={`${item}-desc`}>{sortObjects[item].desc}</MenuItem>
               ])}
         </Select>
-        {/*  <Select labelId="sort-dropdown-label" id="sort-dropdown" label="Sort"
-          value={selectedSortForLogs} onChange={(e) => setSelectedSortForLogs(e.target.value)} >
-          {sortsForLogs.map(sort =>
-            <MenuItem key={sort} value={sort}>{sort}</MenuItem>)}
-        </Select> */}
-      </FormControl>
+        
+      // </FormControl>
     )
   };
 
@@ -134,20 +135,34 @@ function Logs({ likedLogs, setLikedLogs, myUsername }) {
     <Container disableGutters id="logs-container"
       sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "2fr 5fr" } }}>
 
-      <LogFilteringList logs={logs} setFilteredLogs={setFilteredLogs} />
+      <Container disableGutters sx={{ display: { xs: 'none', md: 'inline' } }} >
+        <LogFilteringList logs={logs} setFilteredLogs={setFilteredLogs} />
+      </Container>
+      
+{/* LoginFilteringList komponentit ei jaa samaa tilaa, joten ei tiedä toistensa filtereistä */}
+            <Dialog keepMounted fullWidth maxWidth="xl" open={filterDialogOpen} onClose={() => setFilterDialogOpen(false)} >
 
-      <Container disableGutters sx={{ maxHeight: '85vh' }} >
-        <Toolbar disableGutters sx={{ ml: 2, mr: 1}}>
+              <LogFilteringList logs={logs} setFilteredLogs={setFilteredLogs} asDialog={true}
+                closeDialog={() => setFilterDialogOpen(false)} />
+            </Dialog>
+         
 
-          <Typography variant="h4" sx={{ mr: 'auto', fontFamily: 'Jaapokki' }} onClick={() => navigate(`/hunters/${usernameForLogs}`)}>
+      <Container disableGutters sx={{ display: 'grid', gridTemplateRows: 'max-content 1fr', height:{xs: '90vh', md: '85vh' } }} >
+
+        <Toolbar disableGutters sx={{ ml: 2, mr: 1, pb: 1, maxHeight:{ xs: 58, sm: 65 } }}>
+
+          <Typography variant="h4" sx={{ mr: 'auto', fontFamily: 'Jaapokki', fontSize: { xs: 20, sm: 34 } }} onClick={() => navigate(`/hunters/${usernameForLogs}`)}>
             {usernameForLogs} 's logs
           </Typography>
-
+          
+          <Button sx={{fontFamily: 'Jaapokki', display: { xs: 'inline', md: 'none' } }} onClick={() => setFilterDialogOpen(true)}>Filters</Button>
           <SortDropdown />
+          
           {isOwner && <NewLogForm setLogs={setLogs} />}
         </Toolbar>
 
-        <Container id="logs-list-container" className="hidden-scroll" disableGutters sx={{ overflow: 'scroll', maxHeight: '80vh' }} >
+        <Container id="logs-list-container" className="hidden-scroll" disableGutters
+          sx={{  overflow: { xs: 'scroll', sm: 'scroll' } }} >
           {
             logsToDisplay.map(log => (
               <SingleLog key={log._id} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs}
