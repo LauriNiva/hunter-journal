@@ -317,7 +317,7 @@ const NewLogForm = ({ setLogs }) => {
           <DialogContentText>
 
           </DialogContentText>
-          <Container disableGutters sx={{ display: "flex", justifyContent: 'center', flexDirection: { xs: 'column', md: 'row' }, mb: 2 }}>
+          <Container disableGutters sx={{ display: "flex", justifyContent: 'center', alignItems: 'center', flexDirection: { xs: 'column', md: 'row' }, mb: 2 }}>
             {previewSources[0] ?
             <Container disableGutters sx={{ maxHeight:'55vh' }}>
               <Image src={previewSources[0]} alt="chosen"  />
