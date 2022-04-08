@@ -319,9 +319,7 @@ const NewLogForm = ({ setLogs }) => {
           </DialogContentText>
           <Container disableGutters sx={{ display: "flex", justifyContent: 'center', alignItems: 'center', flexDirection: { xs: 'column', md: 'row' }, mb: 2 }}>
             {previewSources[0] ?
-            <Container disableGutters sx={{ maxHeight:'55vh' }}>
-              <Image src={previewSources[0]} alt="chosen"  />
-            </Container>
+                <Image src={previewSources[0]} alt="chosen" fit='scale-down' sx={{ maxHeight: '55vh' }} />
               :
               <label htmlFor="imageuploadbutton">
                 <Input sx={{ display: "none" }} type='file' id="imageuploadbutton" name='image'
@@ -336,27 +334,29 @@ const NewLogForm = ({ setLogs }) => {
               </label>
             }
 
-            {previewSources[0] && <Container disableGutters sx={{ width: {md:160},  ml: { sm: 1 }, mt: { xs: 1, sm: 0 }, display: 'flex', flexDirection: { md: 'column' }, justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+            {previewSources[0] &&
+              <Container disableGutters sx={{ width: { md: 160 }, height: { xs: 60, md: '100%' }, ml: { sm: 1 }, mt: { xs: 1, sm: 0 },
+               display: 'flex', flexDirection: { md: 'column' }, justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
 
-              {previewSources.map((img, index) =>
-                <Image key={img + index} src={img} width='150px' height='100px' />
+                {previewSources.map((img, index) =>
+                  <Image key={img + index} src={img} fit='scale-down'/>
 
-              )}
+                )}
 
-              {(previewSources.length < 3 && previewSources.length > 0) &&
+                {(previewSources.length < 3 && previewSources.length > 0) &&
 
-                <label htmlFor="imageuploadbutton">
-                  <Input sx={{ display: "none" }} type='file' id="imageuploadbutton" name='image'
-                    accept=".jpg,.jpeg,.png" onChange={handleFileInputChange} />
-                  <Button sx={{
-                    height: { xs: 50, sm: 100 },
-                    width: { xs: 75, sm: 150 },
-                  }} variant="outlined" component="span">
-                    <AddPhotoAlternateIcon />
-                  </Button>
-                </label>
-              }
-            </Container>}
+                  <label htmlFor="imageuploadbutton">
+                    <Input sx={{ display: "none" }} type='file' id="imageuploadbutton" name='image'
+                      accept=".jpg,.jpeg,.png" onChange={handleFileInputChange} />
+                    <Button sx={{
+                      height: { xs: 50, sm: 100 },
+                      width: { xs: 75, sm: 150 },
+                    }} variant="outlined" component="span">
+                      <AddPhotoAlternateIcon />
+                    </Button>
+                  </label>
+                }
+              </Container>}
           </Container>
 
           <form id="newLogForm" onSubmit={handleSubmitDialog}>
@@ -380,10 +380,10 @@ const NewLogForm = ({ setLogs }) => {
                   "gender difficulty weapon notes"
                   "weight rating ammo notes"
                   "fur badge shotdistance notes"`,
-                  lg:
+                lg:
                   `"animal reserve difficulty weapon notes"
                   "gender fur rating ammo notes"
-                  "weight distance badge shotdistance notes"`        
+                  "weight distance badge shotdistance notes"`
               }
             }}>
 
