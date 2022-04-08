@@ -5,8 +5,7 @@
 import React, { useEffect, useState } from 'react';
 import SingleLog from './SingleLog';
 import NewLogForm from './NewLogForm.js';
-import { Container, FormControl, InputLabel, MenuItem, Select, Toolbar, Typography } from '@mui/material';
-import SortIcon from '@mui/icons-material/Sort';
+import { Container, MenuItem, Select, Toolbar, Typography } from '@mui/material';
 import LogFilteringList from './LogFilteringList';
 import { withAuthenticationRequired, useAuth0 } from '@auth0/auth0-react';
 
@@ -14,7 +13,6 @@ import logsService from '../services/logs';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Dialog } from '@mui/material';
 import { Button } from '@mui/material';
-import { DialogTitle } from '@mui/material';
 
 
 

@@ -138,9 +138,7 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
 
     };
 
-    const handleEditClick = () => {
-      console.log('edit click in singlelog')
-    };
+
 
     return (
       <>
