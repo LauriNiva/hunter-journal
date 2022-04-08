@@ -317,7 +317,7 @@ const NewLogForm = ({ setLogs }) => {
           <DialogContentText>
 
           </DialogContentText>
-          <Container disableGutters sx={{ display: "flex", flexDirection: { xs: 'column', md: 'row' }, mb: 2 }}>
+          <Container disableGutters sx={{ display: "flex", justifyContent: 'center', flexDirection: { xs: 'column', md: 'row' }, mb: 2 }}>
             {previewSources[0] ?
             <Container disableGutters sx={{ maxHeight:'55vh' }}>
               <Image src={previewSources[0]} alt="chosen"  />
@@ -336,7 +336,7 @@ const NewLogForm = ({ setLogs }) => {
               </label>
             }
 
-            <Container disableGutters sx={{ width: {md:160},  ml: { sm: 1 }, mt: { xs: 1, sm: 0 }, display: 'flex', flexDirection: { md: 'column' }, justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+            {previewSources[0] && <Container disableGutters sx={{ width: {md:160},  ml: { sm: 1 }, mt: { xs: 1, sm: 0 }, display: 'flex', flexDirection: { md: 'column' }, justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
 
               {previewSources.map((img, index) =>
                 <Image key={img + index} src={img} width='150px' height='100px' />
@@ -356,7 +356,7 @@ const NewLogForm = ({ setLogs }) => {
                   </Button>
                 </label>
               }
-            </Container>
+            </Container>}
           </Container>
 
           <form id="newLogForm" onSubmit={handleSubmitDialog}>
