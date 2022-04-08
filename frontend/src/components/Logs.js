@@ -149,9 +149,9 @@ function Logs({ likedLogs, setLikedLogs, myUsername }) {
             </Dialog>
          
 
-      <Container disableGutters sx={{ display: 'grid', height:{xs: '90vh', md: '85vh' } }} >
+      <Container disableGutters sx={{ display: 'grid', gridTemplateRows: 'max-content 1fr', height:{xs: '90vh', md: '85vh' } }} >
 
-        <Toolbar disableGutters sx={{ ml: 2, mr: 1 }}>
+        <Toolbar disableGutters sx={{ ml: 2, mr: 1, pb: 1, maxHeight:{ xs: 58, sm: 65 } }}>
 
           <Typography variant="h4" sx={{ mr: 'auto', fontFamily: 'Jaapokki', fontSize: { xs: 20, sm: 34 } }} onClick={() => navigate(`/hunters/${usernameForLogs}`)}>
             {usernameForLogs} 's logs
