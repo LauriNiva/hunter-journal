@@ -26,6 +26,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 
 import { Box } from '@mui/system';
+import usersService from '../services/user.js';
 
 
 function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
@@ -122,6 +123,19 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
       setAnchorEl(null);
     };
 
+    const handleHighlightClick = async (event) => {
+      if(window.confirm("Highlight this log on your userpage?")){
+        try {
+          const token = await getAccessTokenSilently();
+          const highlightdata = await usersService.addHighlightedLog(log._id, token);
+          console.log('highlightdata', highlightdata)
+          handleMenuClose();
+        } catch (error) {
+          console.log(error)
+        }
+      }
+    };
+
     const handleDeleteClick = async () => {
       if (window.confirm('Are you sure you want to delete this log?')) {
 
@@ -146,8 +160,9 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
           <MoreVertIcon />
         </IconButton>
         <Menu anchorEl={anchorEl} open={menuOpen} onClose={handleMenuClose}>
-          <MenuItem onClick={handleDeleteClick}>Delete</MenuItem>
+          <MenuItem onClick={handleHighlightClick} sx={{justifyContent:'center'}} >Highlight</MenuItem>
           <EditLogForm log={log} setLogs={setLogs} />
+          <MenuItem onClick={handleDeleteClick} sx={{justifyContent:'center'}} >Delete</MenuItem>
         </Menu>
       </>
     )
@@ -169,6 +184,8 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
       dataToReturn = likes
     } else if (dataToShow === 'createdAt') {
       dataToReturn = date;
+    } else if (dataToShow === 'user') {
+      dataToReturn = log.user.username;
     }
     else {
       dataToReturn = log[dataToShow]
@@ -227,9 +244,9 @@ function SingleLog({ log, setLogs, dataToShow, likedLogs, setLikedLogs }) {
             }
           }}>
             <Box sx={{ gridArea: 'user' }} >
-              {isAuthenticated ? <Typography onClick={() => window.open(`${window.location.origin}/logs/${log.user}`, '_blank')}
-                variant="h7">{log.user}<OpenInNewIcon sx={{ fontSize: 12 }} /> - {date} </Typography>
-                : <Typography variant="h7">{log.user} - {date}</Typography>}
+              {isAuthenticated ? <Typography onClick={() => window.open(`${window.location.origin}/logs/${log.user.username}`, '_blank')}
+                variant="h7">{log.user.username}<OpenInNewIcon sx={{ fontSize: 12 }} /> - {date} </Typography>
+                : <Typography variant="h7">{log.user.username} - {date}</Typography>}
             </Box>
 
             <Box sx={{ gridArea: 'animal', display: 'flex', flexDirection: 'row', alignItems: 'center'}}>

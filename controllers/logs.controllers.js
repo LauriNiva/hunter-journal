@@ -18,7 +18,7 @@ const logsRouter = express.Router();
 
 logsRouter.get('/', checkJwt, async (req, res) => {
   const userid = req.user.sub;
-  const logs = await Log.find({ user: userid }).populate('user').populate('likes', 'username -_id');
+  const logs = await Log.find({ user: userid }).populate('user', 'username -_id').populate('likes', 'username -_id');
   res.json(logs);
 });
 
@@ -28,7 +28,7 @@ logsRouter.get('/user/:username', checkJwt, async (req, res) => {
 
   const user = await User.findOne({ username: username });
 
-  const logs = await Log.find({ user: user }).populate('user').populate('likes', 'username -_id');
+  const logs = await Log.find({ user: user }).populate('user', 'username -_id').populate('likes', 'username -_id');
   res.json(logs);
 });
 
@@ -37,7 +37,7 @@ logsRouter.get('/user/:username/recent', checkJwt, async (req, res) => {
 
   const user = await User.findOne({ username: username });
 
-  const logs = await Log.find({ user: user }).sort({ _id: -1 }).limit(3).populate('user').populate('likes', 'username -_id');
+  const logs = await Log.find({ user: user }).sort({ _id: -1 }).limit(3).populate('user', 'username -_id').populate('likes', 'username -_id');
   res.json(logs);
 });
 
@@ -59,7 +59,7 @@ logsRouter.get('/user/:username/top', checkJwt, async (req, res) => {
 });
 
 logsRouter.get('/recent', async (req, res) => {
-  const recentLogs = await Log.find().sort({ _id: -1 }).limit(10).populate('user').populate('likes', 'username -_id');
+  const recentLogs = await Log.find().sort({ _id: -1 }).limit(10).populate('user', 'username -_id').populate('likes', 'username -_id');
   res.json(recentLogs);
 });
 
@@ -67,7 +67,7 @@ logsRouter.get('/recent/followed', checkJwt, async (req, res) => {
   const userid = req.user.sub;
   const followedUserIds = await User.findById(userid).select('followed');
   const recentFollowedLogs = await Log.find().where('user').in(followedUserIds.followed)
-    .sort({ _id: -1 }).limit(20).populate('user').populate('likes', 'username -_id');
+    .sort({ _id: -1 }).limit(20).populate('user', 'username -_id').populate('likes', 'username -_id');
   res.json(recentFollowedLogs);
 });
 
@@ -77,7 +77,7 @@ logsRouter.get('/mostliked', async (req, res) => {
   //const mostLikedLogs = await Log.find({ 'likes': { $exists: true, $ne: [] } }).sort({ likes: 1 }).limit(10).populate('user').populate('likes', 'username -_id');
 
   const mostLikedLogs = await Log.find().where('_id').in(listOfMostLikedLogs.map(log => log._id))
-    .populate('user').populate('likes', 'username -_id');
+    .populate('user', 'username -_id').populate('likes', 'username -_id');
 
   mostLikedLogs.sort((a, b) => b.likes.length - a.likes.length)
 
@@ -126,7 +126,7 @@ logsRouter.post('/', checkJwt, async (req, res) => {
     console.log(`newLog`, newLog);
 
     const uploadedLog = await newLog.save();
-    await uploadedLog.populate('user').execPopulate();
+    await uploadedLog.populate('user', 'username -_id').execPopulate();
 
     console.log(`uploadedLog`, uploadedLog)
 
@@ -171,7 +171,7 @@ logsRouter.put('/:id', checkJwt, async (req, res) => {
     console.log('logId', logId)
     console.log('updates', updates)
     const updatedLog = await Log.findByIdAndUpdate(logId, updates, { new: true });
-    await updatedLog.populate('user').execPopulate();
+    await updatedLog.populate('user', 'username -_id').execPopulate();
 
     res.json(updatedLog);
   } catch (error) {

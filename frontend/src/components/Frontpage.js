@@ -12,7 +12,8 @@ function Frontpage({ likedLogs, setLikedLogs }) {
 
   useEffect(() => {
     const getRecent = async () => {
-      setMostRecentLogs(await logsService.getRecentLogs())
+      const mostRecent = await logsService.getRecentLogs()
+      setMostRecentLogs(mostRecent)
     }
     getRecent();
   }, [])
