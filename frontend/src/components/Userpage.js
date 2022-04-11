@@ -39,8 +39,7 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setL
     }
     getTop();
   }, [username, getAccessTokenSilently]);
-
-  console.log('topWeapons', usersTop)
+  
 
   useEffect(() => {
     const getAvatar = async () => {
