@@ -1,4 +1,5 @@
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
+import { Tooltip } from '@mui/material';
 import { Avatar, Button, Container, Typography, Paper, Menu, MenuItem } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -15,40 +16,23 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setL
 
   const isOwner = (myUsername === username);
 
-  const [avatar, setAvatar] = useState('');
+  const [userpageData, setUserpageData] = useState({});
   const [followed, setFollowed] = useState(false);
-  const [recentLogs, setRecentLogs] = useState([]);
-  const [usersTop, setUsersTop] = useState([]);
 
   useEffect(() => {
     setFollowed(followedUsers.includes(username))
   }, [followedUsers, setFollowedUsers, username]);
 
+
   useEffect(() => {
-    const getRecent = async () => {
+    const getData = async () => {
       const token = await getAccessTokenSilently();
-      setRecentLogs(await logsService.getUsersRecentLogs(username, token))
+      setUserpageData(await usersService.getUserpageData(username, token))
     }
-    getRecent();
+    getData();
   }, [username, getAccessTokenSilently]);
 
-  useEffect(() => {
-    const getTop = async () => {
-      const token = await getAccessTokenSilently();
-      setUsersTop(await logsService.getUsersTop(username, token))
-    }
-    getTop();
-  }, [username, getAccessTokenSilently]);
-  
-
-  useEffect(() => {
-    const getAvatar = async () => {
-      const avatarNumber = await usersService.getAvatar(username);
-      setAvatar(avatarNumber)
-    }
-    getAvatar();
-  }, [username]);
-
+  console.log('userpageData', userpageData)
 
   const handFollowClick = async () => {
     if (followed) {
@@ -69,7 +53,9 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setL
     try {
       const token = await getAccessTokenSilently();
       const updatedAvatar = await usersService.updateAvatar({ avatar: rngAvatar }, token)
-      setAvatar(updatedAvatar);
+      const updatedUserpageData = userpageData;
+      updatedUserpageData.avatar = rngAvatar;
+      setUserpageData(updatedUserpageData);
       setNewAvatar(updatedAvatar);
       console.log('updatedAvatar', updatedAvatar)
     } catch (error) {
@@ -82,7 +68,6 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setL
 
   const handleAvatarClick = (e) => {
     if (!isOwner) { return };
-    console.log('e', e)
     setAvatarAnchorEl(e.currentTarget);
   };
 
@@ -99,20 +84,20 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setL
           width: '100%',
           display: 'grid',
           gridTemplateColumns: { sm: "4fr 5fr" },
-          gridTemplateRows: {xs:"2fr 1fr" ,sm: "2fr 1fr"},
+          gridTemplateRows: { xs: "2fr 1fr", sm: "2fr 1fr" },
           gridTemplateAreas: `"avatar username"
         "avatar links"
         `,
 
-         
+
         }}>
 
-        {avatar && <>
+        {userpageData.avatar && <>
           <Avatar onClick={handleAvatarClick} sx={{
             gridArea: 'avatar', justifySelf: { xs: 'center', sm: 'end' }, alignSelf: 'center',
             width: 70, height: 70, m: { xs: 0, sm: 2 }
           }}
-            src={`https://avatars.dicebear.com/api/identicon/${avatar}.svg?scale=85`} alt={`${username}avatar`} />
+            src={`https://avatars.dicebear.com/api/identicon/${username}${userpageData.avatar}.svg?scale=85`} alt={`${username}avatar`} />
 
           <Menu anchorEl={avatarAnchorEl} open={avatarMenuOpen} onClose={handleAvatarMenuClose}>
             <MenuItem onClick={() => { newAvatar() }}>Change Avatar</MenuItem>
@@ -131,22 +116,31 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setL
 
       <Container disableGutters sx={{ pt: 2 }}>
 
-        <Paper elevation={5} sx={{ display: 'flex', flexDirection:{ xs: 'column', sm: 'row'}, p: 3 }}>
+        {userpageData.highlight?.log &&
+          <Paper elevation={5} sx={{ p: 3}}>
+            <Tooltip title='Choose a log to highlight from your list of logs' >
+              <Typography align="center" variant="h6">Highlighted Log</Typography>
+            </Tooltip>
+            <SingleLog log={userpageData.highlight.log} likedLogs={likedLogs} setLikedLogs={setLikedLogs} dataToShow='createdAt' />
+          </Paper>
+        }
+
+        <Paper elevation={5} sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, p: 3, mt: 2 }}>
           <Container>
             <Typography align="center" variant="h6">Most Used Weapons</Typography>
-            {usersTop.topWeapons?.map((weapon, i) =>
-              <Typography sx={{ mt: 1}} key={weapon._id}>{i + 1}. {weapon._id} ({weapon.count})</Typography>)}
+            {userpageData.topWeapons?.map((weapon, i) =>
+              <Typography sx={{ mt: 1 }} key={weapon._id}>{i + 1}. {weapon._id} ({weapon.count})</Typography>)}
           </Container>
-          <Container sx={{mt:{xs: 2, sm: 0}}}>
+          <Container sx={{ mt: { xs: 2, sm: 0 } }}>
             <Typography align="center" variant="h6">Most Hunted Animals</Typography>
-            {usersTop.topAnimals?.map((animal, i) =>
-              <Typography sx={{ mt: 1}} key={animal._id}>{i + 1}. {animal._id} ({animal.count})</Typography>)}
+            {userpageData.topAnimals?.map((animal, i) =>
+              <Typography sx={{ mt: 1 }} key={animal._id}>{i + 1}. {animal._id} ({animal.count})</Typography>)}
           </Container>
         </Paper>
 
-        <Paper elevation={5} sx={{ p:{ sm: 3 }, pt:{ xs: 2 }, pb:{ xs: 1 }, mt: 2 }}>
-          <Typography variant="h6" align="center" sx={{mb:2}} >Recent Logs</Typography>
-          {recentLogs.map(log => <SingleLog key={`userpage${log._id}`} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs} dataToShow='createdAt' />)}
+        <Paper elevation={5} sx={{ p: { sm: 3 }, pt: { xs: 2 }, pb: { xs: 1 }, mt: 2 }}>
+          <Typography variant="h6" align="center" sx={{ mb: 2 }} >Recent Logs</Typography>
+          {userpageData.recentLogs?.map(log => <SingleLog key={`userpage${log._id}`} log={log} likedLogs={likedLogs} setLikedLogs={setLikedLogs} dataToShow='createdAt' />)}
         </Paper>
       </Container>
 
