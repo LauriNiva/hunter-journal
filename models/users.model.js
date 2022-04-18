@@ -17,14 +17,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  avatar: { 
+  avatar: {
     type: String,
   },
-  likedLogs:[{
+  likedLogs: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Log'
   }],
-  followers:[{
+  followers: [{
     type: String,
     ref: 'User',
   }],
@@ -32,6 +32,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     ref: 'User',
   }],
+  highlight: {
+    log: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Log'
+    },
+    text: {
+      type: String,
+    }
+  },
 });
 
 userSchema.set('toJSON', {
