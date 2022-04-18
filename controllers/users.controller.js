@@ -128,6 +128,7 @@ usersRouter.post('/highlight/log', checkJwt, async (req, res) => {
   try {
     const userToUpdate = await User.findById(userid);
     userToUpdate.highlight.log = logid;
+    userToUpdate.highlight.text = '';
     const updatedUser = await userToUpdate.save();
     res.json(updatedUser.highlight.log)
   } catch (error) {
@@ -135,6 +136,21 @@ usersRouter.post('/highlight/log', checkJwt, async (req, res) => {
   }
 
 });
+
+usersRouter.post('/highlight/text', checkJwt, async (req, res) => {
+  const userid = req.user.sub;
+  const newText = req.body.newText ?? '';
+
+  try {
+   const updatedUser = await User.findByIdAndUpdate(userid, {'highlight.text': newText}, { returnDocument: 'after'})
+   console.log('updatedUser', updatedUser.highlight.text)
+   res.json(updatedUser.highlight.text)
+  } catch (error) {
+    console.log(error)
+  }
+
+});
+
 
 usersRouter.put('/:username/follow', checkJwt, async (req, res) => {
   const usernameToFollow = req.params.username;

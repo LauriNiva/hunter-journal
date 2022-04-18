@@ -113,14 +113,22 @@ const removeHighlightedLog = async (token) => {
 };
 
 
-const addHighlightedText = async (user, token) => {
-
+const editHighlightedText = async (newText, token) => {
+  const editedText = await axios
+    .post(`${baseURL}/highlight/text/`,
+      { newText: newText },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+      });
+  return editedText.data;
 };
 
 
 const usersService = {
   getUser, createUser, searchUsername, followAUser, updateAvatar, getAvatar,
-  addHighlightedLog, removeHighlightedLog, addHighlightedText, getUserpageData
+  addHighlightedLog, removeHighlightedLog, editHighlightedText, getUserpageData
 };
 
 export default usersService;

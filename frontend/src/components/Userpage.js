@@ -1,11 +1,18 @@
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
+import { IconButton } from '@mui/material';
 import { Tooltip } from '@mui/material';
 import { Avatar, Button, Container, Typography, Paper, Menu, MenuItem } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import logsService from '../services/logs.js';
 import usersService from '../services/user.js';
 import SingleLog from './SingleLog.js';
+
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { Dialog } from '@mui/material';
+import { TextField } from '@mui/material';
+import { DialogContent } from '@mui/material';
+import { DialogActions } from '@mui/material';
+
 
 
 function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setLikedLogs, setNewAvatar }) {
@@ -18,6 +25,8 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setL
 
   const [userpageData, setUserpageData] = useState({});
   const [followed, setFollowed] = useState(false);
+
+  console.log('userpageData', userpageData)
 
   useEffect(() => {
     setFollowed(followedUsers.includes(username))
@@ -32,7 +41,6 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setL
     getData();
   }, [username, getAccessTokenSilently]);
 
-  console.log('userpageData', userpageData)
 
   const handFollowClick = async () => {
     if (followed) {
@@ -48,16 +56,14 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setL
 
   const newAvatar = async () => {
     const rngAvatar = Math.floor(Math.random() * 100)
-    console.log('rngAvatar', rngAvatar)
 
     try {
       const token = await getAccessTokenSilently();
       const updatedAvatar = await usersService.updateAvatar({ avatar: rngAvatar }, token)
-      const updatedUserpageData = userpageData;
+      const updatedUserpageData = { ...userpageData };
       updatedUserpageData.avatar = rngAvatar;
       setUserpageData(updatedUserpageData);
       setNewAvatar(updatedAvatar);
-      console.log('updatedAvatar', updatedAvatar)
     } catch (error) {
       console.log(error)
     }
@@ -73,6 +79,72 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setL
 
   const handleAvatarMenuClose = () => {
     setAvatarAnchorEl(null);
+  };
+
+  const EditMenu = () => {
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [highlightEditOpen, setHighlightEditOpen] = useState(false);
+    const editmenuOpen = Boolean(anchorEl);
+
+    const [highlightText, setHighlightText] = useState(userpageData.highlight.text ?? '');
+
+
+    const handleMenuClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleMenuClose = () => {
+      setAnchorEl(null);
+    };
+
+    const handleHighlightClick = async (event) => {
+      setHighlightEditOpen(true);
+    };
+
+    const updateHightlightText = async () => {
+      setHighlightEditOpen(false)
+      try {
+        const token = await getAccessTokenSilently();
+
+        const updatedText = await usersService.editHighlightedText(highlightText, token);
+        const updatedUserpageData = { ...userpageData };
+        updatedUserpageData.highlight.text = updatedText;
+        setUserpageData(updatedUserpageData);
+      } catch (error) {
+        console.log(error)
+      }
+    };
+
+    return (
+      <>
+        <IconButton id="editmenu-button" disableFocusRipple onClick={handleMenuClick} sx={{}}>
+          <MoreVertIcon />
+        </IconButton>
+        <Menu anchorEl={anchorEl} open={editmenuOpen} onClose={handleMenuClose}>
+          <MenuItem onClick={handleHighlightClick} sx={{ justifyContent: 'center' }} > Edit Highlight Text</MenuItem>
+        </Menu>
+        <Dialog open={highlightEditOpen} onClose={() => setHighlightEditOpen(false)} >
+          <DialogContent>
+            <Typography align="center" variant="h6">
+              Tell something about your highlighted log.
+            </Typography>
+            <Typography align="center" variant="h6">
+              This will show on your userpage.
+            </Typography>
+            <TextField multiline rows={4} sx={{ m: 1, width: 400 }}
+              value={highlightText} onChange={(e) => setHighlightText(e.target.value)} />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setHighlightEditOpen(false)} color="secondary">
+              Cancel
+            </Button>
+            <Button onClick={() => setHighlightText('')} >Clear</Button>
+            <Button onClick={() => updateHightlightText()} color="primary">
+              Save
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </>
+    )
   };
 
 
@@ -117,10 +189,19 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setL
       <Container disableGutters sx={{ pt: 2 }}>
 
         {userpageData.highlight?.log &&
-          <Paper elevation={5} sx={{ p: 3}}>
-            <Tooltip title='Choose a log to highlight from your list of logs' >
-              <Typography align="center" variant="h6">Highlighted Log</Typography>
-            </Tooltip>
+          <Paper elevation={5} sx={{ p: 3 }}>
+            <Container disableGutters sx={{ display: 'grid', gridTemplateColumns: '1fr max-content' }}>
+              <Tooltip title='Choose a log to highlight from your list of logs' >
+                <Typography align="center" variant="h6">Highlighted Log</Typography>
+              </Tooltip>
+              {isOwner && <EditMenu />}
+            </Container>
+
+            {userpageData.highlight.text &&
+              <Paper elevation={5} sx={{ m: 1, p: 1 }}>
+                <Typography align="center" >{userpageData.highlight?.text}</Typography>
+              </Paper>
+            }
             <SingleLog log={userpageData.highlight.log} likedLogs={likedLogs} setLikedLogs={setLikedLogs} dataToShow='createdAt' />
           </Paper>
         }
