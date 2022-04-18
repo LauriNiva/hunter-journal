@@ -188,10 +188,20 @@ function Userpage({ myUsername, followedUsers, setFollowedUsers, likedLogs, setL
 
       <Container disableGutters sx={{ pt: 2 }}>
 
+        {(isOwner && !userpageData.highlight?.log) &&
+          <Paper elevation={5} sx={{ p: 3 }}>
+            <Tooltip title='Choose a log to highlight here from your list of logs' >
+                <Typography align="center" variant="h6">Highlighted Log</Typography>
+              </Tooltip>
+            <Typography align="center" variant="h6">
+              Choose a log to highlight here from your list of logs.
+            </Typography>
+          </Paper>}
+
         {userpageData.highlight?.log &&
           <Paper elevation={5} sx={{ p: 3 }}>
             <Container disableGutters sx={{ display: 'grid', gridTemplateColumns: '1fr max-content' }}>
-              <Tooltip title='Choose a log to highlight from your list of logs' >
+              <Tooltip title='Choose a log to highlight here from your list of logs' >
                 <Typography align="center" variant="h6">Highlighted Log</Typography>
               </Tooltip>
               {isOwner && <EditMenu />}
