@@ -124,8 +124,8 @@ const availableAmmoList = {
     title: 'Kullman .22H',
     ammo: ['.22H Soft-Point', '.22H Polymer-Tip']
   },
-  'M1 Iwaniec Veteran': {
-    title: 'M1 Iwaniec Veteran',
+  'M1 Iwaniec': {
+    title: 'M1 Iwaniec',
     ammo: ['.30-06 Soft-Point', '.30-06 Polymer-Tip']
   },
   'Mangiafico 410/45 Colt': {

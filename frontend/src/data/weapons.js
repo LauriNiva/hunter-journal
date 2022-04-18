@@ -9,7 +9,7 @@ const weaponsList = [
 ["Hudzik .50 Caplock Terra", "rifle"],
 ["King 470DB Zenith", "rifle"],
 ["Kullman .22H", "rifle"],
-["M1 Iwaniec Veteran", "rifle"],
+["M1 Iwaniec", "rifle"],
 ["Martensson 6.5mm Thunder", "rifle"],
 ["Rangemaster 338", "rifle"],
 ["Ranger .243", "rifle"],
