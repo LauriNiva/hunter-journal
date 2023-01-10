@@ -10,6 +10,7 @@ const reservesList = [
   "Te Awaroa National Park",
   "Rancho del Arroyo",
   "Mississippi Acres Preserve",
+  "Revontuli Coast"
 ];
 
 export default reservesList;
