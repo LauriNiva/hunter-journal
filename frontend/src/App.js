@@ -4,7 +4,6 @@ import Logs from './components/Logs';
 import Nav from './components/Nav';
 import { useAuth0 } from '@auth0/auth0-react';
 import { createTheme, CssBaseline, Paper, ThemeProvider } from '@mui/material';
-import { ConfirmProvider } from 'material-ui-confirm';
 import usersService from './services/user';
 import UserDataForm from './components/UserDataForm';
 import { Routes, Route } from 'react-router-dom';
@@ -68,7 +67,6 @@ const App = () => {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <ConfirmProvider>
         <Nav myUsername={myUsername} avatar={avatar} />
         <Paper className="container"
           sx={{
@@ -98,7 +96,6 @@ const App = () => {
           </Routes>
 
         </Paper>
-      </ConfirmProvider>
     </ThemeProvider>
   );
 }
