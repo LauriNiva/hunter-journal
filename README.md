@@ -1,7 +1,6 @@
 # hunter-journal
 
-Renred host:
+Render host:
 https://hunters-log.onrender.com
 
-Tai:
 http://lauriniva.fi/hunter
