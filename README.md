@@ -8,8 +8,7 @@ https://hunters-log.onrender.com
 
 Sivusto theHunter: Call of the Wild -pelin kaatojen tallettamiseen ja jakamiseen.
 
-<details>
-  <summary>---MERN stack---</summary>
+---MERN stack---
 - Frontend
   - React
   - MUI
@@ -20,8 +19,6 @@ Sivusto theHunter: Call of the Wild -pelin kaatojen tallettamiseen ja jakamiseen
   - Mongodb
   - Cloudinary
   - Auth0
-
-</details>
 
 
 ![lisaaminen](https://user-images.githubusercontent.com/17712488/217012161-4f654810-2aa6-4a66-805a-0564217d494a.jpeg)
